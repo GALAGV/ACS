@@ -1,0 +1,423 @@
+﻿<Window x:Class="AGVSystem.UI.APP_UI.Main.Home_Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Main"
+        mc:Ignorable="d"
+        Title="Home_Main" Height="900" Width="1400" WindowState="Maximized" MinWidth="750" MinHeight="600" Loaded="Window_Loaded">
+    <Grid>
+        <Grid Background="#f0f0f0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="0.26*" ></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240" MinWidth="240" ></ColumnDefinition>
+                <ColumnDefinition Width="4" ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Menu HorizontalContentAlignment="Center" Name="Menu" Grid.Row="0" Grid.ColumnSpan="3" Background="#ffffff">
+                <MenuItem Header="文件(_F)" Height="20" FontFamily="微软雅黑">
+                    <MenuItem Header="退出" Height="20"  Name="Exit" >
+                    </MenuItem>
+                </MenuItem>
+                <Separator Width="4" />
+                <MenuItem Header="新建(_G)" Height="20" FontFamily="微软雅黑">
+                    <MenuItem Header="新建地图" Height="20"></MenuItem>
+                </MenuItem>
+                <Separator Width="4" />
+                <MenuItem Header="编辑(_K)" Height="20" FontFamily="微软雅黑">
+                    <MenuItem Header="编辑地图" Height="20" Name="Com_Map" ></MenuItem>
+                    <MenuItem Header="编辑线路" Height="20"></MenuItem>
+                    <MenuItem Header="编辑信标" Height="20"></MenuItem>
+                </MenuItem>
+                <Separator Width="4" />
+                <MenuItem Header="设置(_E)" Height="20" FontFamily="微软雅黑">
+                    <MenuItem Header="软件设置" Height="20" Name="setting" ></MenuItem>
+                </MenuItem>
+                <Separator Width="4" />
+                <MenuItem Header="历史(_E)" Height="20" FontFamily="微软雅黑">
+                    <MenuItem Header="历史信息" Height="20" ></MenuItem>
+                </MenuItem>
+                <Separator Width="4" />
+                <MenuItem Header="帮助(_H)" Height="20" FontFamily="微软雅黑">
+                    <MenuItem Header="关于软件(_A)" Height="20"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <ToolBar Grid.Row="1" Grid.ColumnSpan="3" Background="#f0f0f0">
+                <Button Cursor="Hand">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/start.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <!--<Separator />
+                <Button Cursor="Hand">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="image/智能.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>-->
+                <Separator />
+                <Button Cursor="Hand">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/mouse.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/hand.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand" Name="Magnify" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/Magnify.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand" Name="Shrink"  >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/shrink.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand" Name="Recover" >
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/restoration.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Cursor="Hand" >
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/send.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </ToolBar>
+            <Border Grid.Column="2" Grid.Row="2"   Background="#ffff" >
+                <Border Grid.Column="2" Grid.Row="2" Margin="3,3,1,3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
+                    <Grid Margin="2,2,0,2" Background="#f0f0f0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22"></RowDefinition>
+                            <RowDefinition Height="20"></RowDefinition>
+                            <RowDefinition ></RowDefinition>
+                            <!--<RowDefinition  Height="10"></RowDefinition>-->
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Grid.ColumnSpan="2" Background="#bfcddb">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="24"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Stretch="Fill" Source="/image/map.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
+                            <Label Content="ABB" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-4,-1.4,0,0" ></Label>
+                        </Grid>
+                        <ScrollViewer  Name="SrcX" Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Hidden">
+                            <StackPanel >
+                                <Canvas Name="TopX"  HorizontalAlignment="Left" Height="20" Width="20000"></Canvas>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <!--<ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,20">-->
+                        <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,0,0,20">
+                            <Canvas Name="TopY" Width="20" HorizontalAlignment="Left" Height="1500"></Canvas>
+                        </StackPanel>
+                        <!--</ScrollViewer>-->
+
+
+                        <ScrollViewer  Name="SrcCount" Grid.Column="1" Grid.Row="2"   HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible"   >
+
+                            <Canvas  Name="mainPanel" Background="#ffffff" >
+
+                            </Canvas>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Border>
+            <Grid Grid.Column="0"  Grid.Row="2" Grid.RowSpan="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="1.3*" ></RowDefinition>
+                    <!--<RowDefinition ></RowDefinition>-->
+                    
+                </Grid.RowDefinitions>
+                <Border  Grid.Row="0" Background="#ffff">
+                    <Border Grid.Column="2" Grid.Row="2" Margin="3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
+                        <Grid Margin="0,2,0,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="22"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Background="#bfcddb">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image Stretch="Fill" Source="/image/equipment.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
+                                <Label Content="AGV" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-2,-0.5,0,0" ></Label>
+                            </Grid>
+                            <!--<ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto"  >-->
+                            <TreeView FontSize="15"    BorderThickness="0,0,0,0" Grid.Row="1">
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TreeViewItem}">
+                                        <Setter Property="IsExpanded" Value="True" />
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+                                <TreeViewItem Header="agv-List" Name="agvlist">
+                                    <!--<TreeViewItem Header="agv-001" IsExpanded="True">
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="agv-002"></TreeViewItem>
+                                    <TreeViewItem Header="agv-003"></TreeViewItem>-->
+                                    <!--<TreeViewItem Header="agv-004"></TreeViewItem>
+                                    <TreeViewItem Header="agv-005"></TreeViewItem>
+                                    <TreeViewItem Header="agv-006"></TreeViewItem>
+                                    <TreeViewItem Header="agv-007"></TreeViewItem>
+                                    <TreeViewItem Header="agv-008"></TreeViewItem>
+                                    <TreeViewItem Header="agv-009"></TreeViewItem>-->
+                                </TreeViewItem>
+                            </TreeView>
+                            <!--</ScrollViewer>-->
+                        </Grid>
+                    </Border>
+                </Border>
+                <TabControl Grid.Row="1" Margin="3,0,0,0">
+                    <TabItem Header="AGV信息">
+                        <Border  Grid.Row="1" Background="#ffff" Margin="0,0,2,2">
+                            <Border Grid.Column="2" Grid.Row="2" Margin="3,0,0,3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
+                                <Grid Margin="0,2,0,2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="22"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Background="#bfcddb">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="24"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Stretch="Fill" Source="/image/message.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
+                                        <Label Content="状态" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-1,-1,0,0" ></Label>
+                                    </Grid>
+                                    <DataGrid   BorderBrush="#808080" BorderThickness="0,1,0,0"  Name="TabAgvData"  AllowDrop="True" Grid.Row="1" ItemsSource="{Binding}" >
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header=""  Binding="{Binding Agv}" Width="90">
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader">
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                        <Setter Property="AllowDrop"  Value="False"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="" Binding="{Binding Info}"  Width="*" >
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader">
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                        <Setter Property="AllowDrop"  Value="False"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </TabItem>
+                    <TabItem Header="串口状态">
+                        <Border  Grid.Row="2" Background="#ffff" Margin="0,0,2,0">
+                            <Border Grid.Column="2" Grid.Row="2" Margin="3,0,0,3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
+                                <Grid Margin="0,2,0,2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="22"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Background="#bfcddb">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="24"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Stretch="Fill" Source="/image/COM.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
+                                        <Label Content="串口" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-1,-1,0,0" ></Label>
+                                    </Grid>
+                                    <DataGrid  BorderBrush="#808080"  Name="TabSerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1" Cursor="Hand" ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" >
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="串口号" Width="*"  Binding="{Binding COM}" >
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader">
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                        <Setter Property="AllowDrop"  Value="False"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="状态" Binding="{Binding Comtype}"  Width="*" >
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader">
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                        <Setter Property="AllowDrop"  Value="False"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </TabItem>
+                    <TabItem Header="网络状态">
+                        <Border  Grid.Row="2" Background="#ffff" Margin="0,0,2,0">
+                            <Border Grid.Column="2" Grid.Row="2" Margin="3,0,0,3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
+                                <Grid Margin="0,2,0,2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="22"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Background="#bfcddb">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="24"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Stretch="Fill" Source="/image/COM.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
+                                        <Label Content="串口" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-1,-1,0,0" ></Label>
+                                    </Grid>
+                                    <DataGrid  BorderBrush="#808080"  Name="TabSerialPortDatas" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1" Cursor="Hand" ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" >
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="IP地址" Width="*"  Binding="{Binding COM}"  >
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader">
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                        <Setter Property="AllowDrop"  Value="False"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="连接状态" Width="0.7*" Binding="{Binding Comtype}"   >
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader">
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                        <Setter Property="AllowDrop"  Value="False"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </TabItem>
+                </TabControl>
+
+            </Grid>
+           
+            <Border  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Background="#ffff" Margin="0,2,2,5">
+                <Border Grid.Column="2" Grid.Row="2" Margin="3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
+                    <TabControl Grid.ColumnSpan="5">
+                        <TabItem Header="运行信息">
+                            <DataGrid x:Name="TabAgvMoveData"  AllowDrop="True" ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="状态" Width="*" Binding="{Binding type}" Foreground="Red" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                <Setter Property="AllowDrop"  Value="False"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="AGV编号" Binding="{Binding TagName}"  Width="*" FontWeight="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="速度"  Binding="{Binding Speed}" Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="转弯" Binding="{Binding turn}"  Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="方向" Binding="{Binding Dir}"  Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="挂钩"  Binding="{Binding Hook}"  Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="信标"   Binding="{Binding Rfid}" Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="RouteNo"  Binding="{Binding Hook}"  Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="PBS"  Binding="{Binding Program}"  Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Step"   Binding="{Binding Step}" Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                        <TabItem Header="通信信息">
+                            <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <TextBlock Name="Log" ></TextBlock>
+                            </ScrollViewer>
+                        </TabItem>
+                    </TabControl>
+                </Border>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

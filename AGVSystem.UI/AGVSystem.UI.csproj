@@ -54,17 +54,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="APP_UI\Main\Home_Main.xaml.cs">
+      <DependentUpon>Home_Main.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -89,9 +84,62 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Styles\fonts\fontawesome-webfont.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="APP_UI\Main\Home_Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ExpandCollapseToggle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\DataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\agv.png" />
+    <Resource Include="image\mouse.png" />
+    <Resource Include="image\send.png" />
+    <Resource Include="image\COM.png" />
+    <Resource Include="image\message.png" />
+    <Resource Include="image\区域.png" />
+    <Resource Include="image\半圆.png" />
+    <Resource Include="image\start1.png" />
+    <Resource Include="image\start.png" />
+    <Resource Include="image\map.png" />
+    <Resource Include="image\restoration.png" />
+    <Resource Include="image\手掌.png" />
+    <Resource Include="image\hand.png" />
+    <Resource Include="image\折线.png" />
+    <Resource Include="image\shrink.png" />
+    <Resource Include="image\Magnify.png" />
+    <Resource Include="image\文件.png" />
+    <Resource Include="image\文字.png" />
+    <Resource Include="image\智能.png" />
+    <Resource Include="image\标志.png" />
+    <Resource Include="image\直线.png" />
+    <Resource Include="image\equipment.png" />
+    <Resource Include="image\返回.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APP_UI\Setting\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AGVSystem.BLL\AGVSystem.BLL.csproj">
+      <Project>{93a1558a-d27d-4a7c-a532-4a61794a1b6f}</Project>
+      <Name>AGVSystem.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AGVSystem.Model\AGVSystem.Model.csproj">
+      <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
+      <Name>AGVSystem.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
