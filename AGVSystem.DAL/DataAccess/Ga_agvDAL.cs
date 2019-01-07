@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using AGVSystem.IService.IODAL;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AGVSystem.DAL.DataAccess
 {
-   public class Ga_agvDAL
+   public class Ga_agvDAL: IO_agvDAL
     {
 
         #region 查询AGV信息
@@ -17,7 +18,7 @@ namespace AGVSystem.DAL.DataAccess
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>
-        public List<int> AGVNumList(long MapTime)
+        public List<int> AGVArray(long MapTime)
         {
             List<int> agvNumList = new List<int>();
             string sql = string.Format("SELECT `AGV` FROM agv.device{0}", MapTime);
@@ -39,6 +40,9 @@ namespace AGVSystem.DAL.DataAccess
         }
 
         #endregion
+
+
+
 
     }
 }

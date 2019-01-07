@@ -1,4 +1,7 @@
-﻿using AGVSystem.BLL;
+﻿using AGVSystem.APP.agv_System;
+using AGVSystem.BLL;
+using AGVSystem.IService.IOBLL;
+using AGVSystem.IService.IOSystem;
 using AGVSystem.Model;
 using System;
 using System.Collections.Generic;
@@ -26,7 +29,9 @@ namespace AGVSystem.UI.APP_UI.Main
         {
             InitializeComponent();
         }
-        Ga_agvBLL GetAgvBLL = new Ga_agvBLL();
+
+        IO_agvBLL GetAgvBLL = new Ga_agvBLL();
+        IO_AGVmanagement Get_AGVmanagement = new agvFunction();
         private int selAgv = 1; //默认显示AGV
         DataTable dt;
 
@@ -43,45 +48,14 @@ namespace AGVSystem.UI.APP_UI.Main
         /// <param name="Time"></param>
         public void TabAgvMoveInfo(long Time)
         {
-            List<int> Agvlist = GetAgvBLL.AGVList(Time);
-            dt = new DataTable("TabAgvMoveInfo");
-            dt.Columns.Add(new DataColumn("type"));
-            dt.Columns.Add(new DataColumn("TagName"));
-            dt.Columns.Add(new DataColumn("Speed"));
-            dt.Columns.Add(new DataColumn("turn"));
-            dt.Columns.Add(new DataColumn("Dir"));
-            dt.Columns.Add(new DataColumn("Hook"));
-            dt.Columns.Add(new DataColumn("Rfid"));
-            dt.Columns.Add(new DataColumn("Program"));
-            dt.Columns.Add(new DataColumn("Step"));
-
-            for (int i = 0; i < Agvlist.Count; i++)
-            {
-                dt.Rows.Add(new object[] { "离线", Agvlist[i], "", "", "", "", "", "" });
-                string agvNum = "";
-                if (Agvlist[i] < 10)
-                {
-                    agvNum = "00" + Agvlist[i].ToString();
-                }
-                else if (Agvlist[i] < 10 && Agvlist[i] < 100)
-                {
-                    agvNum = "0" + Agvlist[i].ToString();
-                }
-                else
-                {
-                    agvNum = Agvlist[i].ToString();
-                }
-                TreeViewItem tree = new TreeViewItem() { Header = "agv-" + agvNum + "" };
-                tree.Selected += Tree_Selected;
-                agvlist.Items.Add(tree);
-                MainInfo.agvNo.Add(Agvlist[i]);
-            }
-            if (Agvlist.Count > 0)
-            {
-                selAgv = Agvlist[0];
-            }
+            List<int> AgvNum = GetAgvBLL.AGVNumList(Time);
+            dt = Get_AGVmanagement.AgvInfo(AgvNum, ref selAgv);
             TabAgvMoveData.DataContext = dt.DefaultView;
             TabAgvMoveData.AutoGenerateColumns = false;
+            //agvlist.DataContext = AgvNum;
+            //TreeViewItem tree = new TreeViewItem() { Header = "agv-" + agvNum + "" };
+            //tree.Selected += Tree_Selected;
+            //agvlist.Items.Add(tree);
         }
 
         /// <summary>
@@ -100,22 +74,17 @@ namespace AGVSystem.UI.APP_UI.Main
         /// </summary>
         public void AgvInfo()
         {
-            DataTable AgvData = new DataTable("TabAgvInfo");
-            AgvData.Columns.Add(new DataColumn("Agv"));
-            AgvData.Columns.Add(new DataColumn("Info"));
-            AgvData.Rows.Add(new object[] { "AGV", "" });
-
-            AgvData.Rows.Add(new object[] { "报警信息", "" });
-            AgvData.Rows.Add(new object[] { "Program", "" });
-            AgvData.Rows.Add(new object[] { "Step", "" });
-            AgvData.Rows.Add(new object[] { "出发地", "" });
-            AgvData.Rows.Add(new object[] { "目的地", "" });
-            AgvData.Rows.Add(new object[] { "任务名", "" });
-            TabAgvData.ItemsSource = AgvData.DefaultView;
+            TabAgvData.ItemsSource = Get_AGVmanagement.AgvInfo().DefaultView;
             //TabAgvData.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             TabAgvData.HeadersVisibility = DataGridHeadersVisibility.None;
             TabAgvData.AutoGenerateColumns = false;
         }
+
+
+
+
+
+
 
     }
 }

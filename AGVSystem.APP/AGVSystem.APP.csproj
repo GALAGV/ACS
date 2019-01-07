@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EB2A70D0-3574-4C10-8058-69936A3A74D4}</ProjectGuid>
+    <ProjectGuid>{EE2914FA-0702-4D89-9145-22397EB04C41}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AGVSystem.DAL</RootNamespace>
-    <AssemblyName>AGVSystem.DAL</AssemblyName>
+    <RootNamespace>AGVSystem.APP</RootNamespace>
+    <AssemblyName>AGVSystem.APP</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,12 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,14 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\Ga_agvDAL.cs" />
-    <Compile Include="DataHelper\MySqlHelper.cs" />
+    <Compile Include="agv_System\agvFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AGVSystem.IService\AGVSystem.IService.csproj">
       <Project>{b894994b-925b-4997-b018-da3dcb0ec40a}</Project>
       <Name>AGVSystem.IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AGVSystem.Model\AGVSystem.Model.csproj">
+      <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
+      <Name>AGVSystem.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

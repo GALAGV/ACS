@@ -49,6 +49,10 @@
       <Project>{eb2a70d0-3574-4c10-8058-69936a3a74d4}</Project>
       <Name>AGVSystem.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AGVSystem.IService\AGVSystem.IService.csproj">
+      <Project>{b894994b-925b-4997-b018-da3dcb0ec40a}</Project>
+      <Name>AGVSystem.IService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
