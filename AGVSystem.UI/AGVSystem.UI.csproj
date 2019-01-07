@@ -63,6 +63,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APP_UI\Setting\SettingForm.xaml.cs">
+      <DependentUpon>SettingForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -91,6 +94,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="APP_UI\Main\Home_Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="APP_UI\Setting\SettingForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,9 +135,7 @@
     <Resource Include="image\equipment.png" />
     <Resource Include="image\返回.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="APP_UI\Setting\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\AGVSystem.APP\AGVSystem.APP.csproj">
       <Project>{ee2914fa-0702-4d89-9145-22397eb04c41}</Project>

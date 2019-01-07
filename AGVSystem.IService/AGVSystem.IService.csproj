@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IOBLL\IO_agvBLL.cs" />
-    <Compile Include="IODAL\IO_agvDAL.cs" />
-    <Compile Include="IOSystem\IO_AGVmanagement.cs" />
+    <Compile Include="IO_BLL\IO_agvBLL.cs" />
+    <Compile Include="IO_BLL\IO_MapBLL.cs" />
+    <Compile Include="IO_DAL\IO_agvDAL.cs" />
+    <Compile Include="IO_DAL\IO_MapDAL.cs" />
+    <Compile Include="IO_System\IO_AGVmanagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -21,7 +21,7 @@
             </Grid.ColumnDefinitions>
             <Menu HorizontalContentAlignment="Center" Name="Menu" Grid.Row="0" Grid.ColumnSpan="3" Background="#ffffff">
                 <MenuItem Header="文件(_F)" Height="20" FontFamily="微软雅黑">
-                    <MenuItem Header="退出" Height="20"  Name="Exit" >
+                    <MenuItem Header="退出" Height="20"  Name="Exit" Click="Exit_Click">
                     </MenuItem>
                 </MenuItem>
                 <Separator Width="4" />
@@ -36,7 +36,7 @@
                 </MenuItem>
                 <Separator Width="4" />
                 <MenuItem Header="设置(_E)" Height="20" FontFamily="微软雅黑">
-                    <MenuItem Header="软件设置" Height="20" Name="setting" ></MenuItem>
+                    <MenuItem Header="软件设置" Height="20" Name="setting" Click="Setting_Click"></MenuItem>
                 </MenuItem>
                 <Separator Width="4" />
                 <MenuItem Header="历史(_E)" Height="20" FontFamily="微软雅黑">

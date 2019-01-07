@@ -5,8 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AGVSystem.IService.IOSystem
+namespace AGVSystem.IService.IO_System
 {
+    /// <summary>
+    /// AGV系统功能接口
+    /// </summary>
     public interface IO_AGVmanagement
     {
         /// <summary>

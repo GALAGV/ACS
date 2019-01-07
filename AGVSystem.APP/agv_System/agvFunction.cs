@@ -1,4 +1,4 @@
-﻿using AGVSystem.IService.IOSystem;
+﻿using AGVSystem.IService.IO_System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,19 +53,6 @@ namespace AGVSystem.APP.agv_System
             for (int i = 0; i < Agvlist.Count; i++)
             {
                 dt.Rows.Add(new object[] { "离线", Agvlist[i], "", "", "", "", "", "" });
-                string agvNum = "";
-                if (Agvlist[i] < 10)
-                {
-                    agvNum = "00" + Agvlist[i].ToString();
-                }
-                else if (Agvlist[i] < 10 && Agvlist[i] < 100)
-                {
-                    agvNum = "0" + Agvlist[i].ToString();
-                }
-                else
-                {
-                    agvNum = Agvlist[i].ToString();
-                }
                 MainInfo.agvNo.Add(Agvlist[i]);
             }
             if (Agvlist.Count > 0)

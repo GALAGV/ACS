@@ -1,8 +1,9 @@
 ﻿using AGVSystem.APP.agv_System;
 using AGVSystem.BLL;
-using AGVSystem.IService.IOBLL;
-using AGVSystem.IService.IOSystem;
+using AGVSystem.IService.IO_BLL;
+using AGVSystem.IService.IO_System;
 using AGVSystem.Model;
+using AGVSystem.UI.APP_UI.Setting;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -80,11 +81,15 @@ namespace AGVSystem.UI.APP_UI.Main
             TabAgvData.AutoGenerateColumns = false;
         }
 
+        private void Setting_Click(object sender, RoutedEventArgs e)
+        {
+            SettingForm setting = new SettingForm();
+            setting.ShowDialog();
+        }
 
-
-
-
-
-
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

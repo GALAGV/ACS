@@ -3,27 +3,25 @@ using AGVSystem.IService.IO_BLL;
 using AGVSystem.IService.IO_DAL;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AGVSystem.BLL
 {
-    public class Ga_agvBLL: IO_agvBLL
+    public class Ga_mapBLL : IO_MapBLL
     {
-        IO_agvDAL GetABB = new Ga_agvDAL();
+        IO_MapDAL map = new Ga_mapDAL();
 
         /// <summary>
-        /// 查询所有AGV
+        /// 查询串口信息
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>
-        List<int> IO_agvBLL.AGVNumList(long MapTime)
+        public DataTable ListDevice(long MapTime)
         {
-            return GetABB.AGVArray(MapTime);
+            return map.LoadDevice(MapTime);
         }
-
-
-
     }
 }
