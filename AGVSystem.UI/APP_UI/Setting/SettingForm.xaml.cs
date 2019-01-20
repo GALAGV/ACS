@@ -15,6 +15,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
+using AGVSystem.BLL.ServiceLogicBLL;
 
 namespace AGVSystem.UI.APP_UI.Setting
 {
@@ -69,15 +71,15 @@ namespace AGVSystem.UI.APP_UI.Setting
             gridItem.VerticalAlignment = VerticalAlignment.Top;
             gridItem.HorizontalAlignment = HorizontalAlignment.Center;
             CountMap.Content = gridItem;
-            DataTable PortData = mapMessage.ListDevice(Time);
-            if (PortData.Rows.Count > 0)
+            MySqlDataReader  PortData = mapMessage.ListDevice(Time);
+            int i = 0;
+            while (PortData.Read())
             {
-                for (int i = 0; i < PortData.Rows.Count; i++)
-                {
-                    AddRows(i, PortData.Rows[i]["Com"].ToString(), PortData.Rows[i]["Baud"].ToString(), PortData.Rows[i]["Agv"].ToString());
-                    Index = i;
-                }
+                AddRows(i, PortData["Com"].ToString(), PortData["Baud"].ToString(), PortData["Agv"].ToString());
+                Index = i;
+                i++;
             }
+            PortData.Close();
             if (gridItem.RowDefinitions.Count.Equals(1) || gridItem.RowDefinitions.Count.Equals(0))
             {
                 //DeleteRows.IsEnabled = false;

@@ -48,7 +48,9 @@
     <Compile Include="Ga_agvModels\Ga_agv.cs" />
     <Compile Include="Ga_agvModels\Ga_agvStatus.cs" />
     <Compile Include="Ga_agvModels\Ga_Map.cs" />
-    <Compile Include="MainInfo.cs" />
+    <Compile Include="Ga_agvModels\Ga_PortInfo.cs" />
+    <Compile Include="LogicData\MainInfo.cs" />
+    <Compile Include="LogicData\PortInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Threading;
+using AGVSystem.Model.Ga_agvModels;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -36,7 +37,7 @@ namespace AGVSystem.UI.APP_UI.Main
 
         IO_AGVmanagement Get_AGVmanagement = new agvFunction();
         private int selAgv = 1; //默认显示AGV
-        DataTable dt;
+        List<Ga_agv> Ga_agvNumArray;
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -46,13 +47,22 @@ namespace AGVSystem.UI.APP_UI.Main
         }
 
         /// <summary>
+        /// 加载串口信息
+        /// </summary>
+        public void LoadComInfo(long Time)
+        {
+            SerialPortData.DataContext = Get_AGVmanagement.agvGather(Time);
+            SerialPortData.AutoGenerateColumns = false;
+        }
+
+        /// <summary>
         /// 显示所有AGV初始信息
         /// </summary>
         /// <param name="Time"></param>
         public void TabAgvMoveInfo(long Time)
         {
-            dt = Get_AGVmanagement.AgvInfo(Time, ref selAgv);
-            TabAgvMoveData.DataContext = dt.DefaultView;
+            Ga_agvNumArray = Get_AGVmanagement.AgvInfo(Time, ref selAgv);
+            TabAgvMoveData.DataContext = Ga_agvNumArray;
             TabAgvMoveData.AutoGenerateColumns = false;
         }
 

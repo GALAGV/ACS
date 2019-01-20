@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AGVSystem.BLL
+namespace AGVSystem.BLL.ServiceLogicBLL
 {
     public class Ga_mapBLL : IO_MapBLL
     {
@@ -20,7 +20,7 @@ namespace AGVSystem.BLL
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>
-        public DataTable ListDevice(long MapTime)
+        public MySqlDataReader ListDevice(long MapTime)
         {
             return map.LoadDevice(MapTime);
         }

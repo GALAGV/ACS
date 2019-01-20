@@ -16,10 +16,10 @@ namespace AGVSystem.DAL.DataAccess
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>
-        public DataTable LoadDevice(long MapTime)
+        public MySqlDataReader LoadDevice(long MapTime)
         {
             string sql = string.Format("SELECT `Com`, `Baud`, `Agv` FROM agv.`device{0}`", MapTime);
-            return MySqlHelper.ExecuteDataTable(sql);
+            return MySqlHelper.ExecuteReader(sql);
         }
 
         /// <summary>

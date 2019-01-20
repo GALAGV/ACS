@@ -18,7 +18,7 @@ namespace AGVSystem.IService.IO_DAL
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>
-        DataTable LoadDevice(long MapTime);
+        MySqlDataReader LoadDevice(long MapTime);
 
         /// <summary>
         /// 查询所有地图数据

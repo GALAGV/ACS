@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AGVSystem.BLL
+namespace AGVSystem.BLL.ServiceLogicBLL
 {
     public class Ga_agvBLL: IO_agvBLL
     {

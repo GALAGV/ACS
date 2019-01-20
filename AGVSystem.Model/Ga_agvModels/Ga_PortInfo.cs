@@ -7,21 +7,19 @@ using System.Threading.Tasks;
 namespace AGVSystem.Model.Ga_agvModels
 {
     /// <summary>
-    /// 状态信息实体类
+    /// 串口实体类
     /// </summary>
-    public class Ga_agvStatus
+    public class Ga_PortInfo
     {
+        /// <summary>
+        /// 串口编号
+        /// </summary>
+        public int ComNumber { get; set; }
 
         /// <summary>
-        /// 状态名称
+        /// 串口状态
         /// </summary>
-        public string StatusName { get; set; }
-
-        /// <summary>
-        /// 状态值
-        /// </summary>
-        public string StatusValue { get; set; }
-
+        public string ComStatic { get; set; }
 
     }
 }

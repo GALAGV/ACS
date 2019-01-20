@@ -45,8 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ga_agvBLL.cs" />
-    <Compile Include="Ga_mapBLL.cs" />
+    <Compile Include="ServiceLogicBLL\Ga_agvBLL.cs" />
+    <Compile Include="ServiceLogicBLL\Ga_mapBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -263,7 +263,7 @@
                                         <Image Stretch="Fill" Source="/image/COM.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
                                         <Label Content="串口" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-1,-1,0,0" ></Label>
                                     </Grid>
-                                    <DataGrid  BorderBrush="#808080"  Name="TabSerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1" Cursor="Hand" ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" >
+                                    <DataGrid  BorderBrush="#808080"  Name="SerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1" Cursor="Hand" ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" >
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="串口号" Width="*"  Binding="{Binding COM}" >
                                                 <DataGridTextColumn.HeaderStyle>
@@ -273,7 +273,15 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="状态" Binding="{Binding Comtype}" Width="0.7*" >
+                                            <DataGridTextColumn Header="类型" Width="*"  Binding="{Binding COM}" >
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader">
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                        <Setter Property="AllowDrop"  Value="False"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="状态" Binding="{Binding Comtype}" Width="*" >
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader">
                                                         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -338,7 +346,7 @@
                         <TabItem Header="运行信息">
                             <DataGrid x:Name="TabAgvMoveData"  AllowDrop="True" RowHeaderWidth="0"  ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="状态" Width="80" Binding="{Binding type}"  Foreground="Red" >
+                                    <DataGridTextColumn Header="状态" Width="80" Binding="{Binding agvStatic}"  Foreground="Red" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -346,14 +354,14 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="AGV编号" Binding="{Binding TagName}"   Width="*" FontWeight="Black" >
+                                    <DataGridTextColumn Header="AGV编号" Binding="{Binding agvNumber}"   Width="*" FontWeight="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="电压"  Binding="{Binding Speed}" Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="电压"  Binding="{Binding Voltage}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -388,21 +396,21 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="RFID"   Binding="{Binding Rfid}" Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="RFID"   Binding="{Binding RFID}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="RouteNo"  Binding="{Binding Hook}"  Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="RouteNo"  Binding="{Binding RouteNo}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="PBS"  Binding="{Binding Program}"  Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="PBS"  Binding="{Binding PBS}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -416,7 +424,7 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Program"   Binding="{Binding Step}" Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="Program"   Binding="{Binding Program}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>

@@ -13,7 +13,7 @@ namespace AGVSystem.IService.IO_BLL
     /// </summary>
     public interface IO_MapBLL
     {
-        DataTable ListDevice(long MapTime);
+        MySqlDataReader ListDevice(long MapTime);
 
         /// <summary>
         /// 查询所有地图信息

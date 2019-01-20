@@ -6,19 +6,10 @@ using System.Threading.Tasks;
 using System.Threading;
 using AGVDLL;
 
-namespace AGVSystem.Model
+namespace AGVSystem.Model.LogicData
 {
    public class MainInfo
     {
-        /// <summary>
-        /// 状态回读标准位
-        /// </summary>
-        public static bool agvThState = false; //状态回读标志位
-
-        /// <summary>
-        /// /AGV信息显示标志位
-        /// </summary>
-        public static bool AgvStaticMessg = false;//AGV信息显示标志位
 
 
         public static int prity = 1;//校验位： 0.无校验 1.奇校验 2.偶校验

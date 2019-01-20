@@ -19,12 +19,21 @@ namespace AGVSystem.IService.IO_System
         /// </summary>
         List<Ga_agvStatus> AgvInfo();
 
+
         /// <summary>
         /// 查寻所有AGV信息
         /// </summary>
-        /// <param name="agvNum"></param>
+        /// <param name="Time"></param>
+        /// <param name="selAgv"></param>
         /// <returns></returns>
-        DataTable AgvInfo(long Time, ref int selAgv);
+        List<Ga_agv> AgvInfo(long Time, ref int selAgv);
+
+        /// <summary>
+        /// 串口信息
+        /// </summary>
+        /// <param name="Time"></param>
+        /// <returns></returns>
+        List<Ga_PortInfo> agvGather(long Time);
 
 
 
