@@ -6,29 +6,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using AGVSystem.Model;
+using AGVSystem.IService.IO_BLL;
+using AGVSystem.BLL;
+using AGVSystem.Model.Ga_agvModels;
 
 namespace AGVSystem.APP.agv_System
 {
     public class agvFunction : IO_AGVmanagement
     {
+        IO_agvBLL GetAgvBLL = new Ga_agvBLL();
+
         /// <summary>
         /// AGV信息
         /// </summary>
         /// <returns></returns>
-        public DataTable AgvInfo()
+        public List<Ga_agvStatus> AgvInfo()
         {
-            DataTable AgvData = new DataTable("AgvInfo");
-            AgvData.Columns.Add(new DataColumn("Agv"));
-            AgvData.Columns.Add(new DataColumn("Info"));
-            AgvData.Rows.Add(new object[] { "AGV", "" });
-
-            AgvData.Rows.Add(new object[] { "报警信息", "" });
-            AgvData.Rows.Add(new object[] { "Program", "" });
-            AgvData.Rows.Add(new object[] { "Step", "" });
-            AgvData.Rows.Add(new object[] { "出发地", "" });
-            AgvData.Rows.Add(new object[] { "目的地", "" });
-            AgvData.Rows.Add(new object[] { "任务名", "" });
-            return AgvData;
+            return new List<Ga_agvStatus>()
+            {
+                new Ga_agvStatus { StatusName = "AGV",  StatusValue = "1" },
+                new Ga_agvStatus { StatusName = "网络状态", StatusValue = "在线" },
+                new Ga_agvStatus { StatusName = "运行准备", StatusValue = "ON" },
+                new Ga_agvStatus { StatusName = "驱动状态", StatusValue = "上升" },
+                new Ga_agvStatus { StatusName = "脱轨状态", StatusValue = "正常" },
+                new Ga_agvStatus { StatusName = "出发位置", StatusValue = "5" },
+                new Ga_agvStatus { StatusName = "目的位置", StatusValue = "4" },
+                new Ga_agvStatus { StatusName = "任务名称", StatusValue = "运输" },
+                new Ga_agvStatus { StatusName = "报警信息", StatusValue = "正常" },
+            };
         }
 
         /// <summary>
@@ -37,8 +42,9 @@ namespace AGVSystem.APP.agv_System
         /// <param name="Agvlist"></param>
         /// <param name="selAgv"></param>
         /// <returns></returns>
-        public DataTable AgvInfo(List<int> Agvlist, ref int selAgv)
+        public DataTable AgvInfo(long Time,ref int selAgv)
         {
+            List<int> Agvlist = GetAgvBLL.AGVNumList(Time);
             DataTable dt = new DataTable("TabAgvMoveInfo");
             dt.Columns.Add(new DataColumn("type"));
             dt.Columns.Add(new DataColumn("TagName"));

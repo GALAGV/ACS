@@ -1,5 +1,9 @@
-﻿using System;
+﻿using AGVSystem.BLL;
+using AGVSystem.IService.IO_BLL;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,10 +55,10 @@ namespace AGVSystem.UI.APP_UI.Setting
         }
 
 
-        ABB_MapMessageBLL mapMessage = new ABB_MapMessageBLL();
+        IO_MapBLL mapMessage = new Ga_mapBLL();
         Grid gridItem = new Grid();
         int Index = 0;
-        long Time;
+        long Time= 1535037182;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -65,7 +69,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             gridItem.VerticalAlignment = VerticalAlignment.Top;
             gridItem.HorizontalAlignment = HorizontalAlignment.Center;
             CountMap.Content = gridItem;
-            DataTable PortData = mapMessage.LoadDeviceMap(Time);
+            DataTable PortData = mapMessage.ListDevice(Time);
             if (PortData.Rows.Count > 0)
             {
                 for (int i = 0; i < PortData.Rows.Count; i++)
@@ -104,7 +108,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             label.Foreground = new SolidColorBrush(Colors.Black);
             label.HorizontalAlignment = HorizontalAlignment.Center;
             label.VerticalAlignment = VerticalAlignment.Center;
-            label.Margin = new Thickness(10, 0, 10, 0);
+            label.Margin = new Thickness(10, 2, 10, 2);
             Grid.SetColumn(label, 0);
             Grid.SetRow(label, i);
             gridItem.Children.Add(label);
@@ -115,7 +119,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             combo.Text = port;
             combo.DropDownOpened += Combo_DropDownOpened;
             combo.Width = 75;
-            combo.Margin = new Thickness(0, 0, 10, 0);
+            combo.Margin = new Thickness(0, 2, 10, 2);
             ComboBoxItem ite = new ComboBoxItem();
             ite.Content = port.Equals("") ? "" : "COM" + port;
             combo.Items.Add(ite);
@@ -129,7 +133,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             labe2.Content = "波特率：";
             labe2.HorizontalAlignment = HorizontalAlignment.Center;
             labe2.VerticalAlignment = VerticalAlignment.Center;
-            labe2.Margin = new Thickness(0, 0, 10, 0);
+            labe2.Margin = new Thickness(0, 2, 10, 2);
 
             Grid.SetColumn(labe2, 2);
             Grid.SetRow(labe2, i);
@@ -138,7 +142,7 @@ namespace AGVSystem.UI.APP_UI.Setting
 
             TextBox combo2 = new TextBox();
             combo2.Text = Baud;
-            combo2.Margin = new Thickness(0, 0, 10, 0);
+            combo2.Margin = new Thickness(0, 2, 10, 2);
             combo2.Width = 60;
             Grid.SetColumn(combo2, 3);
             Grid.SetRow(combo2, i);
@@ -147,7 +151,7 @@ namespace AGVSystem.UI.APP_UI.Setting
 
             Label labe3 = new Label();
             labe3.Content = "AGV/其他：";
-            labe3.Margin = new Thickness(0, 0, 10, 0);
+            labe3.Margin = new Thickness(0,2, 10, 2);
             labe3.HorizontalAlignment = HorizontalAlignment.Center;
             labe3.VerticalAlignment = VerticalAlignment.Center;
             Grid.SetColumn(labe3, 4);
@@ -169,7 +173,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             {
                 combo3.Text = Agv;
             }
-            combo3.Margin = new Thickness(0, 0, 10, 0);
+            combo3.Margin = new Thickness(0, 2, 10, 2);
             ComboBoxItem iter = new ComboBoxItem();
             iter.Content = "按钮";
             combo3.Items.Add(iter);

@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ga_agvModels\Ga_agv.cs" />
+    <Compile Include="Ga_agvModels\Ga_agvStatus.cs" />
+    <Compile Include="Ga_agvModels\Ga_Map.cs" />
     <Compile Include="MainInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

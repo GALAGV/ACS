@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -13,5 +14,13 @@ namespace AGVSystem.IService.IO_BLL
     public interface IO_MapBLL
     {
         DataTable ListDevice(long MapTime);
+
+        /// <summary>
+        /// 查询所有地图信息
+        /// </summary>
+        /// <param name="MapTime"></param>
+        /// <returns></returns>
+        MySqlDataReader MapArray();
+
     }
 }

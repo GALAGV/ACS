@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Main"
         mc:Ignorable="d"
-        Title="Home_Main" Height="900" Width="1400" WindowState="Maximized" MinWidth="750" MinHeight="600" Loaded="Window_Loaded">
+        Title="Home_Main" Height="900" Width="1400" WindowState="Maximized" MinWidth="750" MinHeight="600"  Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <Grid Background="#f0f0f0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition Height="32"></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition Height="1"></RowDefinition>
                 <RowDefinition Height="0.26*" ></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -19,10 +20,11 @@
                 <ColumnDefinition Width="4" ></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Row="3"  HorizontalAlignment="Stretch" Grid.ColumnSpan="3"  Height="1"></GridSplitter>
             <Menu HorizontalContentAlignment="Center" Name="Menu" Grid.Row="0" Grid.ColumnSpan="3" Background="#ffffff">
                 <MenuItem Header="文件(_F)" Height="20" FontFamily="微软雅黑">
-                    <MenuItem Header="退出" Height="20"  Name="Exit" Click="Exit_Click">
-                    </MenuItem>
+                    <!--<MenuItem Header="退出" Height="20"  Name="Exit" Click="Exit_Click">
+                    </MenuItem>-->
                 </MenuItem>
                 <Separator Width="4" />
                 <MenuItem Header="新建(_G)" Height="20" FontFamily="微软雅黑">
@@ -30,7 +32,7 @@
                 </MenuItem>
                 <Separator Width="4" />
                 <MenuItem Header="编辑(_K)" Height="20" FontFamily="微软雅黑">
-                    <MenuItem Header="编辑地图" Height="20" Name="Com_Map" ></MenuItem>
+                    <MenuItem Header="编辑地图" Height="20" Name="Com_Map"  Click="Com_Map_Click"></MenuItem>
                     <MenuItem Header="编辑线路" Height="20"></MenuItem>
                     <MenuItem Header="编辑信标" Height="20"></MenuItem>
                 </MenuItem>
@@ -158,9 +160,9 @@
             <Grid Grid.Column="0"  Grid.Row="2" Grid.RowSpan="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="1.3*" ></RowDefinition>
+                    <RowDefinition Height="0.8*" ></RowDefinition>
                     <!--<RowDefinition ></RowDefinition>-->
-                    
+
                 </Grid.RowDefinitions>
                 <Border  Grid.Row="0" Background="#ffff">
                     <Border Grid.Column="2" Grid.Row="2" Margin="3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
@@ -220,9 +222,9 @@
                                         <Image Stretch="Fill" Source="/image/message.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
                                         <Label Content="状态" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-1,-1,0,0" ></Label>
                                     </Grid>
-                                    <DataGrid   BorderBrush="#808080" BorderThickness="0,1,0,0"  Name="TabAgvData"  AllowDrop="True" Grid.Row="1" ItemsSource="{Binding}" >
+                                    <DataGrid  HeadersVisibility="None"  BorderBrush="#808080" BorderThickness="0,1,0,0"  Name="TabAgvData"  AllowDrop="True" Grid.Row="1" ItemsSource="{Binding}" >
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header=""  Binding="{Binding Agv}" Width="90">
+                                            <DataGridTextColumn Header=""  Binding="{Binding StatusName}" Width="70">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader">
                                                         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -230,7 +232,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="" Binding="{Binding Info}"  Width="*" >
+                                            <DataGridTextColumn Header="" Binding="{Binding StatusValue}"  Width="*" >
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader">
                                                         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -271,7 +273,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="状态" Binding="{Binding Comtype}"  Width="*" >
+                                            <DataGridTextColumn Header="状态" Binding="{Binding Comtype}" Width="0.7*" >
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader">
                                                         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -329,14 +331,14 @@
                 </TabControl>
 
             </Grid>
-           
-            <Border  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Background="#ffff" Margin="0,2,2,5">
+
+            <Border  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Background="#ffff" Margin="0,2,2,5">
                 <Border Grid.Column="2" Grid.Row="2" Margin="3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
                     <TabControl Grid.ColumnSpan="5">
                         <TabItem Header="运行信息">
-                            <DataGrid x:Name="TabAgvMoveData"  AllowDrop="True" ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" >
+                            <DataGrid x:Name="TabAgvMoveData"  AllowDrop="True" RowHeaderWidth="0"  ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="状态" Width="*" Binding="{Binding type}" Foreground="Red" >
+                                    <DataGridTextColumn Header="状态" Width="80" Binding="{Binding type}"  Foreground="Red" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -344,7 +346,14 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="AGV编号" Binding="{Binding TagName}"  Width="*" FontWeight="Black" >
+                                    <DataGridTextColumn Header="AGV编号" Binding="{Binding TagName}"   Width="*" FontWeight="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="电压"  Binding="{Binding Speed}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -379,7 +388,7 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="信标"   Binding="{Binding Rfid}" Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="RFID"   Binding="{Binding Rfid}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -407,12 +416,22 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Program"   Binding="{Binding Step}" Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>
-                        <TabItem Header="通信信息">
+                        <TabItem Header="日志输出">
                             <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                <TextBlock Name="Log" ></TextBlock>
+                                <TextBox Name="txtLog" AcceptsReturn="True"  IsReadOnly="True" Text="2018-12-11 05:30:22 agvNum:5 start"
+                 TextWrapping="Wrap" Foreground="#4682b4"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"/>
                             </ScrollViewer>
                         </TabItem>
                     </TabControl>

@@ -26,7 +26,7 @@ namespace AGVSystem.DAL.DataAccess
             while (mr.Read())
             {
                 string agvStr = (mr.IsDBNull(0) ? "" : mr.GetString(0));
-                if (!string.IsNullOrEmpty(agvStr) && agvStr != "Charge" && agvStr != "Button")
+                if (!string.IsNullOrEmpty(agvStr) && agvStr != "Charge" && agvStr != "Button" &&  agvStr != "Plc")
                 {
                     string[] agvArray = agvStr.Split(',');
                     for (int i = 0; i < agvArray.Length; i++)

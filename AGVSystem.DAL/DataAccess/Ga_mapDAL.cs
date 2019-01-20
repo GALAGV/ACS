@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace AGVSystem.DAL.DataAccess
 {
@@ -21,7 +22,17 @@ namespace AGVSystem.DAL.DataAccess
             return MySqlHelper.ExecuteDataTable(sql);
         }
 
+        /// <summary>
+        /// 查询所有地图
+        /// </summary>
+        /// <param name="MapTime"></param>
+        /// <returns></returns>
+        public MySqlDataReader MapList()
+        {
+            return MySqlHelper.ExecuteReader("SELECT * FROM `agv`.`map`");
+        }
 
+       
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -18,6 +19,13 @@ namespace AGVSystem.IService.IO_DAL
         /// <param name="MapTime"></param>
         /// <returns></returns>
         DataTable LoadDevice(long MapTime);
+
+        /// <summary>
+        /// 查询所有地图数据
+        /// </summary>
+        /// <param name="MapTime"></param>
+        /// <returns></returns>
+        MySqlDataReader MapList();
 
 
     }

@@ -3,6 +3,7 @@ using AGVSystem.BLL;
 using AGVSystem.IService.IO_BLL;
 using AGVSystem.IService.IO_System;
 using AGVSystem.Model;
+using AGVSystem.UI.APP_UI.Map;
 using AGVSystem.UI.APP_UI.Setting;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -31,7 +33,7 @@ namespace AGVSystem.UI.APP_UI.Main
             InitializeComponent();
         }
 
-        IO_agvBLL GetAgvBLL = new Ga_agvBLL();
+
         IO_AGVmanagement Get_AGVmanagement = new agvFunction();
         private int selAgv = 1; //默认显示AGV
         DataTable dt;
@@ -39,7 +41,7 @@ namespace AGVSystem.UI.APP_UI.Main
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            TabAgvMoveInfo(1524132399);
+            TabAgvMoveInfo(1535037182);
             AgvInfo();
         }
 
@@ -49,25 +51,9 @@ namespace AGVSystem.UI.APP_UI.Main
         /// <param name="Time"></param>
         public void TabAgvMoveInfo(long Time)
         {
-            List<int> AgvNum = GetAgvBLL.AGVNumList(Time);
-            dt = Get_AGVmanagement.AgvInfo(AgvNum, ref selAgv);
+            dt = Get_AGVmanagement.AgvInfo(Time, ref selAgv);
             TabAgvMoveData.DataContext = dt.DefaultView;
             TabAgvMoveData.AutoGenerateColumns = false;
-            //agvlist.DataContext = AgvNum;
-            //TreeViewItem tree = new TreeViewItem() { Header = "agv-" + agvNum + "" };
-            //tree.Selected += Tree_Selected;
-            //agvlist.Items.Add(tree);
-        }
-
-        /// <summary>
-        /// Tree点击
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Tree_Selected(object sender, RoutedEventArgs e)
-        {
-            TreeViewItem tree = sender as TreeViewItem;
-            MessageBox.Show(tree.Header.ToString());
         }
 
         /// <summary>
@@ -75,8 +61,7 @@ namespace AGVSystem.UI.APP_UI.Main
         /// </summary>
         public void AgvInfo()
         {
-            TabAgvData.ItemsSource = Get_AGVmanagement.AgvInfo().DefaultView;
-            //TabAgvData.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
+            TabAgvData.ItemsSource = Get_AGVmanagement.AgvInfo();
             TabAgvData.HeadersVisibility = DataGridHeadersVisibility.None;
             TabAgvData.AutoGenerateColumns = false;
         }
@@ -90,6 +75,25 @@ namespace AGVSystem.UI.APP_UI.Main
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("确定退出程序？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void Com_Map_Click(object sender, RoutedEventArgs e)
+        {
+            CompileMap compile = new CompileMap();
+            compile.Show();
         }
     }
 }

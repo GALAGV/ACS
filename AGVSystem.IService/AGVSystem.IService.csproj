@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,8 +50,14 @@
     <Compile Include="IO_DAL\IO_agvDAL.cs" />
     <Compile Include="IO_DAL\IO_MapDAL.cs" />
     <Compile Include="IO_System\IO_AGVmanagement.cs" />
+    <Compile Include="IO_System\IO_AGVMapService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AGVSystem.Model\AGVSystem.Model.csproj">
+      <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
+      <Name>AGVSystem.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -63,6 +67,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APP_UI\Map\CompileMap.xaml.cs">
+      <DependentUpon>CompileMap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="APP_UI\Setting\SettingForm.xaml.cs">
       <DependentUpon>SettingForm.xaml</DependentUpon>
     </Compile>
@@ -87,13 +94,19 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Resource Include="Styles\fonts\fontawesome-webfont.ttf" />
+    <Resource Include="Styles\fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="APP_UI\Main\Home_Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="APP_UI\Map\CompileMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,6 +157,10 @@
     <ProjectReference Include="..\AGVSystem.BLL\AGVSystem.BLL.csproj">
       <Project>{93a1558a-d27d-4a7c-a532-4a61794a1b6f}</Project>
       <Name>AGVSystem.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AGVSystem.Infrastructure\AGVSystem.Infrastructure.csproj">
+      <Project>{efa0d1bd-3d72-45b7-a7d9-66959520ba7b}</Project>
+      <Name>AGVSystem.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\AGVSystem.IService\AGVSystem.IService.csproj">
       <Project>{b894994b-925b-4997-b018-da3dcb0ec40a}</Project>

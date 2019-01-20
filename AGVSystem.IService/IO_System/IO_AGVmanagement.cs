@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AGVSystem.Model;
+using AGVSystem.Model.Ga_agvModels;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -15,14 +17,14 @@ namespace AGVSystem.IService.IO_System
         /// <summary>
         /// AGV状态信息
         /// </summary>
-        DataTable AgvInfo();
+        List<Ga_agvStatus> AgvInfo();
 
         /// <summary>
         /// 查寻所有AGV信息
         /// </summary>
         /// <param name="agvNum"></param>
         /// <returns></returns>
-        DataTable AgvInfo(List<int> agvNum, ref int selAgv);
+        DataTable AgvInfo(long Time, ref int selAgv);
 
 
 

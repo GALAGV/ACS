@@ -1,6 +1,7 @@
 ﻿using AGVSystem.DAL.DataAccess;
 using AGVSystem.IService.IO_BLL;
 using AGVSystem.IService.IO_DAL;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,6 +23,16 @@ namespace AGVSystem.BLL
         public DataTable ListDevice(long MapTime)
         {
             return map.LoadDevice(MapTime);
+        }
+
+        /// <summary>
+        /// 查询地图数据
+        /// </summary>
+        /// <param name="MapTime"></param>
+        /// <returns></returns>
+        public MySqlDataReader MapArray()
+        {
+            return map.MapList();
         }
     }
 }

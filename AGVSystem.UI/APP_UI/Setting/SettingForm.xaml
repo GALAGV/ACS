@@ -92,7 +92,7 @@
                     <TreeViewItem Header="系统配置" Name="system" Selected="System_Selected"></TreeViewItem>
                 </TreeView>
                 <Button Content="确定" Grid.Row="2" Margin="8,5,0,0" BorderBrush="#adadad"></Button>
-                <Button Content="取消(_C)" Grid.Row="3" Margin="8,10,0,6" BorderBrush="#adadad" Name="Close" Click="Close_Click"></Button>
+                <Button Content="取消(_C)" Grid.Row="3" Margin="8,10,0,6" BorderBrush="#adadad" Name="CloseForm" Click="Close_Click"></Button>
             </Grid>
         </Grid>
 
