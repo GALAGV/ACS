@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using AGVSystem.Infrastructure.agvCommon;
+using System.Threading;
 
 namespace AGVSystem.UI
 {
@@ -15,11 +16,15 @@ namespace AGVSystem.UI
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// 重写应用程序启动方法,添加异常捕捉事件
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
             //UI线程未捕获异常处理事件（UI主线程）
             this.DispatcherUnhandledException += App_DispatcherUnhandledException;
-            //非UI线程未捕获异常处理事件(子线程)
+            //非UI线程未捕获异常处理事件(子线程 Thread线程)
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             //Task线程内未捕获异常处理事件
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
@@ -34,8 +39,7 @@ namespace AGVSystem.UI
         }
 
         //非UI线程未捕获异常处理事件
-        //如果UI线程异常DispatcherUnhandledException未注册，则如果发生了UI线程未处理异常也会触发此异常事件
-        //此机制的异常捕获后应用程序会直接终止。没有像DispatcherUnhandledException事件中的Handler=true的处理方式
+        //此机制的异常捕获后应用程序会直接终止
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = e.ExceptionObject as Exception;
@@ -63,8 +67,8 @@ namespace AGVSystem.UI
                     errorMsg += String.Format("【InnerException】{0}\n{1}\n", ex.InnerException.Message, ex.InnerException.StackTrace);
                 }
                 errorMsg += String.Format("{0}\n{1}", ex.Message, ex.StackTrace);
-
                 WriteLog.writeLogInfo("Error", "Log", errorMsg);//写入日志
+                MessageBox.Show(ex.Message);
             }
         }
     }

@@ -135,14 +135,14 @@
                             <Image Stretch="Fill" Source="/image/map.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
                             <Label Content="ABB" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-4,-1.4,0,0" ></Label>
                         </Grid>
-                        <ScrollViewer  Name="SrcX" Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Hidden">
+                        <ScrollViewer  Name="SrcX" Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,0">
                             <StackPanel >
                                 <Canvas Name="TopX"  HorizontalAlignment="Left" Height="20" Width="20000"></Canvas>
                             </StackPanel>
                         </ScrollViewer>
 
                         <!--<ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,20">-->
-                        <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,0,0,20">
+                        <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,-1,0,20">
                             <Canvas Name="TopY" Width="20" HorizontalAlignment="Left" Height="1500"></Canvas>
                         </StackPanel>
                         <!--</ScrollViewer>-->
@@ -263,9 +263,9 @@
                                         <Image Stretch="Fill" Source="/image/COM.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
                                         <Label Content="串口" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-1,-1,0,0" ></Label>
                                     </Grid>
-                                    <DataGrid  BorderBrush="#808080"  Name="SerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1" Cursor="Hand" ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" >
+                                    <DataGrid  BorderBrush="#808080" RowHeaderWidth="0" Name="SerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1"  ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" >
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="串口号" Width="*"  Binding="{Binding COM}" >
+                                            <DataGridTextColumn Header="串口号" Width="*"  Binding="{Binding ComNumber}" >
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader">
                                                         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -273,7 +273,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="类型" Width="*"  Binding="{Binding COM}" >
+                                            <DataGridTextColumn Header="类型" Width="*"  Binding="{Binding ComPortType}" >
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader">
                                                         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -281,7 +281,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="状态" Binding="{Binding Comtype}" Width="*" >
+                                            <DataGridTextColumn Header="状态" Binding="{Binding ComStatic}" Width="*" Foreground="Red" >
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader">
                                                         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>

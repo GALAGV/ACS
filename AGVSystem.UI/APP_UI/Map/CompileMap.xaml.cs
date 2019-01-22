@@ -15,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using AGVSystem.IService.IO_System;
 using AGVSystem.APP.agv_Map;
+using AGVSystem.Model.Ga_agvModels;
+using AGVSystem.Infrastructure.agvCommon;
+using System.IO;
 
 namespace AGVSystem.UI.APP_UI.Map
 {
@@ -29,33 +32,16 @@ namespace AGVSystem.UI.APP_UI.Map
             Compile();
         }
 
-        IO_AGVMapService mapService = new agvMapRegulate();
+        IO_AGVMapService mapService = new agvMapRegulate(); //业务逻辑接口
+
+        List<Ga_Map> GetMaps = new List<Ga_Map>(); //显示数据源
+
 
         public void Compile()
         {
-            TabSerialPortData.ItemsSource = mapService.GetMapRegulate();
+            GetMaps= mapService.GetMapRegulate();
+            TabSerialPortData.DataContext = GetMaps;
             TabSerialPortData.AutoGenerateColumns = false;
-        }
-
-        private void TabSerialPortData_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-        }
-
-        private void CheckBox_Click_2(object sender, RoutedEventArgs e)
-        {
-            CheckBox headercb = (CheckBox)sender;
-
-            for (int i = 0; i < TabSerialPortData.Items.Count; i++)
-            {
-                //获取行
-                DataGridRow neddrow = (DataGridRow)TabSerialPortData.ItemContainerGenerator.ContainerFromIndex(i);
-                if (neddrow != null)
-                {
-                    CheckBox cb = (CheckBox)TabSerialPortData.Columns[0].GetCellContent(neddrow);
-                    if (cb != null)
-                        cb.IsChecked = headercb.IsChecked;
-                }
-            }
         }
 
         /// <summary>
@@ -65,7 +51,134 @@ namespace AGVSystem.UI.APP_UI.Map
         /// <param name="e"></param>
         private void Export_Click(object sender, RoutedEventArgs e)
         {
+            Ga_Map ga_Map = SelectMap();
+            if (ga_Map == null)
+                return;
 
+            Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
+            sfd.Filter = "地图信息文件|*.tll";
+            sfd.FileName = "(" + ga_Map.Name + ")" + DateTime.Now.ToString("yyyyMMdd");
+            if (sfd.ShowDialog() == true)
+            {
+                if (mapService.Export_Map(UTC.ConvertDateTimeLong(Convert.ToDateTime(ga_Map.CreateTime)), sfd.FileName))
+                {
+                    GetMaps.ForEach(x => x.IsSelected = false); //取消选择
+                    MessageBox.Show("导出成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Asterisk, MessageBoxResult.No);
+                }
+                else
+                {
+                    MessageBox.Show("导出失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取选中列表项
+        /// </summary>
+        /// <returns></returns>
+        private Ga_Map SelectMap()
+        {
+            List<Ga_Map> SelectedList = GetMaps.Where(a => a.IsSelected).ToList();
+            if (SelectedList.Count.Equals(0))
+            {
+                MessageBox.Show("请选择需要操作的列表项！", "提示", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
+                return null;
+            }
+            else if (SelectedList.Count.Equals(1))
+            {
+
+                return SelectedList[0];
+            }
+            else
+            {
+                MessageBox.Show("请选择一项需要操作的列表项！", "提示", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 新建地图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddMap_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AllCkek_Click(object sender, RoutedEventArgs e)
+        {
+            GetMaps.ForEach(x => x.IsSelected = ((CheckBox)sender).IsChecked == true ? true : false); //全选or反选
+        }
+
+
+        /// <summary>
+        /// 删除地图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteMap_Click(object sender, RoutedEventArgs e)
+        {
+            if ((GetMaps.Where(a => a.IsSelected).ToList()).Count.Equals(0))
+            {
+                MessageBox.Show("请选择需要操作的列表项！", "提示", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
+                return;
+            }
+            MessageBoxResult result = MessageBox.Show("确定删除吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (result == MessageBoxResult.Yes)
+            {
+                if (mapService.Delete_Map(GetMaps.Where(a => a.IsSelected).ToList()) == true)
+                {
+                    GetMaps = mapService.GetMapRegulate();
+                    TabSerialPortData.DataContext = GetMaps;
+                    MessageBox.Show("删除成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
+                }
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// 导入地图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WriteMap_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".tll";
+            dlg.Filter = "地图信息文件|*.tll";
+            if (dlg.ShowDialog() == true)
+            {
+                string sqlText = File.ReadAllText(dlg.FileName);
+                if (mapService.AGV_MapTolead(sqlText) == true)
+                {
+                    GetMaps = mapService.GetMapRegulate();
+                    TabSerialPortData.DataContext = GetMaps;
+                    MessageBox.Show("导入成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("导入失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 编辑地图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditMap_Click(object sender, RoutedEventArgs e)
+        {
+            Ga_Map ga_Map = SelectMap();
+            if (ga_Map == null)
+                return;
+
+            MapEdit map = new MapEdit(ga_Map);
+            map.Show();
+            this.Close();
         }
     }
 }

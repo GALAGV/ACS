@@ -21,6 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Threading;
 using AGVSystem.Model.Ga_agvModels;
+using AGVSystem.APP.agv_Map;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -38,12 +39,22 @@ namespace AGVSystem.UI.APP_UI.Main
         IO_AGVmanagement Get_AGVmanagement = new agvFunction();
         private int selAgv = 1; //默认显示AGV
         List<Ga_agv> Ga_agvNumArray;
+        Painting GetPainting = new Painting();
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            TabAgvMoveInfo(1535037182);
+            TopX.Width = this.Width * 10;
+            TopY.Height = this.Height * 10;
+            mainPanel.Width = this.Width * 2;
+            mainPanel.Height = this.Height * 2;
+            GetPainting.CoordinateX(TopX, TopY, 10, 10, Brushes.Black, 1);
+
+            GetPainting.Coordinate(mainPanel, 10, 10, new SolidColorBrush(Color.FromRgb(208, 208, 208)), 1);
+
+            TabAgvMoveInfo(1532254801);
             AgvInfo();
+            LoadComInfo(1532254801);
         }
 
         /// <summary>
@@ -54,6 +65,12 @@ namespace AGVSystem.UI.APP_UI.Main
             SerialPortData.DataContext = Get_AGVmanagement.agvGather(Time);
             SerialPortData.AutoGenerateColumns = false;
         }
+
+
+
+
+
+
 
         /// <summary>
         /// 显示所有AGV初始信息

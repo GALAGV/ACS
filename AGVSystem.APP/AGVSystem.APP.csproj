@@ -35,6 +35,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,9 +45,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="agv_Map\agvMapRegulate.cs" />
+    <Compile Include="agv_Map\Painting.cs" />
     <Compile Include="agv_System\agvFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +57,10 @@
     <ProjectReference Include="..\AGVSystem.BLL\AGVSystem.BLL.csproj">
       <Project>{93a1558a-d27d-4a7c-a532-4a61794a1b6f}</Project>
       <Name>AGVSystem.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AGVSystem.Infrastructure\AGVSystem.Infrastructure.csproj">
+      <Project>{efa0d1bd-3d72-45b7-a7d9-66959520ba7b}</Project>
+      <Name>AGVSystem.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\AGVSystem.IService\AGVSystem.IService.csproj">
       <Project>{b894994b-925b-4997-b018-da3dcb0ec40a}</Project>

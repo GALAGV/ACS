@@ -60,7 +60,7 @@ namespace AGVSystem.UI.APP_UI.Setting
         IO_MapBLL mapMessage = new Ga_mapBLL();
         Grid gridItem = new Grid();
         int Index = 0;
-        long Time= 1535037182;
+        long Time= 1532254801;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

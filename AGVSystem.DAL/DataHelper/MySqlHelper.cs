@@ -12,11 +12,9 @@ namespace AGVSystem.DAL
 {
     public class MySqlHelper
     {
-        public static string connectionString = ConfigurationManager.ConnectionStrings["MySQLCon"].ConnectionString;
+        public static string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
 
-        public MySqlConnection LogConn = new MySqlConnection(connectionString);
-
-        ////存储过程
+        //存储过程
         public static DataTable ExecuteDataTableCommand(string CommandText)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -243,10 +241,9 @@ namespace AGVSystem.DAL
                     tx.Commit();
                     return true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     tx.Rollback();
-                    Console.WriteLine(ex);
                     return false;
                 }
             }

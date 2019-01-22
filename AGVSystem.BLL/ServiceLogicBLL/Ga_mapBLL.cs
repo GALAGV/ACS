@@ -16,6 +16,50 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         IO_MapDAL map = new Ga_mapDAL();
 
         /// <summary>
+        /// 导入地图
+        /// </summary>
+        /// <param name="MapText"></param>
+        /// <returns></returns>
+        public bool agvMap_Tolead(string MapText)
+        {
+           return map.MapTolead(MapText);
+        }
+
+        /// <summary>
+        /// 导出地图信息
+        /// </summary>
+        /// <param name="TableName"></param>
+        /// <param name="Db"></param>
+        /// <returns></returns>
+        public string ExportMySqlTables(string TableName, string Db)
+        {
+            return map.ExportMySqlTable(TableName, Db);
+        }
+
+        /// <summary>
+        /// 导出地图配置逻辑
+        /// </summary>
+        /// <param name="MapTime"></param>
+        /// <param name="Db"></param>
+        /// <returns></returns>
+        public string ExportSettings(long MapTime, string Db)
+        {
+            return map.ExportSetting(MapTime, Db);
+        }
+
+        /// <summary>
+        /// 导出地图表
+        /// </summary>
+        /// <param name="TableName"></param>
+        /// <param name="Db"></param>
+        /// <param name="MapTime"></param>
+        /// <returns></returns>
+        public string ExportTableContents(string TableName, string Db, string MapTime)
+        {
+            return map.ExportTableContent(TableName, Db, MapTime);
+        }
+
+        /// <summary>
         /// 查询串口信息
         /// </summary>
         /// <param name="MapTime"></param>
@@ -33,6 +77,16 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         public MySqlDataReader MapArray()
         {
             return map.MapList();
+        }
+
+        /// <summary>
+        /// 删除地图
+        /// </summary>
+        /// <param name="MapTime"></param>
+        /// <returns></returns>
+        public bool RemoveMap(long MapTime)
+        {
+            return map.DeleteMap(MapTime);
         }
     }
 }
