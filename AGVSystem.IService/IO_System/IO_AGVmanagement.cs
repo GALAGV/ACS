@@ -34,13 +34,5 @@ namespace AGVSystem.IService.IO_System
         /// <param name="Time"></param>
         /// <returns></returns>
         List<Ga_PortInfo> agvGather(long Time);
-
-
-
-
-
-
-
-
     }
 }

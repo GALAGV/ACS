@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="AGVDLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\AGVDLL.dll</HintPath>
+      <HintPath>..\..\..\..\..\DLL\agvDllNewPoPort\AGV支持反向查询\AGVDLL.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="agvCommon\ConvertCode.cs" />
     <Compile Include="agvCommon\Encryption.cs" />
     <Compile Include="agvCommon\Md5.cs" />
     <Compile Include="agvCommon\WriteLog.cs" />

@@ -11,20 +11,11 @@ namespace AGVSystem.IService.IO_DAL
     /// </summary>
     public interface IO_agvDAL
     {
-
         /// <summary>
         /// 查询所有AGV编号
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>j
         List<int> AGVArray(long MapTime);
-
-
-
-
-
-
-
-
     }
 }

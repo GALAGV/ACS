@@ -27,9 +27,7 @@ namespace AGVSystem.Infrastructure.agvCommon
                 //格式后的字符是小写的字母
                 //如果使用大写（X）则格式后的字符是大写字符
                 pwd = pwd + s[i].ToString("X");
-
             }
-
             return pwd;
         }
     }
