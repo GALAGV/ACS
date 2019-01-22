@@ -61,5 +61,12 @@ namespace AGVSystem.IService.IO_DAL
         /// <returns></returns>
         bool DeleteMap(long MapTime);
 
+        /// <summary>
+        /// 导入地图
+        /// </summary>
+        /// <param name="MapText"></param>
+        /// <returns></returns>
+        bool MapTolead(string MapText);
+
     }
 }

@@ -70,6 +70,9 @@
     <Compile Include="APP_UI\Map\CompileMap.xaml.cs">
       <DependentUpon>CompileMap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="APP_UI\Map\MapEdit.xaml.cs">
+      <DependentUpon>MapEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="APP_UI\Setting\SettingForm.xaml.cs">
       <DependentUpon>SettingForm.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="APP_UI\Map\MapEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="APP_UI\Setting\SettingForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -129,26 +136,28 @@
     <Resource Include="image\send.png" />
     <Resource Include="image\COM.png" />
     <Resource Include="image\message.png" />
-    <Resource Include="image\区域.png" />
-    <Resource Include="image\半圆.png" />
+    <Resource Include="image\area.png" />
+    <Resource Include="image\semicircle.png" />
     <Resource Include="image\start1.png" />
     <Resource Include="image\start.png" />
     <Resource Include="image\map.png" />
     <Resource Include="image\restoration.png" />
     <Resource Include="image\手掌.png" />
     <Resource Include="image\hand.png" />
-    <Resource Include="image\折线.png" />
+    <Resource Include="image\brokenLine.png" />
     <Resource Include="image\shrink.png" />
     <Resource Include="image\Magnify.png" />
     <Resource Include="image\文件.png" />
-    <Resource Include="image\文字.png" />
+    <Resource Include="image\Text.png" />
     <Resource Include="image\智能.png" />
-    <Resource Include="image\标志.png" />
-    <Resource Include="image\直线.png" />
+    <Resource Include="image\sign.png" />
+    <Resource Include="image\line.png" />
     <Resource Include="image\equipment.png" />
     <Resource Include="image\返回.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="image\grab.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AGVSystem.APP\AGVSystem.APP.csproj">
       <Project>{ee2914fa-0702-4d89-9145-22397eb04c41}</Project>
@@ -170,6 +179,15 @@
       <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
       <Name>AGVSystem.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\Magnifying.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\magnifying_.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\复原.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

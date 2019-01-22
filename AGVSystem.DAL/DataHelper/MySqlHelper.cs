@@ -241,10 +241,9 @@ namespace AGVSystem.DAL
                     tx.Commit();
                     return true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     tx.Rollback();
-                    Console.WriteLine(ex);
                     return false;
                 }
             }

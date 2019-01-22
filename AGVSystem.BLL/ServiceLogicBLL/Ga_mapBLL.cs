@@ -16,6 +16,16 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         IO_MapDAL map = new Ga_mapDAL();
 
         /// <summary>
+        /// 导入地图
+        /// </summary>
+        /// <param name="MapText"></param>
+        /// <returns></returns>
+        public bool agvMap_Tolead(string MapText)
+        {
+           return map.MapTolead(MapText);
+        }
+
+        /// <summary>
         /// 导出地图信息
         /// </summary>
         /// <param name="TableName"></param>

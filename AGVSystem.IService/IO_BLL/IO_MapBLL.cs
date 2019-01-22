@@ -29,6 +29,14 @@ namespace AGVSystem.IService.IO_BLL
         /// <returns></returns>
         bool RemoveMap(long MapTime);
 
+
+        /// <summary>
+        /// 导入地图
+        /// </summary>
+        /// <param name="MapText"></param>
+        /// <returns></returns>
+        bool agvMap_Tolead(string MapText);
+
         /// <summary>
         /// 导出地图配置逻辑
         /// </summary>

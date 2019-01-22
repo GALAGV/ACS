@@ -242,6 +242,21 @@ namespace AGVSystem.DAL.DataAccess
             return Delstr + insertSqlText.ToString();
         }
 
-
+        /// <summary>
+        /// 导入地图数据
+        /// </summary>
+        /// <param name="MapText"></param>
+        /// <returns></returns>
+        public bool MapTolead(string MapText)
+        {
+            try
+            {
+                return MySqlHelper.ExecuteSqlTran(new List<string>() { MapText });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

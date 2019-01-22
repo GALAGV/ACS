@@ -80,8 +80,8 @@ namespace AGVSystem.Model.Ga_agvModels
         /// <summary>
         /// 创建时间
         /// </summary>
-        private long createTime;
-        public long CreateTime
+        private string createTime;
+        public string CreateTime
         {
             get { return createTime; }
             set

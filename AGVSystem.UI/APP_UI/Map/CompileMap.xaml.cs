@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using AGVSystem.IService.IO_System;
 using AGVSystem.APP.agv_Map;
 using AGVSystem.Model.Ga_agvModels;
+using AGVSystem.Infrastructure.agvCommon;
+using System.IO;
 
 namespace AGVSystem.UI.APP_UI.Map
 {
@@ -35,20 +37,12 @@ namespace AGVSystem.UI.APP_UI.Map
         List<Ga_Map> GetMaps = new List<Ga_Map>(); //显示数据源
 
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-
         public void Compile()
         {
             GetMaps= mapService.GetMapRegulate();
             TabSerialPortData.DataContext = GetMaps;
             TabSerialPortData.AutoGenerateColumns = false;
         }
-
-
 
         /// <summary>
         /// 导出
@@ -66,7 +60,7 @@ namespace AGVSystem.UI.APP_UI.Map
             sfd.FileName = "(" + ga_Map.Name + ")" + DateTime.Now.ToString("yyyyMMdd");
             if (sfd.ShowDialog() == true)
             {
-                if (mapService.Export_Map(ga_Map.CreateTime, sfd.FileName))
+                if (mapService.Export_Map(UTC.ConvertDateTimeLong(Convert.ToDateTime(ga_Map.CreateTime)), sfd.FileName))
                 {
                     GetMaps.ForEach(x => x.IsSelected = false); //取消选择
                     MessageBox.Show("导出成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Asterisk, MessageBoxResult.No);
@@ -125,7 +119,66 @@ namespace AGVSystem.UI.APP_UI.Map
         /// <param name="e"></param>
         private void DeleteMap_Click(object sender, RoutedEventArgs e)
         {
+            if ((GetMaps.Where(a => a.IsSelected).ToList()).Count.Equals(0))
+            {
+                MessageBox.Show("请选择需要操作的列表项！", "提示", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
+                return;
+            }
+            MessageBoxResult result = MessageBox.Show("确定删除吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (result == MessageBoxResult.Yes)
+            {
+                if (mapService.Delete_Map(GetMaps.Where(a => a.IsSelected).ToList()) == true)
+                {
+                    GetMaps = mapService.GetMapRegulate();
+                    TabSerialPortData.DataContext = GetMaps;
+                    MessageBox.Show("删除成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
+                }
+            }
 
+        }
+
+
+
+        /// <summary>
+        /// 导入地图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WriteMap_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".tll";
+            dlg.Filter = "地图信息文件|*.tll";
+            if (dlg.ShowDialog() == true)
+            {
+                string sqlText = File.ReadAllText(dlg.FileName);
+                if (mapService.AGV_MapTolead(sqlText) == true)
+                {
+                    GetMaps = mapService.GetMapRegulate();
+                    TabSerialPortData.DataContext = GetMaps;
+                    MessageBox.Show("导入成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("导入失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 编辑地图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditMap_Click(object sender, RoutedEventArgs e)
+        {
+            Ga_Map ga_Map = SelectMap();
+            if (ga_Map == null)
+                return;
+
+            MapEdit map = new MapEdit(ga_Map);
+            map.Show();
+            this.Close();
         }
     }
 }

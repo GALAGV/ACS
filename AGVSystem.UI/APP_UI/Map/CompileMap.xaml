@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Map"
         mc:Ignorable="d"
-        Title="CompileMap"  Height="450" Width="890" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="CompileMap"  Height="450" Width="890" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" >
     <Window.Resources>
         <Style x:Key="FontAwesome">
             <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Styles/fonts/#FontAwesome" />
@@ -46,7 +46,7 @@
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn  Width="0.3*">
+                        <DataGridTemplateColumn  Width="0.23*">
                             <DataGridTemplateColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <CheckBox  x:Name="AllCkek" Click="AllCkek_Click"></CheckBox>
@@ -117,7 +117,7 @@
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button  Grid.Row="1" Height="30" Margin="25,5,25,5" BorderBrush="#adadad" >
+                    <Button  Grid.Row="1" Height="30" Margin="25,5,25,5" BorderBrush="#adadad" Name="EditMap"  Click="EditMap_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xf044;" FontSize="18" Style="{DynamicResource FontAwesome}" />
@@ -133,7 +133,7 @@
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button  Grid.Row="3" Height="30" Margin="25,5,25,5" BorderBrush="#adadad">
+                    <Button  Grid.Row="3" Height="30" Margin="25,5,25,5" BorderBrush="#adadad"  Name="WriteMap" Click="WriteMap_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xf01a;" FontSize="18" Style="{DynamicResource FontAwesome}" />
