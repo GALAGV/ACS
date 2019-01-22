@@ -12,6 +12,7 @@ using AGVSystem.Model.Ga_agvModels;
 using MySql.Data.MySqlClient;
 using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.Model.LogicData;
+using System.IO.Ports;
 
 namespace AGVSystem.APP.agv_System
 {
@@ -86,32 +87,45 @@ namespace AGVSystem.APP.agv_System
             MySqlDataReader Read = MapBLL.ListDevice(Time);
             while (Read.Read())
             {
-                portInfos.Add(
-                    new Ga_PortInfo()
-                    {
-                        ComNumber = Convert.ToInt32(Read["Com"].ToString().Trim()),
-                        ComStatic = "离线"
-                    });
+                string Port_type = string.Empty;
                 if (Read["Agv"].ToString() == "Button")
                 {
-                    //PortInfo.buttonPort.Add(new SerialPort());
+                    PortInfo.buttonPort.Add(new SerialPort());
                     PortInfo.buttonCom.Add(Convert.ToInt32(Read["Com"].ToString()));
                     PortInfo.buttonBaud.Add(Convert.ToInt32(Read["Baud"].ToString()));
                     PortInfo.buttonStr.Add("Button");
+                    Port_type = "按钮";
                 }
                 else if (Read["Agv"].ToString() == "Charge")
                 {
-                    //PortInfo.chargePort.Add(new SerialPort());
+                    PortInfo.chargePort.Add(new SerialPort());
                     PortInfo.chargeCom.Add(Convert.ToInt32(Read["Com"].ToString()));
                     PortInfo.chargeBaud.Add(Convert.ToInt32(Read["Baud"].ToString()));
                     PortInfo.chargeStr.Add("Charge");
+                    Port_type = "充电机";
+                }
+                else if (Read["Agv"].ToString() == "Plc")
+                {
+                    PortInfo.chargePort.Add(new SerialPort());
+                    PortInfo.plcCom.Add(Convert.ToInt32(Read["Com"].ToString()));
+                    PortInfo.plcBaud.Add(Convert.ToInt32(Read["Baud"].ToString()));
+                    PortInfo.plcStr.Add("Plc");
+                    Port_type = "PLC";
                 }
                 else
                 {
                     PortInfo.AGVCom.Add(Convert.ToInt32(Read["Com"].ToString()));
                     PortInfo.Baud.Add(Convert.ToInt32(Read["Baud"].ToString()));
                     PortInfo.agv.Add((Read["Agv"].ToString()));
+                    Port_type = "AGV";
                 }
+                portInfos.Add(
+                    new Ga_PortInfo()
+                    {
+                        ComNumber = "COM" + Read["Com"].ToString().Trim(),
+                        ComPortType = Port_type,
+                        ComStatic = "关闭"
+                    });
             }
             Read.Close();
             return portInfos;

@@ -12,9 +12,9 @@ namespace AGVSystem.DAL
 {
     public class MySqlHelper
     {
-        public static string connectionString = ConfigurationManager.ConnectionStrings["MySQL"].ConnectionString;
+        public static string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
 
-        ////存储过程
+        //存储过程
         public static DataTable ExecuteDataTableCommand(string CommandText)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))

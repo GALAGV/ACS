@@ -16,6 +16,13 @@ namespace AGVSystem.IService.IO_System
         /// </summary>
         /// <returns></returns>
         List<Ga_Map> GetMapRegulate();
-        
+
+        /// <summary>
+        /// 导出agv地图
+        /// </summary>
+        /// <returns></returns>
+        bool Export_Map(long UTCTime, string FileName);
+
+
     }
 }

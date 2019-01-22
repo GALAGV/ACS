@@ -6,7 +6,7 @@ namespace AGVSystem.Infrastructure.agvCommon
 {
     public class Encryption
     {
-        private static string encryptKey = "SHGALAXIS_201801_AJ_automation";
+        private static string encryptKey = "SHGALAXIS_2018_AJ_automation";
 
         //默认密钥向量
         private static byte[] Keys = { 0x41, 0x72, 0x65, 0x79, 0x6F, 0x75, 0x6D, 0x79, 0x53, 0x6E, 0x6F, 0x77, 0x6D, 0x61, 0x6E, 0x3F };

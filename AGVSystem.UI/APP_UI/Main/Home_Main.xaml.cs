@@ -44,6 +44,7 @@ namespace AGVSystem.UI.APP_UI.Main
         {
             TabAgvMoveInfo(1535037182);
             AgvInfo();
+            LoadComInfo(1535037182);
         }
 
         /// <summary>
@@ -54,6 +55,12 @@ namespace AGVSystem.UI.APP_UI.Main
             SerialPortData.DataContext = Get_AGVmanagement.agvGather(Time);
             SerialPortData.AutoGenerateColumns = false;
         }
+
+
+
+
+
+
 
         /// <summary>
         /// 显示所有AGV初始信息

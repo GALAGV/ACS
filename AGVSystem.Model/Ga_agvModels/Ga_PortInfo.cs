@@ -14,7 +14,12 @@ namespace AGVSystem.Model.Ga_agvModels
         /// <summary>
         /// 串口编号
         /// </summary>
-        public int ComNumber { get; set; }
+        public string ComNumber { get; set; }
+
+        /// <summary>
+        /// 串口类型
+        /// </summary>
+        public string ComPortType { get; set; }
 
         /// <summary>
         /// 串口状态

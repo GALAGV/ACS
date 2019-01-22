@@ -9,6 +9,12 @@ namespace AGVSystem.Infrastructure.agvCommon
 {
    public class WriteLog
     {
+        /// <summary>
+        /// 写日志
+        /// </summary>
+        /// <param name="DireName">文件夹名称</param>
+        /// <param name="LogName">文件名称</param>
+        /// <param name="LogInfo">日志内容</param>
         public static void writeLogInfo(string DireName, string LogName, string LogInfo)
         {
             if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName))
