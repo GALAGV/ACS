@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace AGVSystem.Model.Ga_agvModels
 {
@@ -12,6 +7,9 @@ namespace AGVSystem.Model.Ga_agvModels
     /// </summary>
     public class Ga_Map : INotifyPropertyChanged
     {
+
+        public int ID { get; set; }
+
         private bool isSelected = false;
 
         public bool IsSelected

@@ -2,12 +2,7 @@
 using AGVSystem.IService.IO_BLL;
 using AGVSystem.IService.IO_DAL;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGVSystem.BLL.ServiceLogicBLL
 {
@@ -23,6 +18,16 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         public bool agvMap_Tolead(string MapText)
         {
            return map.MapTolead(MapText);
+        }
+
+        /// <summary>
+        /// 查询地图信息
+        /// </summary>
+        /// <param name="UTCTime"></param>
+        /// <returns></returns>
+        public DataTable defaultMapBLL(long UTCTime)
+        {
+            return map.defaultMapDAL(UTCTime);
         }
 
         /// <summary>
@@ -59,6 +64,21 @@ namespace AGVSystem.BLL.ServiceLogicBLL
             return map.ExportTableContent(TableName, Db, MapTime);
         }
 
+        public MySqlDataReader GetWidget(string Times)
+        {
+            return map.widgetArrlist(Times);
+        }
+
+        /// <summary>
+        /// 查询线路信息
+        /// </summary>
+        /// <param name="Times"></param>
+        /// <returns></returns>
+        public MySqlDataReader LinelistArrer(string Times)
+        {
+            return map.LineData(Times);
+        }
+
         /// <summary>
         /// 查询串口信息
         /// </summary>
@@ -79,6 +99,21 @@ namespace AGVSystem.BLL.ServiceLogicBLL
             return map.MapList();
         }
 
+        public DataTable Map_Setting()
+        {
+            return map.Setting();
+        }
+
+        /// <summary>
+        /// 查询所有信标数据
+        /// </summary>
+        /// <param name="exls"></param>
+        /// <returns></returns>
+        public MySqlDataReader RataTable(string exls)
+        {
+           return map.GetMapTags(exls);
+        }
+
         /// <summary>
         /// 删除地图
         /// </summary>
@@ -88,5 +123,7 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         {
             return map.DeleteMap(MapTime);
         }
+
+
     }
 }

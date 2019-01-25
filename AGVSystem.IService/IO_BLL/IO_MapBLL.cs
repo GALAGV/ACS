@@ -1,10 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGVSystem.IService.IO_BLL
 {
@@ -62,6 +57,43 @@ namespace AGVSystem.IService.IO_BLL
         /// <param name="MapTime"></param>
         /// <returns></returns>
         string ExportTableContents(string TableName, string Db, string MapTime);
+
+
+        /// <summary>
+        ///加载所有Tag
+        /// </summary>
+        /// <param name="exls"></param>
+        /// <returns></returns>
+        MySqlDataReader RataTable(string exls);
+
+        /// <summary>
+        /// 查询线路信息
+        /// </summary>
+        /// <param name="Times"></param>
+        /// <returns></returns>
+        MySqlDataReader LinelistArrer(string Times);
+
+        /// <summary>
+        /// 查询区域文字信息
+        /// </summary>
+        /// <param name="Times"></param>
+        /// <returns></returns>
+        MySqlDataReader  GetWidget(string Times);
+
+
+        /// <summary>
+        /// 查询默认地图数据
+        /// </summary>
+        /// <returns></returns>
+        DataTable Map_Setting();
+
+
+        /// <summary>
+        /// 查询地图数据
+        /// </summary>
+        /// <param name="UTCTime"></param>
+        /// <returns></returns>
+        DataTable defaultMapBLL(long UTCTime);
 
     }
 }

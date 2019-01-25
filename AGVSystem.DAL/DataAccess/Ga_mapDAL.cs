@@ -2,10 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using AGVSystem.DAL.DataHelper;
 
 namespace AGVSystem.DAL.DataAccess
 {
@@ -19,7 +18,7 @@ namespace AGVSystem.DAL.DataAccess
         public MySqlDataReader LoadDevice(long MapTime)
         {
             string sql = string.Format("SELECT `Com`, `Baud`, `Agv` FROM agv.`device{0}`", MapTime);
-            return MySqlHelper.ExecuteReader(sql);
+            return MySQLHelper.ExecuteReader(sql);
         }
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace AGVSystem.DAL.DataAccess
         /// <returns></returns>
         public MySqlDataReader MapList()
         {
-            return MySqlHelper.ExecuteReader("SELECT * FROM `agv`.`map`");
+            return MySQLHelper.ExecuteReader("SELECT * FROM `agv`.`map`");
         }
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace AGVSystem.DAL.DataAccess
         public bool DeleteMap(long MapTime)
         {
             string sql = string.Format("DELETE FROM agv.`map` WHERE `CreateTime` = '{0}'; DROP TABLE agv.`tag{0}`; DROP TABLE agv.`widget{0}`; DROP TABLE agv.`line{0}`; DROP TABLE agv.`route{0}`; DROP TABLE agv.`device{0}`;", MapTime);
-            return MySqlHelper.ExecuteNonQuery(sql) > 0 ? true : false;
+            return MySQLHelper.ExecuteNonQuery(sql) > 0 ? true : false;
         }
 
         /// <summary>
@@ -70,7 +69,7 @@ namespace AGVSystem.DAL.DataAccess
             sqlText.Append(createSql);
             sqlText.Append(" (");
             string sql = string.Format("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{0}' AND TABLE_SCHEMA = '{1}'", TableName, Db);
-            MySqlDataReader mr = MySqlHelper.ExecuteReader(sql);
+            MySqlDataReader mr = MySQLHelper.ExecuteReader(sql);
             string keyStr = "";
             int colCount = 0;
             while (mr.Read())
@@ -108,7 +107,7 @@ namespace AGVSystem.DAL.DataAccess
 
             sql = string.Format("SELECT * FROM {0}.`{1}`", Db, TableName);
 
-            mr = MySqlHelper.ExecuteReader(sql);
+            mr = MySQLHelper.ExecuteReader(sql);
 
             string Delstr = string.Format("DELETE FROM {0}.`{1}`;", Db, TableName);
             StringBuilder insertSqlText = new StringBuilder(Delstr);
@@ -175,7 +174,7 @@ namespace AGVSystem.DAL.DataAccess
         {
             StringBuilder sqlText = new StringBuilder();
             string sql = string.Format("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{0}' AND TABLE_SCHEMA = '{1}'", TableName, Db);
-            MySqlDataReader mr = MySqlHelper.ExecuteReader(sql);
+            MySqlDataReader mr = MySQLHelper.ExecuteReader(sql);
             int colCount = 0;
             while (mr.Read())
             {
@@ -186,7 +185,7 @@ namespace AGVSystem.DAL.DataAccess
             mr.Close();
 
             sql = string.Format("SELECT * FROM {0}.`{1}` WHERE `CreateTime` = '{2}'", Db, TableName, MapTime);
-            mr = MySqlHelper.ExecuteReader(sql); ;
+            mr = MySQLHelper.ExecuteReader(sql); ;
 
             string Delstr = string.Format("DELETE FROM {0}.`{1}` WHERE `CreateTime` = '{2}' ;", Db, TableName, MapTime);
             StringBuilder insertSqlText = new StringBuilder();
@@ -251,12 +250,61 @@ namespace AGVSystem.DAL.DataAccess
         {
             try
             {
-                return MySqlHelper.ExecuteSqlTran(new List<string>() { MapText });
+                return MySQLHelper.ExecuteSqlTran(new List<string>() { MapText });
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// 载入所有Tag
+        /// </summary>
+        /// <param name="exls"></param>
+        /// <returns></returns>
+        public MySqlDataReader GetMapTags(string exls)
+        {
+            return MySQLHelper.ExecuteReader("SELECT * FROM   `agv`.`tag" + exls + "` order by (TagName+0)");
+        }
+
+       /// <summary>
+       /// 查询线路数据
+       /// </summary>
+       /// <param name="Times"></param>
+       /// <returns></returns>
+        public MySqlDataReader LineData(string Times)
+        {
+            return MySQLHelper.ExecuteReader("SELECT * FROM `agv`.`line" + Times + "`");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Times"></param>
+        /// <returns></returns>
+        public MySqlDataReader widgetArrlist(string Times)
+        {
+           return MySQLHelper.ExecuteReader("SELECT * FROM  `agv`.`widget" + Times + "`  order by WidgetNo");
+        }
+
+        /// <summary>
+        /// 查询默认地图数据
+        /// </summary>
+        /// <returns></returns>
+        public DataTable Setting()
+        {
+            return MySQLHelper.ExecuteDataTable("SELECT * FROM `agv`.`setting`");
+        }
+
+        /// <summary>
+        /// 查询地图数据
+        /// </summary>
+        /// <param name="UTCTime"></param>
+        /// <returns></returns>
+        public DataTable defaultMapDAL(long UTCTime)
+        {
+            return MySQLHelper.ExecuteDataTable($"SELECT * FROM `agv`.`map` WHERE CreateTime={UTCTime}");
         }
     }
 }

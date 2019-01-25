@@ -1,14 +1,11 @@
 ﻿using AGVSystem.IService.IO_DAL;
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AGVSystem.DAL.DataHelper;
 
 namespace AGVSystem.DAL.DataAccess
 {
-   public class Ga_agvDAL: IO_agvDAL
+    public class Ga_agvDAL: IO_agvDAL
     {
 
         #region 查询AGV信息
@@ -18,11 +15,11 @@ namespace AGVSystem.DAL.DataAccess
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>
-        public List<int> AGVArray(long MapTime)
+        public List<string> AGVArray(long MapTime)
         {
-            List<int> agvNumList = new List<int>();
+            List<string> agvNumList = new List<string>();
             string sql = string.Format("SELECT `AGV` FROM agv.device{0}", MapTime);
-            MySqlDataReader mr = MySqlHelper.ExecuteReader(sql);
+            MySqlDataReader mr = MySQLHelper.ExecuteReader(sql);
             while (mr.Read())
             {
                 string agvStr = (mr.IsDBNull(0) ? "" : mr.GetString(0));
@@ -31,7 +28,7 @@ namespace AGVSystem.DAL.DataAccess
                     string[] agvArray = agvStr.Split(',');
                     for (int i = 0; i < agvArray.Length; i++)
                     {
-                        agvNumList.Add(Convert.ToInt32(agvArray[i]));
+                        agvNumList.Add(agvArray[i]);
                     }
                 }
             }

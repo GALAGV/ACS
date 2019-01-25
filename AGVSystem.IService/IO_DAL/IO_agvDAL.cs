@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+
 
 namespace AGVSystem.IService.IO_DAL
 {
@@ -16,6 +13,6 @@ namespace AGVSystem.IService.IO_DAL
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>j
-        List<int> AGVArray(long MapTime);
+        List<string> AGVArray(long MapTime);
     }
 }

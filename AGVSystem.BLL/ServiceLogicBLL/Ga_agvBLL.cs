@@ -1,11 +1,7 @@
 ﻿using AGVSystem.DAL.DataAccess;
 using AGVSystem.IService.IO_BLL;
 using AGVSystem.IService.IO_DAL;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGVSystem.BLL.ServiceLogicBLL
 {
@@ -18,7 +14,7 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>
-        List<int> IO_agvBLL.AGVNumList(long MapTime)
+        List<string> IO_agvBLL.AGVNumList(long MapTime)
         {
             return GetABB.AGVArray(MapTime);
         }

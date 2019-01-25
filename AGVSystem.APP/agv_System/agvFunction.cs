@@ -1,13 +1,7 @@
 ﻿using AGVSystem.IService.IO_System;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using AGVSystem.Model;
 using AGVSystem.IService.IO_BLL;
-using AGVSystem.BLL;
 using AGVSystem.Model.Ga_agvModels;
 using MySql.Data.MySqlClient;
 using AGVSystem.BLL.ServiceLogicBLL;
@@ -49,14 +43,14 @@ namespace AGVSystem.APP.agv_System
         /// <returns></returns>
         public List<Ga_agv> AgvInfo(long Time, ref int selAgv)
         {
-            List<int> Agvlist = GetAgvBLL.AGVNumList(Time);
+            List<string> Agvlist = GetAgvBLL.AGVNumList(Time);
             List<Ga_agv> Ga_agvNum = new List<Ga_agv>();
             for (int i = 0; i < Agvlist.Count; i++)
             {
                 Ga_agvNum.Add(
                        new Ga_agv()
                        {
-                           agvNumber = Agvlist[i],
+                           agvNumber = Convert.ToInt32(Agvlist[i]),
                            agvStatic = "离线",
                            Dir = "",
                            Hook = "",
@@ -71,7 +65,7 @@ namespace AGVSystem.APP.agv_System
                        });
                 MainInfo.agvNo.Add(Agvlist[i]);
                 if (i.Equals(0))
-                    selAgv = Agvlist[0];
+                    selAgv = Convert.ToInt32(Agvlist[0]);
             }
             return Ga_agvNum;
         }

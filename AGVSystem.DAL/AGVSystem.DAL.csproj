@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\Ga_agvDAL.cs" />
     <Compile Include="DataAccess\Ga_mapDAL.cs" />
-    <Compile Include="DataHelper\MySqlHelper.cs" />
+    <Compile Include="DataHelper\MySQLHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

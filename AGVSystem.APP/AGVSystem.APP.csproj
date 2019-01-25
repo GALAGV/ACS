@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="agv_Map\agvMapRegulate.cs" />
+    <Compile Include="agv_Map\MapInstrument.cs" />
     <Compile Include="agv_Map\Painting.cs" />
     <Compile Include="agv_System\agvFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +71,9 @@
       <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
       <Name>AGVSystem.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

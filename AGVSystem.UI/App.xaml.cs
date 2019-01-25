@@ -68,7 +68,7 @@ namespace AGVSystem.UI
                 }
                 errorMsg += String.Format("{0}\n{1}", ex.Message, ex.StackTrace);
                 WriteLog.writeLogInfo("Error", "Log", errorMsg);//写入日志
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message,"错误",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
     }

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Data;
-using AGVSystem.Model;
 using AGVSystem.Model.Ga_agvModels;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace AGVSystem.IService.IO_System
 {
@@ -41,18 +34,13 @@ namespace AGVSystem.IService.IO_System
 
 
         /// <summary>
-        ///绘制X轴Y轴刻度
+        /// 查询配置参数
         /// </summary>
-        /// <param name="mainPanel"></param>
-        /// <param name="mainPane2"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="brush"></param>
-        /// <param name="width"></param>
-        void DrawScale(Canvas mainPanel, Canvas mainPane2, double x, double y, Brush brush, double width);
+        /// <returns></returns>
+        DataTable setting();
 
 
-
+        DataTable defaultMap(long Time);
 
 
     }

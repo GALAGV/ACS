@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AGVSystem.DAL.DataHelper;
+using MySql.Data.MySqlClient;
 
-namespace AGVSystem.Infrastructure.agvCommon
+namespace AGVSystem.DispatchLogic
 {
+
     public class FindRfid
     {
         /// <summary>
@@ -18,9 +16,8 @@ namespace AGVSystem.Infrastructure.agvCommon
         {
             string sql = string.Format("SELECT `TagName` FROM agv.`tag{0}`", MapTime.ToString());
 
-            MySqlCommand mc = new MySqlCommand(sql, DataBase.Conn);
+            MySqlDataReader mr = MySQLHelper.ExecuteReader(sql);
 
-            MySqlDataReader mr = mc.ExecuteReader();
             TagNum = 0;
             while (mr.Read())
             {
@@ -46,8 +43,7 @@ namespace AGVSystem.Infrastructure.agvCommon
                 }
             }
             sql = string.Format("SELECT `Tag1`,`Tag2` FROM agv.`line{0}`", MapTime.ToString());
-            mc.CommandText = sql;
-            mr = mc.ExecuteReader();
+            mr = MySQLHelper.ExecuteReader(sql);
             while (mr.Read())
             {
                 int i = int.Parse(mr.GetString(0).Substring(2));

@@ -8,9 +8,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace AGVSystem.DAL
+namespace AGVSystem.DAL.DataHelper
 {
-    public class MySqlHelper
+    public class MySQLHelper
     {
         public static string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
 

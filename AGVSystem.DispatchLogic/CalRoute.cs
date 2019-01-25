@@ -1,5 +1,11 @@
-﻿using System;
+﻿using AGVDLL;
+using AGVSystem.Infrastructure.agvCommon;
+using AGVSystem.Model.LogicData;
+using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -117,9 +123,9 @@ namespace AGVSystem.DispatchLogic
                 //}
             }
 
-            ConnForm.dkst = dkSt;
-            ConnForm.stInfoList = StList;
-            ChargeForm.ciList = chargeStList;
+            //ConnForm.dkst = dkSt;
+            //ConnForm.stInfoList = StList;
+            //ChargeForm.ciList = chargeStList;
 
             for (int i = 0; i < avoidStop.Count; i++)
             {
@@ -379,25 +385,25 @@ namespace AGVSystem.DispatchLogic
                 }
             }
 
-            dkSt.agvGet = DrGet;
-            dkSt.agvReqOut = ReqOut;
-            StList[0].agvGet = AagvGet;
-            StList[1].agvGet = BagvGet;
-            StList[0].agvEm = AagvEm;
-            StList[1].agvEm = BagvEm;
+            //dkSt.agvGet = DrGet;
+            //dkSt.agvReqOut = ReqOut;
+            //StList[0].agvGet = AagvGet;
+            //StList[1].agvGet = BagvGet;
+            //StList[0].agvEm = AagvEm;
+            //StList[1].agvEm = BagvEm;
             //===========================2017-3-12-调试301、302做的注释，将来从flash调路径要使用的===============
-            if (chargeSt1 == 0)
-            {
-                chargeStList[0].ChargeCommand = "0";
-            }
-            if (chargeSt2 == 0)
-            {
-                chargeStList[1].ChargeCommand = "0";
-            }
-            if (chargeSt3 == 0)
-            {
-                chargeStList[2].ChargeCommand = "0";
-            }
+            //if (chargeSt1 == 0)
+            //{
+            //    chargeStList[0].ChargeCommand = "0";
+            //}
+            //if (chargeSt2 == 0)
+            //{
+            //    chargeStList[1].ChargeCommand = "0";
+            //}
+            //if (chargeSt3 == 0)
+            //{
+            //    chargeStList[2].ChargeCommand = "0";
+            //}
 
 
             for (int i = 0; i < agvCount; i++)
@@ -497,16 +503,16 @@ namespace AGVSystem.DispatchLogic
 
                 if (agvStatusList[i].rfidStatus == "33" && stationB1Start == 0 && !agvStatusList[i].IsRunning && agvStatusList[i].errorCode != 205)
                 {
-                    StList[0].agvGet = 1;
-                    if (StList[0].outCmd == 1)//A区是否可以出发
-                    {
-                        lock (agvBufferStart)
-                        {
-                            agvBufferStart[agvStatusList[i].carNum] = 1;
-                        }
-                        stationA2Start = agvStatusList[i].carNum;
-                        stationA++;
-                    }
+                    //StList[0].agvGet = 1;
+                    //if (StList[0].outCmd == 1)//A区是否可以出发
+                    //{
+                    //    lock (agvBufferStart)
+                    //    {
+                    //        agvBufferStart[agvStatusList[i].carNum] = 1;
+                    //    }
+                    //    stationA2Start = agvStatusList[i].carNum;
+                    //    stationA++;
+                    //}
 
                 }
 
@@ -521,16 +527,16 @@ namespace AGVSystem.DispatchLogic
 
                 if (agvStatusList[i].rfidStatus == "32" && stationA1Start == 0 && !agvStatusList[i].IsRunning && agvStatusList[i].errorCode != 205)
                 {
-                    StList[1].agvGet = 1;
-                    if (StList[1].outCmd == 1)//B区是否可以出发
-                    {
-                        lock (agvBufferStart)
-                        {
-                            agvBufferStart[agvStatusList[i].carNum] = 1;
-                        }
-                        stationB2Start = agvStatusList[i].carNum;
-                        stationB++;
-                    }
+                    //StList[1].agvGet = 1;
+                    //if (StList[1].outCmd == 1)//B区是否可以出发
+                    //{
+                    //    lock (agvBufferStart)
+                    //    {
+                    //        agvBufferStart[agvStatusList[i].carNum] = 1;
+                    //    }
+                    //    stationB2Start = agvStatusList[i].carNum;
+                    //    stationB++;
+                    //}
 
                 }
 
@@ -559,163 +565,163 @@ namespace AGVSystem.DispatchLogic
                     }
                 }
 
-                if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "DR#1#0" && dkSt.allowIn == 1 && dkSt.agvGet == 0 && !agvStatusList[i].IsRunning && agvStatusList[i].errorCode != 205)
-                {
-                    lock (agvBufferStart)
-                    {
-                        agvBufferStart[agvStatusList[i].carNum] = 1;
-                    }
-                }
+                //if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "DR#1#0" && dkSt.allowIn == 1 && dkSt.agvGet == 0 && !agvStatusList[i].IsRunning && agvStatusList[i].errorCode != 205)
+                //{
+                //    lock (agvBufferStart)
+                //    {
+                //        agvBufferStart[agvStatusList[i].carNum] = 1;
+                //    }
+                //}
 
-                if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "DR#1#1" && dkSt.agvPass == 1 && dkSt.allowOut == 1 && drOut == 0 && !agvStatusList[i].IsRunning && agvStatusList[i].errorCode != 205)
-                {
-                    lock (agvBufferStart)
-                    {
-                        agvBufferStart[agvStatusList[i].carNum] = 1;
-                    }
-                }
+                //if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "DR#1#1" && dkSt.agvPass == 1 && dkSt.allowOut == 1 && drOut == 0 && !agvStatusList[i].IsRunning && agvStatusList[i].errorCode != 205)
+                //{
+                //    lock (agvBufferStart)
+                //    {
+                //        agvBufferStart[agvStatusList[i].carNum] = 1;
+                //    }
+                //}
 
                 if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "CH#0#0" && chargeSt1 == 0 && !agvStatusList[i].IsRunning && agvStatusList[i].errorCode != 205)
                 {
-                    if ((chargeStList[0].InOutStation == "1" && chargeStList[0].Auto == "1") || !ChargeForm.chSt1Use)
-                    {
-                        lock (agvBufferStart)
-                        {
-                            agvBufferStart[agvStatusList[i].carNum] = 1;
-                        }
-                    }
+                    //if ((chargeStList[0].InOutStation == "1" && chargeStList[0].Auto == "1") || !ChargeForm.chSt1Use)
+                    //{
+                    //    lock (agvBufferStart)
+                    //    {
+                    //        agvBufferStart[agvStatusList[i].carNum] = 1;
+                    //    }
+                    //}
                 }
 
-                if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "CH#1#0" && agvStatusList[i].errorCode != 205)
-                {
-                    if (chargeSt2 == 0 && !agvStatusList[i].IsRunning)
-                    {
-                        if (((chargeStList[0].InOutStation == "1" && chargeStList[0].Auto == "1") || !ChargeForm.chSt1Use) && ((chargeStList[1].InOutStation == "1" && chargeStList[1].Auto == "1") || !ChargeForm.chSt2Use))
-                        {
-                            lock (agvBufferStart)
-                            {
-                                agvBufferStart[agvStatusList[i].carNum] = 1;
-                            }
-                            chargeSt2 = agvStatusList[i].carNum;
-                        }
+                //if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "CH#1#0" && agvStatusList[i].errorCode != 205)
+                //{
+                //    if (chargeSt2 == 0 && !agvStatusList[i].IsRunning)
+                //    {
+                //        if (((chargeStList[0].InOutStation == "1" && chargeStList[0].Auto == "1") || !ChargeForm.chSt1Use) && ((chargeStList[1].InOutStation == "1" && chargeStList[1].Auto == "1") || !ChargeForm.chSt2Use))
+                //        {
+                //            lock (agvBufferStart)
+                //            {
+                //                agvBufferStart[agvStatusList[i].carNum] = 1;
+                //            }
+                //            chargeSt2 = agvStatusList[i].carNum;
+                //        }
 
-                        lock (agvRelayClose)
-                        {
-                            agvRelayClose[agvStatusList[i].carNum] = 2;
-                        }
+                //        lock (agvRelayClose)
+                //        {
+                //            agvRelayClose[agvStatusList[i].carNum] = 2;
+                //        }
 
-                        if (agvRelayStatus[agvStatusList[i].carNum] == 0)//继电器断开
-                        {
-                            chargeStList[0].ChargeCommand = "0";
-                        }
-                    }
-                    else if (chargeSt2 != 0 && !agvStatusList[i].IsRunning)
-                    {
-                        chargeStList[0].ChargeCommand = "1";
-                        if (chargeStList[0].ChargeStatus != "1" && chargeStList[0].InOutStation == "2")
-                        {
-                            lock (agvRelayClose)
-                            {
-                                agvRelayClose[agvStatusList[i].carNum] = 1;
-                            }
-                        }
-                        else if (chargeStList[0].ChargeStatus == "1")
-                        {
-                            lock (agvRelayClose)
-                            {
-                                agvRelayClose[agvStatusList[i].carNum] = 0;
-                            }
-                        }
-                    }
-                }
+                //        if (agvRelayStatus[agvStatusList[i].carNum] == 0)//继电器断开
+                //        {
+                //            chargeStList[0].ChargeCommand = "0";
+                //        }
+                //    }
+                //    else if (chargeSt2 != 0 && !agvStatusList[i].IsRunning)
+                //    {
+                //        chargeStList[0].ChargeCommand = "1";
+                //        if (chargeStList[0].ChargeStatus != "1" && chargeStList[0].InOutStation == "2")
+                //        {
+                //            lock (agvRelayClose)
+                //            {
+                //                agvRelayClose[agvStatusList[i].carNum] = 1;
+                //            }
+                //        }
+                //        else if (chargeStList[0].ChargeStatus == "1")
+                //        {
+                //            lock (agvRelayClose)
+                //            {
+                //                agvRelayClose[agvStatusList[i].carNum] = 0;
+                //            }
+                //        }
+                //    }
+                //}
 
-                if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "CH#2#0" && agvStatusList[i].errorCode != 205)
-                {
-                    if (chargeSt3 == 0 && !agvStatusList[i].IsRunning)
-                    {
+                //if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "CH#2#0" && agvStatusList[i].errorCode != 205)
+                //{
+                //    if (chargeSt3 == 0 && !agvStatusList[i].IsRunning)
+                //    {
 
-                        if (((chargeStList[1].InOutStation == "1" && chargeStList[1].Auto == "1") || !ChargeForm.chSt2Use) && ((chargeStList[2].InOutStation == "1" && chargeStList[2].Auto == "1") || !ChargeForm.chSt3Use))
-                        {
-                            lock (agvBufferStart)
-                            {
-                                agvBufferStart[agvStatusList[i].carNum] = 1;
-                            }
-                            chargeSt3 = agvStatusList[i].carNum;
-                        }
+                //        if (((chargeStList[1].InOutStation == "1" && chargeStList[1].Auto == "1") || !ChargeForm.chSt2Use) && ((chargeStList[2].InOutStation == "1" && chargeStList[2].Auto == "1") || !ChargeForm.chSt3Use))
+                //        {
+                //            lock (agvBufferStart)
+                //            {
+                //                agvBufferStart[agvStatusList[i].carNum] = 1;
+                //            }
+                //            chargeSt3 = agvStatusList[i].carNum;
+                //        }
 
-                        lock (agvRelayClose)
-                        {
-                            agvRelayClose[agvStatusList[i].carNum] = 2;
-                        }
+                //        lock (agvRelayClose)
+                //        {
+                //            agvRelayClose[agvStatusList[i].carNum] = 2;
+                //        }
 
-                        if (agvRelayStatus[agvStatusList[i].carNum] == 0)//继电器断开
-                        {
-                            chargeStList[1].ChargeCommand = "0";
-                        }
-                    }
-                    else if (chargeSt3 != 0 && !agvStatusList[i].IsRunning)
-                    {
-                        chargeStList[1].ChargeCommand = "1";
-                        if (chargeStList[1].ChargeStatus != "1" && chargeStList[1].InOutStation == "2")
-                        {
-                            lock (agvRelayClose)
-                            {
-                                agvRelayClose[agvStatusList[i].carNum] = 1;
-                            }
-                        }
-                        else if (chargeStList[1].ChargeStatus == "1")
-                        {
-                            lock (agvRelayClose)
-                            {
-                                agvRelayClose[agvStatusList[i].carNum] = 0;
-                            }
-                        }
+                //        if (agvRelayStatus[agvStatusList[i].carNum] == 0)//继电器断开
+                //        {
+                //            chargeStList[1].ChargeCommand = "0";
+                //        }
+                //    }
+                //    else if (chargeSt3 != 0 && !agvStatusList[i].IsRunning)
+                //    {
+                //        chargeStList[1].ChargeCommand = "1";
+                //        if (chargeStList[1].ChargeStatus != "1" && chargeStList[1].InOutStation == "2")
+                //        {
+                //            lock (agvRelayClose)
+                //            {
+                //                agvRelayClose[agvStatusList[i].carNum] = 1;
+                //            }
+                //        }
+                //        else if (chargeStList[1].ChargeStatus == "1")
+                //        {
+                //            lock (agvRelayClose)
+                //            {
+                //                agvRelayClose[agvStatusList[i].carNum] = 0;
+                //            }
+                //        }
 
-                    }
-                }
+                //    }
+                //}
 
-                if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "CH#3#0" && agvStatusList[i].errorCode != 205)
-                {
-                    if (loadSt < 2 && !agvStatusList[i].IsRunning)
-                    {
-                        if ((chargeStList[2].InOutStation == "1" && chargeStList[2].Auto == "1") || !ChargeForm.chSt3Use)
-                        {
-                            lock (agvBufferStart)
-                            {
-                                agvBufferStart[agvStatusList[i].carNum] = 1;
-                            }
-                            loadSt = agvStatusList[i].carNum;
-                        }
+                //if (MainInfo.rfidStation.ContainsKey(agvStatusList[i].rfidStatus) && MainInfo.rfidStation[agvStatusList[i].rfidStatus] == "CH#3#0" && agvStatusList[i].errorCode != 205)
+                //{
+                //    if (loadSt < 2 && !agvStatusList[i].IsRunning)
+                //    {
+                //        if ((chargeStList[2].InOutStation == "1" && chargeStList[2].Auto == "1") || !ChargeForm.chSt3Use)
+                //        {
+                //            lock (agvBufferStart)
+                //            {
+                //                agvBufferStart[agvStatusList[i].carNum] = 1;
+                //            }
+                //            loadSt = agvStatusList[i].carNum;
+                //        }
 
-                        lock (agvRelayClose)
-                        {
-                            agvRelayClose[agvStatusList[i].carNum] = 2;
-                        }
+                //        lock (agvRelayClose)
+                //        {
+                //            agvRelayClose[agvStatusList[i].carNum] = 2;
+                //        }
 
-                        if (agvRelayStatus[agvStatusList[i].carNum] == 0)//继电器断开
-                        {
-                            chargeStList[2].ChargeCommand = "0";
-                        }
-                    }
-                    else if (loadSt != 0 && !agvStatusList[i].IsRunning)
-                    {
-                        chargeStList[2].ChargeCommand = "1";
-                        if (chargeStList[2].ChargeStatus != "1" && chargeStList[2].InOutStation == "2")
-                        {
-                            lock (agvRelayClose)
-                            {
-                                agvRelayClose[agvStatusList[i].carNum] = 1;
-                            }
-                        }
-                        else if (chargeStList[2].ChargeStatus == "1")
-                        {
-                            lock (agvRelayClose)
-                            {
-                                agvRelayClose[agvStatusList[i].carNum] = 0;
-                            }
-                        }
-                    }
-                }
+                //        if (agvRelayStatus[agvStatusList[i].carNum] == 0)//继电器断开
+                //        {
+                //            chargeStList[2].ChargeCommand = "0";
+                //        }
+                //    }
+                //    else if (loadSt != 0 && !agvStatusList[i].IsRunning)
+                //    {
+                //        chargeStList[2].ChargeCommand = "1";
+                //        if (chargeStList[2].ChargeStatus != "1" && chargeStList[2].InOutStation == "2")
+                //        {
+                //            lock (agvRelayClose)
+                //            {
+                //                agvRelayClose[agvStatusList[i].carNum] = 1;
+                //            }
+                //        }
+                //        else if (chargeStList[2].ChargeStatus == "1")
+                //        {
+                //            lock (agvRelayClose)
+                //            {
+                //                agvRelayClose[agvStatusList[i].carNum] = 0;
+                //            }
+                //        }
+                //    }
+                //}
 
                 if (agvRouteNameList[agvStatusList[i].carNum][0] == "" && agvStatusList[i].agvRouteNo != 0)
                 {
@@ -743,13 +749,13 @@ namespace AGVSystem.DispatchLogic
             bool dtNowBool = false;
             for (int i = 0; i < 6; i++)
             {
-                long stLong = long.Parse(TimerInfo.startTimeList[i].ToString("HHmmss"));
-                long etLong = long.Parse(TimerInfo.endTimeList[i].ToString("HHmmss"));
-                if (dtNowLong > stLong && dtNowLong < etLong && TimerInfo.useList[i] == 1)
-                {
-                    dtNowBool = true;
-                    break;
-                }
+                //long stLong = long.Parse(TimerInfo.startTimeList[i].ToString("HHmmss"));
+                //long etLong = long.Parse(TimerInfo.endTimeList[i].ToString("HHmmss"));
+                //if (dtNowLong > stLong && dtNowLong < etLong && TimerInfo.useList[i] == 1)
+                //{
+                //    dtNowBool = true;
+                //    break;
+                //}
             }
 
             if (dtNowBool && MainInfo.fixedTime != 0)
@@ -799,18 +805,18 @@ namespace AGVSystem.DispatchLogic
                     int resetInt = 1;//用来判断现在的时间是不是已经超过最晚的定时启动结束时间，1为是，0为否
                     for (int i = 0; i < 6; i++)
                     {
-                        long stLong = long.Parse(TimerInfo.startTimeList[i].ToString("HHmmss"));
-                        long interval = stLong - dtNowLong;
-                        long etLong = long.Parse(TimerInfo.endTimeList[i].ToString("HHmmss"));
-                        if (dtNowLong < etLong && TimerInfo.useList[i] == 1)
-                        {
-                            resetInt = 0;
-                        }
-                        if (TimerInfo.useList[i] == 1 && interval > 0 && interval < minInterval)
-                        {
-                            minInterval = interval;
-                            RecentStTime = TimerInfo.startTimeList[i];
-                        }
+                        //long stLong = long.Parse(TimerInfo.startTimeList[i].ToString("HHmmss"));
+                        //long interval = stLong - dtNowLong;
+                        //long etLong = long.Parse(TimerInfo.endTimeList[i].ToString("HHmmss"));
+                        //if (dtNowLong < etLong && TimerInfo.useList[i] == 1)
+                        //{
+                        //    resetInt = 0;
+                        //}
+                        //if (TimerInfo.useList[i] == 1 && interval > 0 && interval < minInterval)
+                        //{
+                        //    minInterval = interval;
+                        //    RecentStTime = TimerInfo.startTimeList[i];
+                        //}
 
                     }
 
@@ -950,7 +956,6 @@ namespace AGVSystem.DispatchLogic
                     }
                 }
             }
-            Console.WriteLine(RouteName[0]);
             rc = DrToRfidList(routeDr);
 
             agvRfidListHash[AgvNo] = rc;

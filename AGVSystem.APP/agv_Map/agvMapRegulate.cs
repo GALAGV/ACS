@@ -1,20 +1,13 @@
-﻿using AGVSystem.BLL;
-using AGVSystem.BLL.ServiceLogicBLL;
+﻿using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.IService.IO_BLL;
 using AGVSystem.IService.IO_System;
-using AGVSystem.Model;
 using AGVSystem.Model.Ga_agvModels;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AGVSystem.Infrastructure.agvCommon;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace AGVSystem.APP.agv_Map
 {
@@ -60,7 +53,7 @@ namespace AGVSystem.APP.agv_Map
                         Name = mySql["Name"].ToString(),
                         Width = Convert.ToDouble(mySql["Width"].ToString()),
                         Height = Convert.ToDouble(mySql["Height"].ToString()),
-
+                        ID = Convert.ToInt32(mySql["ID"].ToString()),
                         CreateTime = UTC.ConvertLongDateTime(long.Parse(mySql["CreateTime"].ToString())).ToString("yyyy-MM-dd HH:mm:ss")
                     });
             }
@@ -101,17 +94,17 @@ namespace AGVSystem.APP.agv_Map
         }
 
         /// <summary>
-        /// 绘制刻度
+        /// 查询配置参数
         /// </summary>
-        /// <param name="mainPanel"></param>
-        /// <param name="mainPane2"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="brush"></param>
-        /// <param name="width"></param>
-        public void DrawScale(Canvas mainPanel, Canvas mainPane2, double x, double y, Brush brush, double width)
+        /// <returns></returns>
+        public DataTable setting()
         {
-           
+            return IO_AGVMapService.Map_Setting();
+        }
+
+        public DataTable defaultMap(long Time)
+        {
+            return IO_AGVMapService.defaultMapBLL(Time);
         }
     }
 }

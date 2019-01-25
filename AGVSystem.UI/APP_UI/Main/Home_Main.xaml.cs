@@ -1,27 +1,15 @@
 ﻿using AGVSystem.APP.agv_System;
-using AGVSystem.BLL;
-using AGVSystem.IService.IO_BLL;
 using AGVSystem.IService.IO_System;
-using AGVSystem.Model;
 using AGVSystem.UI.APP_UI.Map;
 using AGVSystem.UI.APP_UI.Setting;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Threading;
 using AGVSystem.Model.Ga_agvModels;
 using AGVSystem.APP.agv_Map;
+using AGVSystem.Model.MapData;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -35,27 +23,67 @@ namespace AGVSystem.UI.APP_UI.Main
             InitializeComponent();
         }
 
-
         IO_AGVmanagement Get_AGVmanagement = new agvFunction();
-        private int selAgv = 1; //默认显示AGV
-        List<Ga_agv> Ga_agvNumArray;
-        Painting GetPainting = new Painting();
+        IO_AGVMapService mapService = new agvMapRegulate(); //业务逻辑接口
+        MapInstrument map = new MapInstrument();
 
+        List<Ga_agv> Ga_agvNumArray; //数据源
+        Painting GetPainting = new Painting();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            TopX.Width = this.Width * 10;
-            TopY.Height = this.Height * 10;
-            mainPanel.Width = this.Width * 2;
-            mainPanel.Height = this.Height * 2;
-            GetPainting.CoordinateX(TopX, TopY, 10, 10, Brushes.Black, 1);
-
-            GetPainting.Coordinate(mainPanel, 10, 10, new SolidColorBrush(Color.FromRgb(208, 208, 208)), 1);
-
-            TabAgvMoveInfo(1532254801);
-            AgvInfo();
-            LoadComInfo(1532254801);
+            Setting_Map();
         }
+
+
+        /// <summary>
+        /// 查询默认地图
+        /// </summary>
+        public void Setting_Map()
+        {
+            DataTable data = mapService.setting();
+            if (data.Rows.Count > 0)
+            {
+                MapRegulate.UTCTime = long.Parse(data.Rows[0]["Map"].ToString());
+
+                DataTable MapData = mapService.defaultMap(MapRegulate.UTCTime);
+                if (MapData.Rows.Count > 0)
+                {
+                    Ga_Map GetMap = new Ga_Map()
+                    {
+                        Width = Convert.ToDouble(MapData.Rows[0]["Width"].ToString()),
+                        Height = Convert.ToDouble(MapData.Rows[0]["Height"].ToString())
+                    };
+                    GetPainting.CoordinateX(TopX, TopY);
+                    GetPainting.Coordinate(mainPanel);
+                    map.GetCanvas = mainPanel;
+                    map.MapSise = 2;
+                    double CanvasWidth = GetMap.Width * 10 * map.MapSise > this.Width * 1.5 ? GetMap.Width * 10 * map.MapSise : this.Width * 1.5;
+                    double CanvasHeight = GetMap.Height * 10 * map.MapSise > this.Height * 1.2 ? GetMap.Height * 10 * map.MapSise : this.Height * 1.2;
+                    TopX.Width = CanvasWidth;
+                    TopY.Height = CanvasHeight;
+                    mainPanel.Width = CanvasWidth;
+                    mainPanel.Height = CanvasHeight;
+                    map.LoadEditMap(MapRegulate.UTCTime);
+                    TabAgvMoveInfo(MapRegulate.UTCTime);
+                    AgvInfo();
+                    LoadComInfo(MapRegulate.UTCTime);
+                }
+                else
+                {
+                    throw new Exception("Maps don't exist！");
+                }
+            }
+            else
+            {
+                throw new Exception("Default map configuration missing!");
+            }
+
+        }
+
+
+
+
 
         /// <summary>
         /// 加载串口信息
@@ -66,19 +94,13 @@ namespace AGVSystem.UI.APP_UI.Main
             SerialPortData.AutoGenerateColumns = false;
         }
 
-
-
-
-
-
-
         /// <summary>
         /// 显示所有AGV初始信息
         /// </summary>
         /// <param name="Time"></param>
         public void TabAgvMoveInfo(long Time)
         {
-            Ga_agvNumArray = Get_AGVmanagement.AgvInfo(Time, ref selAgv);
+            Ga_agvNumArray = Get_AGVmanagement.AgvInfo(Time, ref MapRegulate.selAgv);
             TabAgvMoveData.DataContext = Ga_agvNumArray;
             TabAgvMoveData.AutoGenerateColumns = false;
         }

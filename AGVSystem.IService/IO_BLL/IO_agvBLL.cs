@@ -14,7 +14,7 @@ namespace AGVSystem.IService.IO_BLL
         /// <summary>
         /// 查询所有AGV
         /// </summary>
-        List<int> AGVNumList(long MapTime);
+        List<string> AGVNumList(long MapTime);
 
 
 

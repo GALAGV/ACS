@@ -29,7 +29,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="鼠标指针">
+                <Button Cursor="Hand" ToolTip="鼠标指针" Name="Mouse" Click="Mouse_Click" >
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/mouse.png"/>
@@ -37,7 +37,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="抓手工具">
+                <Button Cursor="Hand" ToolTip="抓手工具" Name="Tongs_Tool" Click="Tongs_Tool_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/grab.png"/>
@@ -45,7 +45,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" Name="Magnify" ToolTip="放大">
+                <Button Cursor="Hand" Name="Magnify" ToolTip="放大" Click="Magnify_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/Magnifying.png"/>
@@ -53,7 +53,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" Name="Shrink" ToolTip="缩小">
+                <Button Cursor="Hand" Name="Shrink" ToolTip="缩小" Click="Shrink_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/magnifying_.png"/>
@@ -61,7 +61,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" Name="Recover" ToolTip="复原地图">
+                <Button Cursor="Hand" Name="Recover" ToolTip="复原地图"  Click="Recover_Click">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/restoration.png"/>
@@ -69,7 +69,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="信标">
+                <Button Cursor="Hand" ToolTip="信标" Name="Sign" Click="Sign_Click">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/sign.png"/>
@@ -77,7 +77,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="直线">
+                <Button Cursor="Hand" ToolTip="直线" Name="Map_Line" Click="Map_Line_Click">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/line.png"/>
@@ -85,7 +85,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="折现">
+                <Button Cursor="Hand" ToolTip="折线" Name="Broken" Click="Broken_Click">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/brokenLine.png"/>
@@ -93,7 +93,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="半圆">
+                <Button Cursor="Hand" ToolTip="半圆" Name="Semicircle_Map" Click="Semicircle_Map_Click">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/semicircle.png"/>
@@ -101,7 +101,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="半圆">
+                <Button Cursor="Hand" ToolTip="文字">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/Text.png"/>
@@ -109,7 +109,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="标记">
+                <Button Cursor="Hand" ToolTip="区域" Name="Area" Click="Area_Click">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/area.png"/>
@@ -153,11 +153,13 @@
                         <!--</ScrollViewer>-->
 
 
-                        <ScrollViewer  Name="SrcCount" Grid.Column="1" Grid.Row="2"   HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible"   >
+                        <ScrollViewer  Name="SrcCount" Grid.Column="1" Grid.Row="2"   HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" ScrollChanged="SrcCount_ScrollChanged"  >
+                            <StackPanel Name="Geenh" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas  Name="mainPanel" Background="#ffffff">
+                                    <!--MouseMove="MainPanel_MouseMove" MouseDown="MainPanel_MouseDown" MouseUp="MainPanel_MouseUp"-->
 
-                            <Canvas  Name="mainPanel" Background="#ffffff"   >
-
-                            </Canvas>
+                                </Canvas>
+                            </StackPanel>
                         </ScrollViewer>
                     </Grid>
                 </Border>
