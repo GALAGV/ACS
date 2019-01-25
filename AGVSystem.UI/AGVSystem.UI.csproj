@@ -189,5 +189,14 @@
   <ItemGroup>
     <Resource Include="image\复原.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\Gray_s.png" />
+    <Resource Include="image\Green_s.gif" />
+    <Resource Include="image\Green_s.png" />
+    <Resource Include="image\Orange_s.gif" />
+    <Resource Include="image\Red_s.gif" />
+    <Resource Include="image\Red_s.png" />
+    <Resource Include="image\Yellow_s.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

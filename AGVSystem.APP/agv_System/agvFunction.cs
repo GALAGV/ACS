@@ -43,6 +43,7 @@ namespace AGVSystem.APP.agv_System
         /// <returns></returns>
         public List<Ga_agv> AgvInfo(long Time, ref int selAgv)
         {
+            MainInfo.agvNo.Clear();
             List<string> Agvlist = GetAgvBLL.AGVNumList(Time);
             List<Ga_agv> Ga_agvNum = new List<Ga_agv>();
             for (int i = 0; i < Agvlist.Count; i++)

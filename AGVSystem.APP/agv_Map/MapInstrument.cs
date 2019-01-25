@@ -18,7 +18,7 @@ namespace AGVSystem.APP.agv_Map
         private int s = 1;//信标起始索引
         private int index = 1;//区域起始索引
         private int TextInx = 1;//文字索引
-        public double MapSise = 2; //画布默认缩放大小
+        public double MapSise = 1; //画布默认缩放大小
         bool tongs = false; //画布移动标志位
         private Painting painting = new Painting();//地图绘制
         IO_MapBLL IO_AGVMapService = new Ga_mapBLL();
@@ -44,7 +44,7 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="TagID"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public Label TagCreate(Point point, int TagID, bool type)
+        public Label TagCreate(Point point, int TagID, bool type, bool tagevent)
         {
             Label labelStrn = new Label()
             {
@@ -62,13 +62,16 @@ namespace AGVSystem.APP.agv_Map
             };
 
             Canvas.SetZIndex(labelStrn, 999999);
-            labelStrn.MouseDown += LabelStrn_MouseDown;
-            labelStrn.MouseMove += LabelStrn_MouseMove;
-            labelStrn.MouseUp += LabelStrn_MouseUp;
+            if (tagevent)
+            {
+                labelStrn.MouseDown += LabelStrn_MouseDown;
+                labelStrn.MouseMove += LabelStrn_MouseMove;
+                labelStrn.MouseUp += LabelStrn_MouseUp;
+            }
             valuePairs.Add(TagID, labelStrn);
             return labelStrn;
         }
-        
+
 
         #endregion
 
@@ -182,7 +185,7 @@ namespace AGVSystem.APP.agv_Map
 
         #region 清除线路
 
-        
+
         /// <summary>
         /// 清除线路
         /// </summary>
@@ -195,8 +198,8 @@ namespace AGVSystem.APP.agv_Map
                 {
                     //if (item.circuitType.Equals(CircuitType.Broken))
                     //{
-                        CrearS(item);
-                        break;
+                    CrearS(item);
+                    break;
                     //}
                     //else if (item.circuitType.Equals(CircuitType.Semicircle))
                     //{
@@ -404,7 +407,7 @@ namespace AGVSystem.APP.agv_Map
 
         #region Tag鼠标动作事件
 
-     
+
         /// <summary>
         /// 释放鼠标发生
         /// </summary>
@@ -475,7 +478,7 @@ namespace AGVSystem.APP.agv_Map
             }
         }
 
-       
+
         /// <summary>
         /// 按下鼠标发生
         /// </summary>
@@ -523,12 +526,12 @@ namespace AGVSystem.APP.agv_Map
             index = CountTg > 0 ? pairs[0].Key : 1;
             if (CountTg > 0)
             { index++; }
-            Label labelArea = NewArea(point, null, index, "000000", "FFFFFF", "000000", 21, 100, 100, false, "居中对齐");
+            Label labelArea = NewArea(point, null, index, "000000", "FFFFFF", "000000", 21, 100, 100, false, "居中对齐", true);
             GetCanvas.Children.Add(labelArea);
             index++;
         }
-      
-        public Label NewArea(Point point, string Text, int ArID, string bgColor, string FontColor, string BrColor, double FontSise, double MpWidth, double MpHeight, bool type, string FontPosition)
+
+        public Label NewArea(Point point, string Text, int ArID, string bgColor, string FontColor, string BrColor, double FontSise, double MpWidth, double MpHeight, bool type, string FontPosition, bool Areaevent)
         {
             Label labelArea = new Label()
             {
@@ -538,16 +541,19 @@ namespace AGVSystem.APP.agv_Map
                 BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + BrColor + "")),
                 BorderThickness = new Thickness(2, 2, 2, 2),
                 FontSize = FontSise,
-                Width = MpWidth ,
+                Width = MpWidth,
                 Height = MpHeight,
                 Margin = new Thickness(point.X + (type.Equals(false) ? 120 : 0), point.Y + (type.Equals(false) ? 120 : 0), 0, 0),//120(位置偏移量)
                 Cursor = Cursors.Hand,
                 Tag = ArID,
             };
             aAlignment(FontPosition, labelArea);
-            labelArea.MouseDown += LabelArea_MouseDown;
-            labelArea.MouseMove += LabelArea_MouseMove;
-            labelArea.MouseUp += LabelArea_MouseUp;
+            if (Areaevent)
+            {
+                labelArea.MouseDown += LabelArea_MouseDown;
+                labelArea.MouseMove += LabelArea_MouseMove;
+                labelArea.MouseUp += LabelArea_MouseUp;
+            }
             keyValuePairs.Add(ArID, labelArea);
             return labelArea;
         }
@@ -620,14 +626,14 @@ namespace AGVSystem.APP.agv_Map
         /// </summary>
         public void TextNew(Canvas mainPanel, Point point)
         {
-            Label labelText = FontNew(point, null, TextInx, 35, "000000", false);
+            Label labelText = FontNew(point, null, TextInx, 35, "000000", false, true);
             mainPanel.Children.Add(labelText);
             GetCanvas = mainPanel;
             TextInx++;
         }
 
 
-        public Label FontNew(Point point, string Text, int TextInx, double FontSise, string fontColor, bool type)
+        public Label FontNew(Point point, string Text, int TextInx, double FontSise, string fontColor, bool type, bool Fontevent)
         {
             Label labelText = new Label()
             {
@@ -640,9 +646,12 @@ namespace AGVSystem.APP.agv_Map
                 Cursor = Cursors.Hand,
                 Tag = TextInx,
             };
-            labelText.MouseDown += LabelText_MouseDown;
-            labelText.MouseMove += LabelText_MouseMove;
-            labelText.MouseUp += LabelText_MouseUp;
+            if (Fontevent)
+            {
+                labelText.MouseDown += LabelText_MouseDown;
+                labelText.MouseMove += LabelText_MouseMove;
+                labelText.MouseUp += LabelText_MouseUp;
+            }
             GetKeyValues.Add(TextInx, labelText);
             return labelText;
         }
@@ -685,7 +694,7 @@ namespace AGVSystem.APP.agv_Map
             tmp.Cursor = Cursors.Hand;
             if (e.RightButton == MouseButtonState.Pressed)
             {
-              
+
             }
         }
 
@@ -696,7 +705,7 @@ namespace AGVSystem.APP.agv_Map
 
         #region 功能菜单
 
-       
+
         /// <summary>
         /// NewTag
         /// </summary>
@@ -706,7 +715,7 @@ namespace AGVSystem.APP.agv_Map
             var pairs = valuePairs.OrderByDescending(x => x.Key).ToArray();
             s = pairs.Count() > 0 ? pairs[0].Key : 0;
             s++;
-            GetCanvas.Children.Add(TagCreate(point, s, false));
+            GetCanvas.Children.Add(TagCreate(point, s, false, false));
             TagFormer();
         }
 
@@ -853,43 +862,48 @@ namespace AGVSystem.APP.agv_Map
         /// 载入编辑地图数据
         /// </summary>
         /// <param name="Time"></param>
-        public void LoadEditMap(long Time, double Width, double Height)
+        public void LoadEditMap(long Time, double Width, double Height, bool event_type)
         {
-            LoadTag(Time);
+            LoadTag(Time, event_type);
             LoadLine(Time);
-            WidgetLoad(Time);
-
+            WidgetLoad(Time, event_type);
             Mapmagnify(MapSise, Width, Height);
         }
+
+        #endregion
+
+        #region 加载编辑地图数据
 
         /// <summary>
         /// 载入编辑地图数据
         /// </summary>
         /// <param name="Time"></param>
-        public void LoadEditMap(long Time)
+        public void LoadEditMap(long Time, bool event_type)
         {
-            LoadTag(Time);
+            wirePointArrays.Clear();
+            keyValuePairs.Clear();
+            valuePairs.Clear();
+            GetKeyValues.Clear();
+            siseWin = 1;
+            painting.Line_Width = 3;
+            LoadTag(Time, event_type);
             LoadLine(Time);
-            WidgetLoad(Time);
+            WidgetLoad(Time, event_type);
 
             Mapmagnify(MapSise);
         }
-        #endregion
-
-        #region 加载编辑地图数据
-
 
         /// <summary>
         /// 加载所有Tag
         /// </summary>
         /// <param name="painti"></param>
-        public void LoadTag(long Times)
+        public void LoadTag(long Times, bool Tagevent)
         {
             MySqlDataReader item = IO_AGVMapService.RataTable(Times.ToString());
             while (item.Read())
             {
                 int id = Convert.ToInt32(item["TagName"].ToString());
-                TagCreate(new Point() { X = (Convert.ToDouble(item["X"].ToString()) * 10) - 19, Y = (Convert.ToDouble(item["Y"].ToString()) * 10) - 11.5 }, Convert.ToInt32(item["TagName"].ToString()), true);
+                TagCreate(new Point() { X = (Convert.ToDouble(item["X"].ToString()) * 10) - 19, Y = (Convert.ToDouble(item["Y"].ToString()) * 10) - 11.5 }, Convert.ToInt32(item["TagName"].ToString()), true, Tagevent);
             }
             item.Close();
         }
@@ -926,7 +940,7 @@ namespace AGVSystem.APP.agv_Map
         /// 载入区域和文字
         /// </summary>
         /// <param name="Times"></param>
-        public void WidgetLoad(long Times)
+        public void WidgetLoad(long Times, bool Widgetevent)
         {
             MySqlDataReader item = IO_AGVMapService.GetWidget(Times.ToString());
             int Indexs = 0;
@@ -934,13 +948,13 @@ namespace AGVSystem.APP.agv_Map
             {
                 if (item["WidgetNo"].ToString().Substring(0, 2).Equals("AR"))
                 {
-                    NewArea((new Point() { X = Convert.ToDouble(item["X"].ToString()) * 10, Y = Convert.ToDouble(item["Y"].ToString()) * 10 }), item["Name"].ToString(), Indexs, item["BackColor"].ToString(), item["ForeColor"].ToString(), item["BorderColor"].ToString(), Convert.ToDouble(item["FontSize"].ToString()), Convert.ToDouble(item["Width"].ToString()) * 10, Convert.ToDouble(item["Height"].ToString()) * 10, true, item["FontPosition"].ToString());
+                    NewArea((new Point() { X = Convert.ToDouble(item["X"].ToString()) * 10, Y = Convert.ToDouble(item["Y"].ToString()) * 10 }), item["Name"].ToString(), Indexs, item["BackColor"].ToString(), item["ForeColor"].ToString(), item["BorderColor"].ToString(), Convert.ToDouble(item["FontSize"].ToString()), Convert.ToDouble(item["Width"].ToString()) * 10, Convert.ToDouble(item["Height"].ToString()) * 10, true, item["FontPosition"].ToString(), Widgetevent);
                     Indexs++;
                     index = Indexs;
                 }
                 else if (item["WidgetNo"].ToString().Substring(0, 2).Equals("TE"))
                 {
-                    FontNew((new Point() { X = Convert.ToDouble(item["X"].ToString()) * 10, Y = Convert.ToDouble(item["Y"].ToString()) * 10 }), item["Name"].ToString(), Indexs, Convert.ToDouble(item["FontSize"].ToString()), item["ForeColor"].ToString(), true);
+                    FontNew((new Point() { X = Convert.ToDouble(item["X"].ToString()) * 10, Y = Convert.ToDouble(item["Y"].ToString()) * 10 }), item["Name"].ToString(), Indexs, Convert.ToDouble(item["FontSize"].ToString()), item["ForeColor"].ToString(), true, Widgetevent);
                     Indexs++;
                     TextInx = Indexs;
                 }
@@ -953,7 +967,7 @@ namespace AGVSystem.APP.agv_Map
 
         #region 比例尺缩放
 
-      
+
 
         /// <summary>
         /// 地图比例尺缩放
@@ -961,13 +975,13 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="Size"></param>
         /// <param name="mainPanel"></param>
         /// <param name="mainPane2"></param>
-        public void Mapmagnify(double Size,double Width,double Height)
+        public void Mapmagnify(double Size, double Width, double Height)
         {
             GetCanvas.Children.Clear();
             GetCanvas.Width = Width * Size;
             GetCanvas.Height = Height * Size;
             painting.Coordinate(GetCanvas);
-            Zoom(Size, GetCanvas);
+            Zoom(Size, GetCanvas, true);
             siseWin = Size;
         }
 
@@ -981,18 +995,18 @@ namespace AGVSystem.APP.agv_Map
         {
             GetCanvas.Children.Clear();
             painting.Coordinate(GetCanvas);
-            Zoom(Size, GetCanvas);
+            Zoom(Size, GetCanvas, false);
             siseWin = Size;
         }
 
 
-        public  double siseWin = 1;//上一次缩放大小
+        public double siseWin = 1;//上一次缩放大小
 
         /// <summary>
         /// 比例尺控件缩放
         /// </summary>
         /// <param name="Sise"></param>
-        public void Zoom(double Sise, Canvas mainPan)
+        public void Zoom(double Sise, Canvas mainPan, bool tagMap)
         {
             foreach (WirePointArray item in wirePointArrays)//线路缩放
             {
@@ -1009,7 +1023,7 @@ namespace AGVSystem.APP.agv_Map
                 if (item.circuitType.Equals(CircuitType.Line))//直线
                 {
                     path = painting.Line(item.GetPoint.SetPoint, item.GetWirePoint.SetPoint, mainPan);
-                    path.StrokeThickness =((WirePointLine) item).GetPath.StrokeThickness;
+                    path.StrokeThickness = ((WirePointLine)item).GetPath.StrokeThickness;
                     path.Stroke = ((WirePointLine)item).GetPath.Stroke;
                     ((WirePointLine)item).GetPath = path;
                 }
@@ -1033,20 +1047,21 @@ namespace AGVSystem.APP.agv_Map
                     }
                      ((WirePointBroken)item).Paths = Kaths;
                 }
-               
-               
+
+
             }
             foreach (int item in valuePairs.Keys)//信标缩放
             {
                 valuePairs[item].Margin = new Thickness(((valuePairs[item].Margin.Left + 19) / siseWin) * Sise - 19, ((valuePairs[item].Margin.Top + 11.5) / siseWin) * Sise - 11.5, 0, 0);
-                mainPan.Children.Add(valuePairs[item]);
+                if (tagMap)
+                    mainPan.Children.Add(valuePairs[item]);
             }
             foreach (int item in keyValuePairs.Keys)//区域缩放
             {
                 keyValuePairs[item].Margin = new Thickness((keyValuePairs[item].Margin.Left / siseWin) * Sise, (keyValuePairs[item].Margin.Top / siseWin) * Sise, 0, 0);
                 //长宽计算
-               keyValuePairs[item].Width = keyValuePairs[item].Width / siseWin * Sise;
-               keyValuePairs[item].Height =keyValuePairs[item].Height / siseWin * Sise;
+                keyValuePairs[item].Width = keyValuePairs[item].Width / siseWin * Sise;
+                keyValuePairs[item].Height = keyValuePairs[item].Height / siseWin * Sise;
                 //字体计算
                 keyValuePairs[item].FontSize = keyValuePairs[item].FontSize / siseWin * Sise;
                 mainPan.Children.Add(keyValuePairs[item]);

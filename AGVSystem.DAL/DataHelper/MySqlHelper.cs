@@ -364,11 +364,11 @@ namespace AGVSystem.DAL.DataHelper
             {
                 throw e;
             }
-            // finally
-            // {
-            // cmd.Dispose();
-            // connection.Close();
-            // }
+            //finally
+            //{
+            //    cmd.Dispose();
+            //    connection.Close();
+            //}
         }
 
         #endregion ExecuteReader

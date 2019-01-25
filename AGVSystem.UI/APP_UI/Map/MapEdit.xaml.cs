@@ -24,7 +24,8 @@ namespace AGVSystem.UI.APP_UI.Map
             InitializeComponent();
             GetMap = ga_Map;
             LoadMap();
-            instrument.LoadEditMap(UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)), CanvasWidth, CanvasHeight);
+            instrument.MapSise = 2;
+            instrument.LoadEditMap(UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)), CanvasWidth, CanvasHeight,true);
         }
 
         /// <summary>

@@ -49,8 +49,8 @@
                                 <RowDefinition Height="80"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Border BorderBrush="#898c95" Grid.Row="0" Background="#ffff" BorderThickness="1,1,1,1" Margin="0,10,0,0">
-                                <ScrollViewer  HorizontalScrollBarVisibility="Auto" Name="CountMap" VerticalScrollBarVisibility="Auto" Padding="5,10,5,5" >
-
+                                <ScrollViewer  HorizontalScrollBarVisibility="Auto" Name="CountMap"  VerticalScrollBarVisibility="Auto" Padding="5,10,5,5" >
+                              
                                 </ScrollViewer>
                             </Border>
                         </Grid>
