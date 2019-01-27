@@ -138,7 +138,7 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Image Stretch="Fill" Source="/image/map.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
-                            <Label Content="ABB" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-4,-1.4,0,0" ></Label>
+                            <Label Content="地图" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-4,-1.4,0,0" ></Label>
                         </Grid>
                         <ScrollViewer  Name="SrcX" Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,0">
                             <StackPanel >

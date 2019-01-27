@@ -179,6 +179,10 @@
       <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
       <Name>AGVSystem.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AGVSystem.ServiceClearLog\AGVSystem.ServiceClearLog.csproj">
+      <Project>{3389e62c-4413-4998-84c7-ad6cf9c242f6}</Project>
+      <Name>AGVSystem.ServiceClearLog</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="image\Magnifying.png" />
