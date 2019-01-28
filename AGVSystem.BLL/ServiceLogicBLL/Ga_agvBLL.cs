@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace AGVSystem.BLL.ServiceLogicBLL
 {
-    public class Ga_agvBLL: IO_agvBLL
+    public class Ga_agvBLL : IO_agvBLL
     {
-        IO_agvDAL GetABB = new Ga_agvDAL();
+        private IO_agvDAL GetABB = new Ga_agvDAL();
 
         /// <summary>
         /// 查询所有AGV
@@ -18,8 +18,5 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         {
             return GetABB.AGVArray(MapTime);
         }
-
-
-
     }
 }

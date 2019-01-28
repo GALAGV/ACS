@@ -306,5 +306,45 @@ namespace AGVSystem.DAL.DataAccess
         {
             return MySQLHelper.ExecuteDataTable($"SELECT * FROM `agv`.`map` WHERE CreateTime={UTCTime}");
         }
+
+        /// <summary>
+        /// 保存串口数据
+        /// </summary>
+        /// <param name="mapTime"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public bool InsertDeviceDAL(long mapTime, DataTable data)
+        {
+            string desql = string.Format("DELETE FROM agv.`device{0}`;", mapTime.ToString());
+
+            StringBuilder sbSql = new StringBuilder();
+            sbSql.Append(desql);
+            for (int i = 0; i < data.Rows.Count; i++)
+            {
+                string sql = string.Format("INSERT INTO agv.`device{0}` (`Com`, `Baud`, `Agv`) VALUES ", mapTime.ToString());
+                sbSql.Append(sql);
+                sbSql.Append('(');
+                sbSql.Append(data.Rows[i][0]);
+                sbSql.Append(",'");
+                sbSql.Append(data.Rows[i][1]);
+                sbSql.Append("','");
+                sbSql.Append(data.Rows[i][2]);
+                sbSql.Append("')");
+                sbSql.Append(";");
+            }
+            return MySQLHelper.ExecuteNonQuery(sbSql.ToString()) > 0 ? true : false;
+        }
+
+        /// <summary>
+        /// 修改启动地图配置
+        /// </summary>
+        /// <param name="Map"></param>
+        /// <param name="Mode"></param>
+        /// <returns></returns>
+        public bool UpdateSetting(long Map, int Mode)
+        {
+            string sql = string.Format("UPDATE agv.`setting` SET `Map` = {0}, `Mode` = {1} WHERE `ID` = 1;", Map, Mode);
+            return MySQLHelper.ExecuteNonQuery(sql) > 0 ? true : false;
+        }
     }
 }

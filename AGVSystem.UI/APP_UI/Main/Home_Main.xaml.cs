@@ -13,6 +13,8 @@ using AGVSystem.Model.MapData;
 using AGVSystem.Infrastructure.agvCommon;
 using AGVSystem.Model.LogicData;
 using System.Windows.Media.Imaging;
+using System.IO;
+using OperateIni;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -54,31 +56,43 @@ namespace AGVSystem.UI.APP_UI.Main
         /// </summary>
         public void LoadMap()
         {
-            DataTable MapData = mapService.defaultMap(MapRegulate.UTCTime);
-            if (MapData.Rows.Count > 0)
+            try
             {
-                Ga_Map GetMap = new Ga_Map()
+                DataTable MapData = mapService.defaultMap(MapRegulate.UTCTime);
+                if (MapData.Rows.Count > 0)
                 {
-                    Width = Convert.ToDouble(MapData.Rows[0]["Width"].ToString()),
-                    Height = Convert.ToDouble(MapData.Rows[0]["Height"].ToString())
-                };
-                MapMenu.Text = MapData.Rows[0]["Name"].ToString();
-                GetPainting.CoordinateX(TopX, TopY);
-                map.GetCanvas = mainPanel;
-                map.MapSise = 1.7;
-                double CanvasWidth = GetMap.Width * 10 * map.MapSise > this.Width * 1.2 ? GetMap.Width * 10 * map.MapSise : this.Width * 1.2;
-                double CanvasHeight = GetMap.Height * 10 * map.MapSise > this.Height * 1.2 ? GetMap.Height * 10 * map.MapSise : this.Height * 1.2;
-                TopX.Width = CanvasWidth;
-                TopY.Height = CanvasHeight;
-                mainPanel.Width = CanvasWidth;
-                mainPanel.Height = CanvasHeight;
-                map.LoadEditMap(MapRegulate.UTCTime, false);
-                TabAgvMoveInfo(MapRegulate.UTCTime);
-                LoadComInfo(MapRegulate.UTCTime);
+                    Ga_Map GetMap = new Ga_Map()
+                    {
+                        Width = Convert.ToDouble(MapData.Rows[0]["Width"].ToString()),
+                        Height = Convert.ToDouble(MapData.Rows[0]["Height"].ToString())
+                    };
+                    string MapNam = MapData.Rows[0]["Name"].ToString();
+                    MapMenu.Text = MapNam;
+                    GetPainting.CoordinateX(TopX, TopY);
+                    map.GetCanvas = mainPanel;
+                    if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
+                    {
+                        string Size = IniFile.ReadIniData("AGV", "MapSise", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+                        map.MapSise = Convert.ToDouble(Size);
+                    }
+                    double CanvasWidth = GetMap.Width * 10 * map.MapSise > this.Width * 1.2 ? GetMap.Width * 10 * map.MapSise : this.Width * 1.2;
+                    double CanvasHeight = GetMap.Height * 10 * map.MapSise > this.Height * 1.2 ? GetMap.Height * 10 * map.MapSise : this.Height * 1.2;
+                    TopX.Width = CanvasWidth;
+                    TopY.Height = CanvasHeight;
+                    mainPanel.Width = CanvasWidth;
+                    mainPanel.Height = CanvasHeight;
+                    map.LoadEditMap(MapRegulate.UTCTime, false);
+                    TabAgvMoveInfo(MapRegulate.UTCTime);
+                    LoadComInfo(MapRegulate.UTCTime);
+                }
+                else
+                {
+                    throw new Exception("Maps don't exist！");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Maps don't exist！");
+                throw new Exception(ex.Message);
             }
         }
 
@@ -89,12 +103,19 @@ namespace AGVSystem.UI.APP_UI.Main
         /// <param name="e"></param>
         private void MapMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            SelectionMenu();
+        }
+
+        public void SelectionMenu()
+        {
             if (SelectMenu)
             {
                 DataTable data = mapService.setting();
                 if (data.Rows.Count > 0)
                 {
-                    MapRegulate.UTCTime = long.Parse(data.Rows[0]["Map"].ToString());
+                    long DefaultName = long.Parse(data.Rows[0]["Map"].ToString().Trim()); ;
+                    MapRegulate.UTCTime = DefaultName;
+                    MapRegulate.DefaultMap = DefaultName;
                     SelectMenu = false;
                 }
                 else
@@ -109,6 +130,11 @@ namespace AGVSystem.UI.APP_UI.Main
             LoadMap();
             Load_agv();
         }
+
+
+
+
+
 
 
 
@@ -193,6 +219,7 @@ namespace AGVSystem.UI.APP_UI.Main
         private void Setting_Click(object sender, RoutedEventArgs e)
         {
             SettingForm setting = new SettingForm();
+            setting.GetSettingMap += SelectionMenu;
             setting.ShowDialog();
         }
 

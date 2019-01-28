@@ -8,7 +8,7 @@ namespace AGVSystem.BLL.ServiceLogicBLL
 {
     public class Ga_mapBLL : IO_MapBLL
     {
-        IO_MapDAL map = new Ga_mapDAL();
+       private IO_MapDAL map = new Ga_mapDAL();
 
         /// <summary>
         /// 导入地图
@@ -70,6 +70,17 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         }
 
         /// <summary>
+        /// 保存配置
+        /// </summary>
+        /// <param name="mapTime"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public bool InsertDeviceBLL(long mapTime, DataTable data)
+        {
+            return map.InsertDeviceDAL(mapTime, data);
+        }
+
+        /// <summary>
         /// 查询线路信息
         /// </summary>
         /// <param name="Times"></param>
@@ -124,6 +135,9 @@ namespace AGVSystem.BLL.ServiceLogicBLL
             return map.DeleteMap(MapTime);
         }
 
-
+        public bool UpdateSettingMap(long Map, int Mode)
+        {
+            return map.UpdateSetting(Map, Mode);
+        }
     }
 }

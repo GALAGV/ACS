@@ -11,5 +11,7 @@ namespace AGVSystem.Model.MapData
         public static int selAgv = 1; //默认显示AGV
 
         public static long UTCTime = 0;
+
+        public static long DefaultMap = 0;
     }
 }

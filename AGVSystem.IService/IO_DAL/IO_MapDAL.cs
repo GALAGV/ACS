@@ -98,5 +98,22 @@ namespace AGVSystem.IService.IO_DAL
         /// <returns></returns>
         DataTable defaultMapDAL(long UTCTime);
 
+
+        /// <summary>
+        /// 保存串口数据
+        /// </summary>
+        /// <param name="mapTime"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        bool InsertDeviceDAL(long mapTime, DataTable data);
+
+        /// <summary>
+        /// 修改启动地图数据
+        /// </summary>
+        /// <param name="Map"></param>
+        /// <param name="Mode"></param>
+        /// <returns></returns>
+        bool UpdateSetting(long Map, int Mode);
+
     }
 }

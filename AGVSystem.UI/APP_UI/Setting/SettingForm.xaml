@@ -5,15 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Setting"
         mc:Ignorable="d"
-       Title="Setting" Height="419.318" Width="762.81" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+       Title="Setting" Height="419.318" Width="772.81" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="FontAwesome">
+            <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Styles/fonts/#FontAwesome" />
+        </Style>
+    </Window.Resources>
     <Grid Background="#f0f0f0">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="180"></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1" Margin="5">
-                <Grid  Background="#f0f0f0"   Name="agv_map">
+                <Grid  Background="#f0f0f0"   Name="agv_map" Panel.ZIndex="5">
                     <GroupBox Header="地图设置" Height="140" VerticalAlignment="Top" BorderBrush="#dcdcdc" BorderThickness="1" >
                         <Grid Margin="10">
                             <Grid.RowDefinitions>
@@ -27,16 +32,23 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Content="默认地图:" Margin="0,5,0,0"></Label>
-                            <ComboBox  Grid.Row="0" Grid.Column="1" SelectedIndex="0" Width="200"  Margin="0,5,0,0" HorizontalAlignment="Left">
-                                <ComboBoxItem Content="延锋"></ComboBoxItem>
-                                <ComboBoxItem Content="ABB"></ComboBoxItem>
-                                <ComboBoxItem Content="汤臣"></ComboBoxItem>
+                            <ComboBox  Grid.Row="0" Grid.Column="1" Name="MapList"   Width="200"  DisplayMemberPath="Name" SelectedValuePath="CreateTime" Margin="0,5,0,0" HorizontalAlignment="Left">
                             </ComboBox>
                             <Label Grid.Row="2" Grid.Column="0" Content="默认倍数:" Margin="0,5,0,0"></Label>
-                            <ComboBox  Grid.Row="2" Grid.Column="1" SelectedIndex="0" Margin="0,5,0,0" Width="200"  HorizontalAlignment="Left">
-                                <ComboBoxItem Content="X1"></ComboBoxItem>
-                                <ComboBoxItem Content="X2"></ComboBoxItem>
-                                <ComboBoxItem Content="X3"></ComboBoxItem>
+                            <ComboBox  Grid.Row="2" Grid.Column="1" SelectedIndex="0" Name="Map_Size" Margin="0,5,0,0" Width="200"  HorizontalAlignment="Left">
+                                <ComboBoxItem Content="1.0"></ComboBoxItem>
+                                <ComboBoxItem Content="1.2"></ComboBoxItem>
+                                <ComboBoxItem Content="1.4"></ComboBoxItem>
+                                <ComboBoxItem Content="1.6"></ComboBoxItem>
+                                <ComboBoxItem Content="1.8"></ComboBoxItem>
+                                <ComboBoxItem Content="2.0"></ComboBoxItem>
+                                <ComboBoxItem Content="2.2"></ComboBoxItem>
+                                <ComboBoxItem Content="2.4"></ComboBoxItem>
+                                <ComboBoxItem Content="2.6"></ComboBoxItem>
+                                <ComboBoxItem Content="2.8"></ComboBoxItem>
+                                <ComboBoxItem Content="3.0"></ComboBoxItem>
+                                <ComboBoxItem Content="3.5"></ComboBoxItem>
+                                <ComboBoxItem Content="4.0"></ComboBoxItem>
                             </ComboBox>
                         </Grid>
                     </GroupBox>
@@ -46,34 +58,59 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
-                                <RowDefinition Height="80"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Border BorderBrush="#898c95" Grid.Row="0" Background="#ffff" BorderThickness="1,1,1,1" Margin="0,10,0,0">
                                 <ScrollViewer  HorizontalScrollBarVisibility="Auto" Name="CountMap"  VerticalScrollBarVisibility="Auto" Padding="5,10,5,5" >
                               
                                 </ScrollViewer>
                             </Border>
+                            <Grid Grid.Row="1" Margin="0,13,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="90"></ColumnDefinition>
+                                    <ColumnDefinition Width="90"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Button  Grid.Column="2" Margin="10,0,0,0" BorderBrush="#adadad" Name="AddPort" Click="AddPort_Click">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<TextBlock Text="&#xf055;" FontSize="18" Style="{DynamicResource FontAwesome}" />-->
+                                            <TextBlock Text="增加" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button  Grid.Column="3" Margin="10,0,0,0" BorderBrush="#adadad" Name="DeletePort"  Click="DeletePort_Click">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<TextBlock Text="&#xf014;" FontSize="18" Style="{DynamicResource FontAwesome}" />-->
+                                            <TextBlock Text="删除" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
                         </Grid>
 
                     </GroupBox>
 
 
                 </Grid>
-                <Grid  Background="#f0f0f0"  Name="agv_system" >
+                <Grid  Background="#f0f0f0"  Name="agv_system">
                     <GroupBox Header="系统设置"  Height="140" BorderBrush="#dcdcdc" VerticalAlignment="Top" BorderThickness="1" >
                         <Grid Margin="10">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="4"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
                                 <RowDefinition Height="30"></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="200"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!--<Label Grid.Row="0" Grid.Column="0" Content="开机启动:" Margin="0,5,0,0"></Label>-->
                             <CheckBox Grid.Row="0" Grid.Column="0" Content="开机启动" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+                            <CheckBox Grid.Row="1" Grid.Column="0" Content="开启日志清理服务" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -86,12 +123,13 @@
                     <RowDefinition Height="43"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Content="选择设置：" Grid.Row="0" VerticalAlignment="Center" Margin="3,0,0,0"></Label>
-                <TreeView  Grid.Row="1" Margin="8,0,0,0">
+                <TreeView  Grid.Row="1" Margin="8,0,0,0" >
                     <TreeViewItem Header="串口设置" Name="Com"  IsSelected="True" Selected="Com_Selected"></TreeViewItem>
+                    <TreeViewItem Header="网络设置" ></TreeViewItem>
                     <TreeViewItem Header="地图设置" Name="Map"  Selected="Map_Selected"></TreeViewItem>
                     <TreeViewItem Header="系统配置" Name="system" Selected="System_Selected"></TreeViewItem>
                 </TreeView>
-                <Button Content="确定" Grid.Row="2" Margin="8,5,0,0" BorderBrush="#adadad"></Button>
+                <Button Content="确定(_S)" Grid.Row="2" Margin="8,5,0,0" BorderBrush="#adadad" Name="SaveSetting" Click="SaveSetting_Click"></Button>
                 <Button Content="取消(_C)" Grid.Row="3" Margin="8,10,0,6" BorderBrush="#adadad" Name="CloseForm" Click="Close_Click"></Button>
             </Grid>
         </Grid>

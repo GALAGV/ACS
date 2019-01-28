@@ -43,5 +43,13 @@ namespace AGVSystem.IService.IO_System
         DataTable defaultMap(long Time);
 
 
+        /// <summary>
+        /// 保存串口
+        /// </summary>
+        /// <param name="mapTime"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        bool InsertDeviceSetting(long mapTime, DataTable data);
+
     }
 }

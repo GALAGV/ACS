@@ -12,7 +12,7 @@
                 <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition Height="32"></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="1"></RowDefinition>
+                <RowDefinition Height="2"></RowDefinition>
                 <RowDefinition Height="0.26*" ></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="4" ></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <GridSplitter Grid.Row="3"  HorizontalAlignment="Stretch" Grid.ColumnSpan="3"  Height="1"></GridSplitter>
+            <GridSplitter Grid.Row="3"  HorizontalAlignment="Stretch" ShowsPreview="True"  Grid.ColumnSpan="3"  Height="2"></GridSplitter>
             <Menu HorizontalContentAlignment="Center" Name="Menu" Grid.Row="0" Grid.ColumnSpan="3" Background="#ffffff">
                 <MenuItem Header="文件(_F)" Height="20" FontFamily="微软雅黑">
                     <!--<MenuItem Header="退出" Height="20"  Name="Exit" Click="Exit_Click">

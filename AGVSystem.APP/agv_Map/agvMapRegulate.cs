@@ -80,7 +80,7 @@ namespace AGVSystem.APP.agv_Map
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }    
+            }
         }
 
         /// <summary>
@@ -105,6 +105,17 @@ namespace AGVSystem.APP.agv_Map
         public DataTable defaultMap(long Time)
         {
             return IO_AGVMapService.defaultMapBLL(Time);
+        }
+
+        /// <summary>
+        /// 保存串口
+        /// </summary>
+        /// <param name="mapTime"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public bool InsertDeviceSetting(long mapTime, DataTable data)
+        {
+            return IO_AGVMapService.InsertDeviceBLL(mapTime, data);
         }
     }
 }

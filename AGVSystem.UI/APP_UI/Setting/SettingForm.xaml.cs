@@ -8,6 +8,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using MySql.Data.MySqlClient;
 using AGVSystem.BLL.ServiceLogicBLL;
+using AGVSystem.Model.MapData;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+using AGVSystem.Model.LogicData;
+using System.Data;
+using AGVSystem.IService.IO_System;
+using AGVSystem.APP.agv_Map;
+using OperateIni;
+using System.IO;
+using AGVSystem.Infrastructure.agvCommon;
 
 namespace AGVSystem.UI.APP_UI.Setting
 {
@@ -21,11 +31,20 @@ namespace AGVSystem.UI.APP_UI.Setting
             InitializeComponent();
         }
 
+        private Menutype GetMenutype = Menutype.MapSetting;
+        IO_AGVMapService mapService = new agvMapRegulate(); //业务逻辑接口
+        private IO_MapBLL mapMessage = new Ga_mapBLL();
+        private Grid gridItem = new Grid();
+        private int Index = 0;
+        public delegate void SettingMap();
+        public SettingMap GetSettingMap;
+
         private void Com_Selected(object sender, RoutedEventArgs e)
         {
-            Panel.SetZIndex(Port,3);
+            Panel.SetZIndex(Port, 3);
             Panel.SetZIndex(agv_system, 2);
             Panel.SetZIndex(agv_map, 1);
+            GetMenutype = Menutype.ProntSetting;
         }
 
         private void Map_Selected(object sender, RoutedEventArgs e)
@@ -33,6 +52,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             Panel.SetZIndex(Port, 1);
             Panel.SetZIndex(agv_system, 2);
             Panel.SetZIndex(agv_map, 3);
+            GetMenutype = Menutype.MapSetting;
         }
 
         private void System_Selected(object sender, RoutedEventArgs e)
@@ -40,6 +60,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             Panel.SetZIndex(Port, 1);
             Panel.SetZIndex(agv_system, 3);
             Panel.SetZIndex(agv_map, 2);
+            GetMenutype = Menutype.SystemSetting;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -48,21 +69,32 @@ namespace AGVSystem.UI.APP_UI.Setting
         }
 
 
-        IO_MapBLL mapMessage = new Ga_mapBLL();
-        Grid gridItem = new Grid();
-        int Index = 0;
-        long Time= 1532254801;
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             PortLoad();
+            MapList.ItemsSource = mapService.GetMapRegulate();
+
+            DataTable MapData = mapService.defaultMap(MapRegulate.DefaultMap);
+            if (MapData.Rows.Count > 0)
+            {
+                MapList.Text = MapData.Rows[0]["Name"].ToString();
+            }
+            else
+            {
+                MapList.SelectedIndex = 0;
+            }
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
+            {
+                Map_Size.Text = Convert.ToDouble(IniFile.ReadIniData("AGV", "MapSise", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini")).ToString("0.0");
+            }
         }
         public void PortLoad()
         {
+            GetMenutype = Menutype.ProntSetting;
             gridItem.VerticalAlignment = VerticalAlignment.Top;
             gridItem.HorizontalAlignment = HorizontalAlignment.Center;
             CountMap.Content = gridItem;
-            MySqlDataReader  PortData = mapMessage.ListDevice(Time);
+            MySqlDataReader PortData = mapMessage.ListDevice(MapRegulate.UTCTime);
             int i = 0;
             while (PortData.Read())
             {
@@ -73,7 +105,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             PortData.Close();
             if (gridItem.RowDefinitions.Count.Equals(1) || gridItem.RowDefinitions.Count.Equals(0))
             {
-                //DeleteRows.IsEnabled = false;
+                DeletePort.IsEnabled = false;
             }
         }
 
@@ -144,7 +176,7 @@ namespace AGVSystem.UI.APP_UI.Setting
 
             Label labe3 = new Label();
             labe3.Content = "AGV/其他：";
-            labe3.Margin = new Thickness(0,2, 10, 2);
+            labe3.Margin = new Thickness(0, 2, 10, 2);
             labe3.HorizontalAlignment = HorizontalAlignment.Center;
             labe3.VerticalAlignment = VerticalAlignment.Center;
             Grid.SetColumn(labe3, 4);
@@ -162,11 +194,18 @@ namespace AGVSystem.UI.APP_UI.Setting
             {
                 combo3.Text = "充电机";
             }
+            else if (Agv.Equals("Plc"))
+            {
+                combo3.Text = "PLC";
+            }
             else
             {
                 combo3.Text = Agv;
             }
             combo3.Margin = new Thickness(0, 2, 10, 2);
+            ComboBoxItem itel = new ComboBoxItem();
+            itel.Content = "PLC";
+            combo3.Items.Add(itel);
             ComboBoxItem iter = new ComboBoxItem();
             iter.Content = "按钮";
             combo3.Items.Add(iter);
@@ -185,7 +224,12 @@ namespace AGVSystem.UI.APP_UI.Setting
         private void Combo_DropDownOpened(object sender, EventArgs e)
         {
             ComboBox box = (ComboBox)sender;
+            string str = box.Text;
             box.Items.Clear();
+            //ComboBoxItem it = new ComboBoxItem();
+            //it.Content = str;
+            //box.Items.Add(it);
+            box.Text = str;
             string[] polist = SerialPort.GetPortNames();
             for (int i = 0; i < polist.Length; i++)
             {
@@ -215,5 +259,290 @@ namespace AGVSystem.UI.APP_UI.Setting
                 }
             }
         }
+
+        private void AddPort_Click(object sender, RoutedEventArgs e)
+        {
+            if (gridItem.RowDefinitions.Count.Equals(0))
+            { Index = 0; }
+            else
+            { Index++; DeletePort.IsEnabled = true; }
+            AddRows(Index, "", "", "");
+        }
+
+        private void DeletePort_Click(object sender, RoutedEventArgs e)
+        {
+            if (gridItem.RowDefinitions.Count.Equals(1) || gridItem.RowDefinitions.Count.Equals(0))
+            {
+                return;
+            }
+            gridItem.Children.Remove(GetTs[Index]);
+            gridItem.Children.Remove(combos[Index]);
+            gridItem.Children.Remove(Labels[Index]);
+            gridItem.Children.Remove(TextBoxes[Index]);
+            gridItem.Children.Remove(labels[Index]);
+            gridItem.Children.Remove(Combos[Index]);
+
+            GetTs.Remove(GetTs[Index]);
+            combos.Remove(combos[Index]);
+            Labels.Remove(Labels[Index]);
+            TextBoxes.Remove(TextBoxes[Index]);
+            labels.Remove(labels[Index]);
+            Combos.Remove(Combos[Index]);
+
+            gridItem.RowDefinitions.Remove(definitions[Index]);
+            definitions.Remove(definitions[Index]);
+            for (int i = 0; i < GetTs.Count; i++)
+            {
+                Grid.SetRow(GetTs[i], i);
+                Grid.SetRow(combos[i], i);
+                Grid.SetRow(Labels[i], i);
+                Grid.SetRow(TextBoxes[i], i);
+                Grid.SetRow(labels[i], i);
+                Grid.SetRow(Combos[i], i);
+            }
+            Index--;
+            if (gridItem.RowDefinitions.Count.Equals(1))
+            {
+                DeletePort.IsEnabled = false;
+            }
+        }
+
+        private void SaveSetting_Click(object sender, RoutedEventArgs e)
+        {
+            switch (GetMenutype)
+            {
+                case Menutype.ProntSetting:
+                    SavePront();
+                    break;
+                case Menutype.MapSetting:
+                    MapSave();
+                    break;
+                case Menutype.SystemSetting:
+                    SystemSave();
+                    break;
+                //default:
+                //    break;
+            }
+            GetSettingMap();
+        }
+
+        /// <summary>
+        /// 串口保存
+        /// </summary>
+        private void SavePront()
+        {
+            bool Textnull = true;
+            for (int i = 0; i < combos.Count; i++)
+            {
+                if (combos[i].Text.Equals(""))
+                {
+                    Textnull = false;
+                }
+                if (TextBoxes[i].Text.Equals(""))
+                {
+                    Textnull = false;
+                }
+                if (Combos[i].Text.Equals(""))
+                {
+                    Textnull = false;
+                }
+                else
+                {
+                    string[] arr = Combos[i].Text.Replace('，', ',').Split(',');
+                    if (arr.Length > 0)
+                    {
+                        if (IsRepeat2(arr))
+                        {
+                            MessageBox.Show("AGV编号重复！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+                }
+                string[] ar = Combos[i].Text.Replace('，', ',').Split(',');
+                for (int s = 0; s < ar.Length; s++)
+                {
+                    if (ar[s].Equals(""))
+                    {
+                        Textnull = false;
+                    }
+                    if (ar[s].ToString().Trim().Equals("按钮") || ar[s].ToString().Trim().Equals("充电机"))
+                    {
+                        continue;
+                    }
+                    string pattern = "[\u4e00-\u9fbb]";
+                    if (Regex.IsMatch(ar[s], pattern))
+                    {
+                        MessageBox.Show("AGV编号不能为中文！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Textnull = false;
+                        return;
+                    }
+                }
+
+            }
+            if (Textnull)
+            {
+                PortInfo.AGVCom.Clear();
+                PortInfo.Baud.Clear();
+                PortInfo.agv.Clear();
+
+
+                PortInfo.buttonPort.Clear();
+                PortInfo.buttonCom.Clear();
+                PortInfo.buttonBaud.Clear();
+                PortInfo.buttonStr.Clear();
+
+                PortInfo.plcPort.Clear();
+                PortInfo.plcCom.Clear();
+                PortInfo.plcBaud.Clear();
+                PortInfo.plcStr.Clear();
+
+                PortInfo.chargePort.Clear();
+                PortInfo.chargeCom.Clear();
+                PortInfo.chargeBaud.Clear();
+                PortInfo.chargeStr.Clear();
+                DataTable dr = new DataTable();
+                for (int i = 0; i < 3; i++)
+                {
+                    DataColumn dc = new DataColumn();
+                    dr.Columns.Add(dc);
+                }
+                for (int i = 0; i < combos.Count; i++)
+                {
+                    DataRow dt = dr.NewRow();
+                    string type = Combos[i].Text.ToString().Trim();
+                    if (type.Equals("按钮"))
+                    {
+                        dt[0] = combos[i].Text.ToString().Trim().Substring(3);
+                        dt[1] = TextBoxes[i].Text.ToString().Trim();
+                        dt[2] = "Button";
+                        PortInfo.buttonCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        PortInfo.buttonBaud.Add(Convert.ToInt32(TextBoxes[i].Text.ToString().Trim()));
+                        PortInfo.buttonStr.Add("Button");
+                    }
+                    else if (type.Equals("充电机"))
+                    {
+                        dt[0] = combos[i].Text.ToString().Trim().Substring(3);
+                        dt[1] = TextBoxes[i].Text.ToString().Trim();
+                        dt[2] = "Charge";
+                        PortInfo.buttonCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        PortInfo.buttonBaud.Add(Convert.ToInt32(TextBoxes[i].Text.ToString().Trim()));
+                        PortInfo.chargeStr.Add("Charge");
+                    }
+                    else if (type.Equals("PLC"))
+                    {
+                        dt[0] = combos[i].Text.ToString().Trim().Substring(3);
+                        dt[1] = TextBoxes[i].Text.ToString().Trim();
+                        dt[2] = "Plc";
+                        PortInfo.plcCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        PortInfo.plcBaud.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        PortInfo.plcStr.Add("Plc");
+                    }
+                    else 
+                    {
+                        dt[0] = combos[i].Text.ToString().Trim().Substring(3);
+                        dt[1] = TextBoxes[i].Text.ToString().Trim();
+                        dt[2] = Combos[i].Text.Replace('，', ',').ToString().Trim();
+                        PortInfo.buttonCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        PortInfo.buttonBaud.Add(Convert.ToInt32(TextBoxes[i].Text.ToString().Trim()));
+                        PortInfo.agv.Add(Combos[i].Text.Replace('，', ',').ToString().Trim());
+                    }
+                    dr.Rows.Add(dt);
+                }
+                if (mapMessage.InsertDeviceBLL(MapRegulate.UTCTime, dr))
+                {
+                    MessageBox.Show("设置保存成功!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //GetMap.Maplist_SelectionChanged(null, null);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("保存失败!", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("串口号，波特率，AGV/其他不能为空！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// 地图保存
+        /// </summary>
+        private void MapSave()
+        {
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
+            {
+               IniFile.WriteIniData("AGV", "MapSise", Map_Size.Text, AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+            }
+            if (mapMessage.UpdateSettingMap(UTC.ConvertDateTimeLong(Convert.ToDateTime(MapList.SelectedValue.ToString())), 1))
+            {
+                MessageBox.Show("设置保存成功!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+            }
+        }
+
+        /// <summary>
+        /// 系统设置保存
+        /// </summary>
+        private void SystemSave()
+        {
+
+
+        }
+        /// <summary>
+        /// for循环
+        /// </summary>
+        /// <param name="yourValue"></param>
+        /// <returns></returns>
+        public bool IsRepeat2(string[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = 0; j < array.Length; j++)
+                {
+                    if (j <= i)
+                    {
+                        continue;
+                    }
+                    if (array[i] == array[j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
+
+
+
+
+
+    }
+
+    /// <summary>
+    /// 菜单项
+    /// </summary>
+    public enum Menutype
+    {
+        /// <summary>
+        /// 串口设置
+        /// </summary>
+        [Description("串口设置")]
+        ProntSetting,
+
+        /// <summary>
+        /// 地图设置
+        /// </summary>
+        [Description("地图设置")]
+        MapSetting,
+
+        /// <summary>
+        /// 系统设置
+        /// </summary>
+        [Description("系统设置")]
+        SystemSetting
     }
 }
