@@ -46,6 +46,11 @@ namespace AGVSystem.Model.LogicData
         //public static List<TIPSButtonClass> listTipsButtonPre = new List<TIPSButtonClass>();
         public static List<IntPtr> listPtr = new List<IntPtr>();
 
+        
+
+
+
+
 
         public static double width;
         public static double height;

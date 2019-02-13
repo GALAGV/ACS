@@ -715,7 +715,7 @@ namespace AGVSystem.APP.agv_Map
             var pairs = valuePairs.OrderByDescending(x => x.Key).ToArray();
             s = pairs.Count() > 0 ? pairs[0].Key : 0;
             s++;
-            GetCanvas.Children.Add(TagCreate(point, s, false, false));
+            GetCanvas.Children.Add(TagCreate(point, s, false, true));
             TagFormer();
         }
 
@@ -980,6 +980,8 @@ namespace AGVSystem.APP.agv_Map
             GetCanvas.Children.Clear();
             GetCanvas.Width = Width * Size;
             GetCanvas.Height = Height * Size;
+            painting.Canvas_X = 10 * Size;
+            painting.Canvas_Y = 10 * Size;
             painting.Coordinate(GetCanvas);
             Zoom(Size, GetCanvas, true);
             siseWin = Size;
@@ -1343,6 +1345,16 @@ namespace AGVSystem.APP.agv_Map
         }
 
         #endregion
+
+        #region 实时绘制AGV位置
+
+        public void DrawShowTag(int TagIndex)
+        {
+            Label label = valuePairs.FirstOrDefault(x => x.Key.Equals(TagIndex)).Value;
+        }
+
+        #endregion
+
 
 
     }

@@ -1,0 +1,34 @@
+﻿<Window x:Class="AGVSystem.UI.APP_UI.Map.AddMap"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Map"
+        mc:Ignorable="d"
+        Title="添加地图" Height="243.595" Width="350.93" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <GroupBox Header="添加地图" Margin="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="地图名称：" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Row="1" Grid.Column="0" Content="地图宽度：" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Row="2" Grid.Column="0" Content="地图高度：" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                <TextBox Grid.Row="0" Grid.Column="1" Name="mapName" Height="25" VerticalContentAlignment="Center" ></TextBox>
+                <TextBox Grid.Row="1" Grid.Column="1" Name="mapWidth"  Height="25" VerticalContentAlignment="Center" ></TextBox>
+                <TextBox Grid.Row="2" Grid.Column="1" Name="mapHeight"  Height="25" VerticalContentAlignment="Center"></TextBox>
+                <Button Content="确定(_S)" Grid.Row="3" BorderBrush="#adadad" Grid.Column="1" Grid.ColumnSpan="2" Width="80" Height="27" Margin="2,11,157,12" />
+                <Button Content="取消(_C)" Grid.Row="3" BorderBrush="#adadad" Grid.Column="1" Name="FormClose" Click="FormClose_Click" Grid.ColumnSpan="2" Width="80"  Height="27" Margin="136,13,23,10" ></Button>
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</Window>

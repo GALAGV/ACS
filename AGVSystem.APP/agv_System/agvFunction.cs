@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.Model.LogicData;
 using System.IO.Ports;
+using System.Windows.Media;
 
 namespace AGVSystem.APP.agv_System
 {
@@ -23,15 +24,15 @@ namespace AGVSystem.APP.agv_System
         {
             return new List<Ga_agvStatus>()
             {
-                new Ga_agvStatus { StatusName = "AGV",  StatusValue = "1" },
-                new Ga_agvStatus { StatusName = "网络状态", StatusValue = "在线" },
-                new Ga_agvStatus { StatusName = "运行准备", StatusValue = "ON" },
-                new Ga_agvStatus { StatusName = "驱动状态", StatusValue = "上升" },
-                new Ga_agvStatus { StatusName = "脱轨状态", StatusValue = "正常" },
-                new Ga_agvStatus { StatusName = "出发位置", StatusValue = "5" },
-                new Ga_agvStatus { StatusName = "目的位置", StatusValue = "4" },
-                new Ga_agvStatus { StatusName = "任务名称", StatusValue = "运输" },
-                new Ga_agvStatus { StatusName = "报警信息", StatusValue = "正常" },
+                new Ga_agvStatus { StatusName = "AGV",  StatusValue = "1" , ColorBg = new SolidColorBrush(Colors.Black)},
+                new Ga_agvStatus { StatusName = "网络状态", StatusValue = "在线" , ColorBg = new SolidColorBrush(Colors.Green)},
+                new Ga_agvStatus { StatusName = "运行准备", StatusValue = "ON" , ColorBg = new SolidColorBrush(Colors.Green) },
+                new Ga_agvStatus { StatusName = "驱动状态", StatusValue = "上升"  , ColorBg = new SolidColorBrush(Colors.Red)},
+                new Ga_agvStatus { StatusName = "脱轨状态", StatusValue = "正常"  , ColorBg = new SolidColorBrush(Colors.Green)},
+                new Ga_agvStatus { StatusName = "出发位置", StatusValue = "5" , ColorBg = new SolidColorBrush(Colors.Black)},
+                new Ga_agvStatus { StatusName = "目的位置", StatusValue = "4" , ColorBg = new SolidColorBrush(Colors.Black)},
+                new Ga_agvStatus { StatusName = "任务名称", StatusValue = "运输", ColorBg = new SolidColorBrush(Colors.Black) },
+                new Ga_agvStatus { StatusName = "报警信息", StatusValue = "正常" , ColorBg = new SolidColorBrush(Colors.Green)},
             };
         }
 
@@ -63,6 +64,7 @@ namespace AGVSystem.APP.agv_System
                            Step = "",
                            turn = "",
                            Voltage = "",
+                           ColorBg = new SolidColorBrush(Colors.Red)
                        });
                 MainInfo.agvNo.Add(Agvlist[i]);
                 if (i.Equals(0))
@@ -126,9 +128,13 @@ namespace AGVSystem.APP.agv_System
             return portInfos;
         }
 
+        /// <summary>
+        /// 打开串口
+        /// </summary>
+        public void OpenPort()
+        {
         
 
-
-
+        }
     }
 }

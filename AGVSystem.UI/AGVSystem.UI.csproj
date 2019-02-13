@@ -71,6 +71,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APP_UI\Map\AddMap.xaml.cs">
+      <DependentUpon>AddMap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="APP_UI\Map\CompileMap.xaml.cs">
       <DependentUpon>CompileMap.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="APP_UI\Main\Home_Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="APP_UI\Map\AddMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,7 +160,7 @@
     <Resource Include="image\Magnify.png" />
     <Resource Include="image\文件.png" />
     <Resource Include="image\Text.png" />
-    <Resource Include="image\智能.png" />
+    <Resource Include="image\noopsyche.png" />
     <Resource Include="image\sign.png" />
     <Resource Include="image\line.png" />
     <Resource Include="image\equipment.png" />
@@ -205,6 +212,21 @@
     <Resource Include="image\Red_s.gif" />
     <Resource Include="image\Red_s.png" />
     <Resource Include="image\Yellow_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\停止.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\Stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\Stopagv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\Config.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

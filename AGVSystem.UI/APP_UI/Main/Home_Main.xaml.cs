@@ -15,6 +15,7 @@ using AGVSystem.Model.LogicData;
 using System.Windows.Media.Imaging;
 using System.IO;
 using OperateIni;
+using System.Windows.Media;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -35,6 +36,8 @@ namespace AGVSystem.UI.APP_UI.Main
         List<Ga_agv> Ga_agvNumArray; //数据源
         Painting GetPainting = new Painting();
         bool SelectMenu = false;
+        bool OpenPort = false;
+        bool StartNoopsyche = false;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -113,14 +116,14 @@ namespace AGVSystem.UI.APP_UI.Main
                 DataTable data = mapService.setting();
                 if (data.Rows.Count > 0)
                 {
-                    long DefaultName = long.Parse(data.Rows[0]["Map"].ToString().Trim()); ;
+                    long DefaultName = long.Parse(data.Rows[0]["Map"].ToString().Trim());
                     MapRegulate.UTCTime = DefaultName;
                     MapRegulate.DefaultMap = DefaultName;
                     SelectMenu = false;
                 }
                 else
                 {
-                    throw new Exception("Default map configuration missing!");
+                    throw new Exception("默认地图配置丢失！");
                 }
             }
             else
@@ -132,15 +135,9 @@ namespace AGVSystem.UI.APP_UI.Main
         }
 
 
-
-
-
-
-
-
         public void Load_agv()
         {
-
+            MapRegulate.GetValuePairs.Clear();
             Grid gridItem = new Grid();
             gridItem.Children.Clear();
             gridItem.VerticalAlignment = VerticalAlignment.Top;
@@ -181,6 +178,7 @@ namespace AGVSystem.UI.APP_UI.Main
                 Grid.SetColumn(image, 1);
                 Grid.SetRow(image, i);
                 gridItem.Children.Add(image);
+                MapRegulate.GetValuePairs.GetOrAdd(Convert.ToInt32(MainInfo.agvNo[i]), image);
             }
         }
 
@@ -191,7 +189,8 @@ namespace AGVSystem.UI.APP_UI.Main
         /// </summary>
         public void LoadComInfo(long Time)
         {
-            SerialPortData.DataContext = Get_AGVmanagement.agvGather(Time);
+            MapRegulate.GetPortInfos = Get_AGVmanagement.agvGather(Time);
+            SerialPortData.DataContext = MapRegulate.GetPortInfos;
             SerialPortData.AutoGenerateColumns = false;
         }
 
@@ -201,17 +200,19 @@ namespace AGVSystem.UI.APP_UI.Main
         /// <param name="Time"></param>
         public void TabAgvMoveInfo(long Time)
         {
-            Ga_agvNumArray = Get_AGVmanagement.AgvInfo(Time, ref MapRegulate.selAgv);
+            MapRegulate.GetAgvs = Get_AGVmanagement.AgvInfo(Time, ref MapRegulate.selAgv);
+            Ga_agvNumArray = MapRegulate.GetAgvs;
             TabAgvMoveData.DataContext = Ga_agvNumArray;
             TabAgvMoveData.AutoGenerateColumns = false;
         }
 
         /// <summary>
-        ///加载agv初始信息
+        ///加载默认agv初始信息
         /// </summary>
         public void AgvInfo()
         {
-            TabAgvData.ItemsSource = Get_AGVmanagement.AgvInfo();
+            MapRegulate.Ga_AgvStatuses = Get_AGVmanagement.AgvInfo();
+            TabAgvData.DataContext = MapRegulate.Ga_AgvStatuses;
             TabAgvData.HeadersVisibility = DataGridHeadersVisibility.None;
             TabAgvData.AutoGenerateColumns = false;
         }
@@ -230,15 +231,24 @@ namespace AGVSystem.UI.APP_UI.Main
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("确定退出程序？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-            if (result == MessageBoxResult.No)
+            if (!OpenPort)
             {
-                e.Cancel = true;
+                MessageBoxResult result = MessageBox.Show("确定退出程序？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                if (result == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
             }
             else
             {
-                Application.Current.Shutdown();
+                e.Cancel = true;
+                MessageBox.Show("请先关闭串口！", "提示", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
+
         }
 
         private void Com_Map_Click(object sender, RoutedEventArgs e)
@@ -247,6 +257,62 @@ namespace AGVSystem.UI.APP_UI.Main
             compile.Show();
         }
 
+        /// <summary>
+        /// 打开串口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Open_Port_Click(object sender, RoutedEventArgs e)
+        {
+            if (!OpenPort)
+            {
+                PortImg.Source = new BitmapImage(new Uri("pack://application:,,,/image/Stop.png", UriKind.Absolute));
+                PortText.Text = "关闭串口";
+                OpenPort = true;
+                StartBrainpower.IsEnabled = true;
+                MapMenu.IsEnabled = false;
+                MessageBox.Show("打开成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                PortImg.Source = new BitmapImage(new Uri("pack://application:,,,/image/start.png", UriKind.Absolute));
+                PortText.Text = "打开串口";
+                OpenPort = false;
+                MapMenu.IsEnabled = true;
+                StartBrainpower.IsEnabled = false;
+                MessageBox.Show("关闭成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
+        }
+
+        /// <summary>
+        /// 智能运行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StartBrainpower_Click(object sender, RoutedEventArgs e)
+        {
+            if (!StartNoopsyche)
+            {
+                StartImg.Source = new BitmapImage(new Uri("pack://application:,,,/image/Stopagv.png", UriKind.Absolute));
+                StartText.Text = "停止运行";
+                StartNoopsyche = true;
+                Open_Port.IsEnabled = false;
+            }
+            else
+            {
+                StartImg.Source = new BitmapImage(new Uri("pack://application:,,,/image/noopsyche.png", UriKind.Absolute));
+                StartText.Text = "智能运行";
+                StartNoopsyche = false;
+                Open_Port.IsEnabled = true;
+            }
+
+        }
+
+        private void AddMapInfo_Click(object sender, RoutedEventArgs e)
+        {
+            AddMap map = new AddMap();
+            map.ShowDialog();
+        }
     }
 }

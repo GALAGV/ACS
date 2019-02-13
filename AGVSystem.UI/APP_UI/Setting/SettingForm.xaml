@@ -53,7 +53,7 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <Grid  Background="#f0f0f0"  Name="Port"  Panel.ZIndex="3">
+                <Grid  Background="#f0f0f0"  Name="Port"  Panel.ZIndex="6">
                     <GroupBox Header="串口设置" BorderBrush="#dcdcdc" BorderThickness="1" >
                         <Grid>
                             <Grid.RowDefinitions>

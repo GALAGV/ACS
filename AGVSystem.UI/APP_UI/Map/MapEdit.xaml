@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Map"
         mc:Ignorable="d"
-        Title="MapEdit" Height="586.674" Width="1202.909" WindowState="Maximized">
+        Title="MapEdit" Height="786.674" Width="1302.909" WindowState="Maximized">
     <Window.Resources>
         <Style x:Key="FontAwesome">
             <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Styles/fonts/#FontAwesome" />
@@ -21,7 +21,7 @@
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <ToolBar Grid.Row="0" Grid.ColumnSpan="3" Background="#f0f0f0">
-                <Button Cursor="Hand" ToolTip="保存">
+                <Button Cursor="Hand" ToolTip="保存" Name="SaveMap" Click="SaveMap_Click">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xf0c7;" FontSize="25" Foreground="#515151" Style="{DynamicResource FontAwesome}" />
@@ -116,8 +116,32 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
+                <Separator />
+                <Button Cursor="Hand" ToolTip="保存为图片" Name="Saveimg" Click="Saveimg_Click">
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xf03e;" FontSize="21" Foreground="#515151"  Style="{DynamicResource FontAwesome}" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand" ToolTip="打印" Name="PrintImg" Click="PrintImg_Click">
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/print.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand" ToolTip="地图配置" Click="PrintImg_Click">
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/Config.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
             </ToolBar>
-            <Border Grid.Column="0" Grid.Row="1"   Background="#ffff"  Margin="2,1,3,3">
+            <Border Grid.Column="0" Grid.Row="1"   Background="#ffff"  Margin="1,1,0,0">
                 <Border Grid.Column="2" Grid.Row="2" Margin="3,3,1,3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
                     <Grid Margin="2,2,0,2" Background="#f0f0f0">
                         <Grid.RowDefinitions>
@@ -146,19 +170,16 @@
                             </StackPanel>
                         </ScrollViewer>
 
-                        <!--<ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,20">-->
+                        <ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,20">
                         <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,-1,0,20" >
                             <Canvas Name="TopY" Width="20" HorizontalAlignment="Left" ></Canvas>
                         </StackPanel>
-                        <!--</ScrollViewer>-->
+                        </ScrollViewer>
 
 
                         <ScrollViewer  Name="SrcCount" Grid.Column="1" Grid.Row="2"   HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" ScrollChanged="SrcCount_ScrollChanged"  >
-                            <StackPanel Name="Geenh" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Canvas  Name="mainPanel" Background="#ffffff">
-                                    <!--MouseMove="MainPanel_MouseMove" MouseDown="MainPanel_MouseDown" MouseUp="MainPanel_MouseUp"-->
-
-                                </Canvas>
+                            <StackPanel Name="Geenh" HorizontalAlignment="Left"  VerticalAlignment="Top">
+                                <Canvas  Name="mainPanel" Background="#ffffff" Width="2000" Height="1000"></Canvas>
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>

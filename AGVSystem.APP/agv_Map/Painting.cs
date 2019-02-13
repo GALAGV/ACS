@@ -14,12 +14,12 @@ namespace AGVSystem.APP.agv_Map
         /// <summary>
         /// 画布间隔长度
         /// </summary>
-        public int Canvas_X { get; set; }
+        public double Canvas_X { get; set; }
 
         /// <summary>
         /// 画布间隔高度
         /// </summary>
-        public int Canvas_Y { get; set; }
+        public double Canvas_Y { get; set; }
 
         /// <summary>
         /// 画布背景颜色
@@ -39,12 +39,12 @@ namespace AGVSystem.APP.agv_Map
         /// <summary>
         /// 刻度间隔长度
         /// </summary>
-        public int Scale_X { get; set; }
+        public double Scale_X { get; set; }
 
         /// <summary>
         /// 刻度间隔高度
         /// </summary>
-        public int Scale_Y { get; set; }
+        public double Scale_Y { get; set; }
 
         /// <summary>
         /// 刻度背景颜色

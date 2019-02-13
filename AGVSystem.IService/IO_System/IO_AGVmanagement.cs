@@ -35,9 +35,12 @@ namespace AGVSystem.IService.IO_System
         /// <returns></returns>
         List<Ga_PortInfo> agvGather(long Time);
 
+        /// <summary>
+        /// 打开串口
+        /// </summary>
+        void OpenPort();
 
 
-       
 
 
 

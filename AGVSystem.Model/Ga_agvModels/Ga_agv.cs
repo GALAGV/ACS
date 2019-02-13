@@ -1,9 +1,12 @@
-﻿namespace AGVSystem.Model.Ga_agvModels
+﻿using System.ComponentModel;
+using System.Windows.Media;
+
+namespace AGVSystem.Model.Ga_agvModels
 {
     /// <summary>
     /// AGV信息实体类
     /// </summary>
-    public class Ga_agv
+    public class Ga_agv : INotifyPropertyChanged
     {
         /// <summary>
         /// AGV编号
@@ -64,5 +67,30 @@
         /// 程序号
         /// </summary>
         public string Program { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        /// <summary>
+        /// 属性更改通知客户端事件
+        /// </summary>
+        private void GetChanged(string Name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(Name));
+            }
+        }
+
+        private Brush colorBg;
+        public Brush ColorBg
+        {
+            get { return colorBg; }
+            set
+            {
+                colorBg = value;
+                GetChanged("ColorBg");
+            }
+        }
     }
 }

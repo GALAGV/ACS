@@ -144,6 +144,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             combo.Text = port;
             combo.DropDownOpened += Combo_DropDownOpened;
             combo.Width = 75;
+            combo.VerticalContentAlignment = VerticalAlignment.Center;
             combo.Margin = new Thickness(0, 2, 10, 2);
             ComboBoxItem ite = new ComboBoxItem();
             ite.Content = port.Equals("") ? "" : "COM" + port;
@@ -169,6 +170,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             combo2.Text = Baud;
             combo2.Margin = new Thickness(0, 2, 10, 2);
             combo2.Width = 60;
+            combo2.VerticalContentAlignment = VerticalAlignment.Center;
             Grid.SetColumn(combo2, 3);
             Grid.SetRow(combo2, i);
             gridItem.Children.Add(combo2);
@@ -202,6 +204,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             {
                 combo3.Text = Agv;
             }
+            combo3.VerticalContentAlignment = VerticalAlignment.Center;
             combo3.Margin = new Thickness(0, 2, 10, 2);
             ComboBoxItem itel = new ComboBoxItem();
             itel.Content = "PLC";
@@ -490,6 +493,11 @@ namespace AGVSystem.UI.APP_UI.Setting
 
 
         }
+
+
+
+
+
         /// <summary>
         /// for循环
         /// </summary>
@@ -513,13 +521,6 @@ namespace AGVSystem.UI.APP_UI.Setting
             }
             return false;
         }
-
-
-
-
-
-
-
     }
 
     /// <summary>
