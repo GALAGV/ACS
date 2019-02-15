@@ -340,6 +340,7 @@ namespace AGVSystem.DAL.DataHelper
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
+
                 throw e;
             }
         }
@@ -353,15 +354,18 @@ namespace AGVSystem.DAL.DataHelper
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand cmd = new MySqlCommand();
+            MySqlDataReader myReader = null;
             try
             {
                 PrepareCommand(cmd, connection, null, SQLString, cmdParms);
-                MySqlDataReader myReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                myReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 cmd.Parameters.Clear();
                 return myReader;
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
+                myReader.Close();
+                connection.Dispose();
                 throw e;
             }
             //finally

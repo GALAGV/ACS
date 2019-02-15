@@ -15,7 +15,6 @@ using AGVSystem.Model.LogicData;
 using System.Windows.Media.Imaging;
 using System.IO;
 using OperateIni;
-using System.Windows.Media;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -90,7 +89,7 @@ namespace AGVSystem.UI.APP_UI.Main
                 }
                 else
                 {
-                    throw new Exception("Maps don't exist！");
+                    throw new Exception("地图数据不存在！");
                 }
             }
             catch (Exception ex)

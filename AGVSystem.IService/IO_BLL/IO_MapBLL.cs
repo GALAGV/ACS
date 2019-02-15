@@ -1,5 +1,8 @@
-﻿using MySql.Data.MySqlClient;
+﻿using AGVSystem.Model.DrawMap;
+using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using System.Data;
+using System.Windows.Controls;
 
 namespace AGVSystem.IService.IO_BLL
 {
@@ -111,5 +114,7 @@ namespace AGVSystem.IService.IO_BLL
         /// <param name="Mode"></param>
         /// <returns></returns>
         bool UpdateSettingMap(long Map, int Mode);
+
+        bool SaveMapInfo(string Times, bool type, string Name, double Width, double Height, string AgvStr, int MapType, double Size, Dictionary<int, Label> keyValues, Dictionary<int, Label> Area, Dictionary<int, Label> TextControl, List<WirePointArray> Line);
     }
 }

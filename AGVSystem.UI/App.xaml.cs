@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using AGVSystem.Infrastructure.agvCommon;
-using System.Threading;
-
 namespace AGVSystem.UI
 {
     /// <summary>
@@ -16,6 +10,7 @@ namespace AGVSystem.UI
     /// </summary>
     public partial class App : Application
     {
+
         /// <summary>
         /// 重写应用程序启动方法,添加异常捕捉事件
         /// </summary>
@@ -67,7 +62,7 @@ namespace AGVSystem.UI
                     errorMsg += String.Format("【InnerException】{0}\n{1}\n", ex.InnerException.Message, ex.InnerException.StackTrace);
                 }
                 errorMsg += String.Format("{0}\n{1}", ex.Message, ex.StackTrace);
-                WriteLog.writeLogInfo("Error", "Log", errorMsg);//写入日志
+                WriteLog.writeLogInfo("Error", "error", errorMsg);//写入日志
                 MessageBox.Show(ex.Message,"错误",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }

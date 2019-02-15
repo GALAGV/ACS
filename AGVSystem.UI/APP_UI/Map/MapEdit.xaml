@@ -37,14 +37,14 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="抓手工具" Name="Tongs_Tool" Click="Tongs_Tool_Click">
+                <!--<Button Cursor="Hand" ToolTip="抓手工具" Name="Tongs_Tool" Click="Tongs_Tool_Click" >
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/grab.png"/>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Separator />
+                <Separator />-->
                 <Button Cursor="Hand" Name="Magnify" ToolTip="放大" Click="Magnify_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
@@ -61,10 +61,34 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" Name="Recover" ToolTip="复原地图"  Click="Recover_Click">
+                <Button Cursor="Hand" Name="Recover" ToolTip="复原地图" Click="Recover_Click" >
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/restoration.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand"  ToolTip="水平对齐" Name="Level"  Click="Level_Click">
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/level.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand"  ToolTip="垂直对齐"  Name="Vertical" Click="Vertical_Click">
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/vertical.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand"  ToolTip="清除线路"  Name="ClearLine" Click="ClearLine_Click">
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/clear.png"/>
                         </StackPanel>
                     </Button.Content>
                 </Button>

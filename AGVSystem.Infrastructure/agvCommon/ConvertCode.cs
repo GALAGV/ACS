@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AGVSystem.Infrastructure.agvCommon
 {
@@ -113,5 +110,8 @@ namespace AGVSystem.Infrastructure.agvCommon
         {
             return Convert.ToInt32(BinStr, 2);
         }
+
+
+
     }
 }

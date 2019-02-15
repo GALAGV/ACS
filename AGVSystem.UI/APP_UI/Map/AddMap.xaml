@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Map"
         mc:Ignorable="d"
-        Title="添加地图" Height="243.595" Width="350.93" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="添加地图" Height="284.595" Width="383.93" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <GroupBox Header="添加地图" Margin="2">
+        <GroupBox Header="添加地图" Margin="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -25,7 +25,7 @@
                 <TextBox Grid.Row="0" Grid.Column="1" Name="mapName" Height="25" VerticalContentAlignment="Center" ></TextBox>
                 <TextBox Grid.Row="1" Grid.Column="1" Name="mapWidth"  Height="25" VerticalContentAlignment="Center" ></TextBox>
                 <TextBox Grid.Row="2" Grid.Column="1" Name="mapHeight"  Height="25" VerticalContentAlignment="Center"></TextBox>
-                <Button Content="确定(_S)" Grid.Row="3" BorderBrush="#adadad" Grid.Column="1" Grid.ColumnSpan="2" Width="80" Height="27" Margin="2,11,157,12" />
+                <Button Content="确定(_S)" Name="MapAdd" Click="MapAdd_Click" Grid.Row="3" BorderBrush="#adadad" Grid.Column="1" Grid.ColumnSpan="2" Width="80" Height="27" Margin="2,11,157,12" />
                 <Button Content="取消(_C)" Grid.Row="3" BorderBrush="#adadad" Grid.Column="1" Name="FormClose" Click="FormClose_Click" Grid.ColumnSpan="2" Width="80"  Height="27" Margin="136,13,23,10" ></Button>
             </Grid>
         </GroupBox>

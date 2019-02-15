@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace AGVSystem.Infrastructure.agvCommon
 {
-  public  class UTC
+    public  class UTC
     {
         public static long ConvertDateTimeLong(DateTime Time)//DateTime time = System.DateTime.UtcNow;
         {

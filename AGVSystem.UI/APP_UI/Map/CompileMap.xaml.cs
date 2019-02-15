@@ -170,7 +170,7 @@ namespace AGVSystem.UI.APP_UI.Map
             if (ga_Map == null)
                 return;
 
-            MapEdit map = new MapEdit(ga_Map);
+            MapEdit map = new MapEdit(ga_Map, true);
             map.Show();
             this.Close();
         }

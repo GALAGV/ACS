@@ -34,6 +34,7 @@
     <Reference Include="AGVDLL">
       <HintPath>..\AGVSystem.DispatchLogic\bin\Debug\AGVDLL.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows" />
@@ -45,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="agvCommon\ControlRegulate.cs" />
     <Compile Include="agvCommon\ConvertCode.cs" />
     <Compile Include="agvCommon\Encryption.cs" />
+    <Compile Include="agvCommon\FormatVerification.cs" />
     <Compile Include="agvCommon\Md5.cs" />
     <Compile Include="agvCommon\UTC.cs" />
     <Compile Include="agvCommon\WriteLog.cs" />

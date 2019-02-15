@@ -35,6 +35,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\AGVSystem.IService\bin\Debug\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,6 +58,10 @@
     <ProjectReference Include="..\AGVSystem.IService\AGVSystem.IService.csproj">
       <Project>{b894994b-925b-4997-b018-da3dcb0ec40a}</Project>
       <Name>AGVSystem.IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AGVSystem.Model\AGVSystem.Model.csproj">
+      <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
+      <Name>AGVSystem.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

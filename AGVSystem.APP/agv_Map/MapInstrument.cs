@@ -540,9 +540,9 @@ namespace AGVSystem.APP.agv_Map
                 Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + FontColor + "")),
                 BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + BrColor + "")),
                 BorderThickness = new Thickness(2, 2, 2, 2),
-                FontSize = FontSise,
-                Width = MpWidth,
-                Height = MpHeight,
+                FontSize = FontSise * siseWin,
+                Width = MpWidth * siseWin,
+                Height = MpHeight * siseWin,
                 Margin = new Thickness(point.X + (type.Equals(false) ? 120 : 0), point.Y + (type.Equals(false) ? 120 : 0), 0, 0),//120(位置偏移量)
                 Cursor = Cursors.Hand,
                 Tag = ArID,
@@ -715,8 +715,11 @@ namespace AGVSystem.APP.agv_Map
             var pairs = valuePairs.OrderByDescending(x => x.Key).ToArray();
             s = pairs.Count() > 0 ? pairs[0].Key : 0;
             s++;
-            GetCanvas.Children.Add(TagCreate(point, s, false, true));
             TagFormer();
+            Label label = TagCreate(point, s, false, true);
+            label.Background = new SolidColorBrush(Colors.Green);
+            GetCanvas.Children.Add(label);
+            
         }
 
         /// <summary>
@@ -753,6 +756,36 @@ namespace AGVSystem.APP.agv_Map
         }
 
         /// <summary>
+        /// 水平对齐
+        /// </summary>
+        public void align()
+        {
+            PathStatic = true;
+            GetCircuitType = CircuitType.Align;//信标对齐
+            TagFormer();
+        }
+
+        /// <summary>
+        /// 垂直对齐
+        /// </summary>
+        public void alignVe()
+        {
+            PathStatic = true;
+            GetCircuitType = CircuitType.vertical;//垂直对齐
+            TagFormer();
+        }
+
+        /// <summary>
+        /// 清除
+        /// </summary>
+        public void ClearTen()
+        {
+            PathStatic = true;
+            GetCircuitType = CircuitType.Clear;//清除
+            TagFormer();
+        }
+
+        /// <summary>
         /// 半圆
         /// </summary>
         public void Semicircle()
@@ -771,6 +804,8 @@ namespace AGVSystem.APP.agv_Map
             PathStatic = false;
             TagFormer();
         }
+
+
 
         /// <summary>
         /// 画布鼠标按下事件
@@ -1355,7 +1390,23 @@ namespace AGVSystem.APP.agv_Map
 
         #endregion
 
+        #region 保存地图
 
+        /// <summary>
+        /// 保存地图
+        /// </summary>
+        /// <param name="Times">UTC</param>
+        /// <param name="type">是否是新建地图</param>
+        /// <param name="Name">地图名称</param>
+        /// <param name="Width">地图宽度</param>
+        /// <param name="Height">地图高度</param>
+        /// <returns></returns>
+        public bool MapPreserve(string Times, bool type, string Name, double Width, double Height)
+        {
+            return IO_AGVMapService.SaveMapInfo(Times, type, Name, Width / 10, Height / 10, "0", 0, MapSise, valuePairs, keyValuePairs, GetKeyValues, wirePointArrays);
+        }
+
+        #endregion
 
     }
 }

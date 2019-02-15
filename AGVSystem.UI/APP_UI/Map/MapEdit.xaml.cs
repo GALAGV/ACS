@@ -19,30 +19,38 @@ namespace AGVSystem.UI.APP_UI.Map
         //Point jos = new Point();
 
         MapInstrument instrument = new MapInstrument();
-        double CanvasWidth, CanvasHeight;
+        double CanvasWidth, CanvasHeight; //初始宽高
+        bool editStatic = true;
 
-        public MapEdit(Ga_Map ga_Map)
+        public MapEdit(Ga_Map ga_Map,bool edit)
         {
             InitializeComponent();
             GetMap = ga_Map;
-            LoadMap();
-            instrument.LoadEditMap(UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)), CanvasWidth, CanvasHeight,true);
+            editStatic = edit;
+            LoadMap(edit);
+
         }
 
         /// <summary>
         /// 载入数据
         /// </summary>
-        public void LoadMap()
+        public void LoadMap(bool edit)
         {
             this.Title = "地图编辑-" + GetMap.Name;
             //CanvasWidth = GetMap.Width * 10 > this.Width * 2 ? GetMap.Width *10 : this.Width * 2;
             //CanvasHeight = GetMap.Height * 10 > this.Height * 2 ? GetMap.Height *10: this.Height * 2;
             CanvasWidth = GetMap.Width * 10;
-            CanvasHeight = GetMap.Height * 10 ;
+            CanvasHeight = GetMap.Height * 10;
             TopX.Width = CanvasWidth * instrument.MapSise;
             TopY.Height = CanvasHeight * instrument.MapSise;
+            mainPanel.Width = TopX.Width;
+            mainPanel.Height = TopY.Height;
             instrument.GetCanvas = mainPanel;
             GetPainting.CoordinateX(TopX, TopY); //绘制X轴Y轴刻度
+            if (edit)
+                instrument.LoadEditMap(UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)), CanvasWidth, CanvasHeight, true);
+            else
+                GetPainting.Coordinate(mainPanel);
         }
 
         /// <summary>
@@ -173,8 +181,14 @@ namespace AGVSystem.UI.APP_UI.Map
         private void SaveMap_Click(object sender, RoutedEventArgs e)
         {
 
-
-           
+            if (instrument.MapPreserve(UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)).ToString(), !editStatic, GetMap.Name, CanvasWidth, CanvasHeight))
+            {
+                MessageBox.Show("保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("保存失败", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
@@ -223,6 +237,36 @@ namespace AGVSystem.UI.APP_UI.Map
             rtb.Render(canvas);
 
             SaveRTBAsPNG(rtb, filename);
+        }
+
+        /// <summary>
+        /// 水平对齐
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Level_Click(object sender, RoutedEventArgs e)
+        {
+            instrument.align();
+        }
+
+        /// <summary>
+        /// 垂直对齐
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Vertical_Click(object sender, RoutedEventArgs e)
+        {
+            instrument.alignVe();
+        }
+
+        /// <summary>
+        /// 清楚线路
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearLine_Click(object sender, RoutedEventArgs e)
+        {
+            instrument.ClearTen();
         }
 
         private static void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)

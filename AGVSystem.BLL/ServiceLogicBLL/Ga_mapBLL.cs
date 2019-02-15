@@ -1,8 +1,11 @@
 ﻿using AGVSystem.DAL.DataAccess;
 using AGVSystem.IService.IO_BLL;
 using AGVSystem.IService.IO_DAL;
+using AGVSystem.Model.DrawMap;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using System.Data;
+using System.Windows.Controls;
 
 namespace AGVSystem.BLL.ServiceLogicBLL
 {
@@ -138,6 +141,11 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         public bool UpdateSettingMap(long Map, int Mode)
         {
             return map.UpdateSetting(Map, Mode);
+        }
+
+        public bool SaveMapInfo(string Times, bool type, string Name, double Width, double Height, string AgvStr, int MapType, double Size, Dictionary<int, Label> keyValues, Dictionary<int, Label> Area, Dictionary<int, Label> TextControl, List<WirePointArray> Line)
+        {
+            return map.SaveAtlas(Times, type, Name, Width, Height, AgvStr, MapType, Size, keyValues, Area, TextControl, Line);
         }
     }
 }

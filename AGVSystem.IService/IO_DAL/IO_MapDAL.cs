@@ -1,6 +1,8 @@
-﻿using MySql.Data.MySqlClient;
+﻿using AGVSystem.Model.DrawMap;
+using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using System.Data;
-
+using System.Windows.Controls;
 
 namespace AGVSystem.IService.IO_DAL
 {
@@ -114,6 +116,24 @@ namespace AGVSystem.IService.IO_DAL
         /// <param name="Mode"></param>
         /// <returns></returns>
         bool UpdateSetting(long Map, int Mode);
+
+        /// <summary>
+        /// 保存地图
+        /// </summary>
+        /// <param name="Times">UTCTime</param>
+        /// <param name="type">是否是新建地图 True是，false否 编辑地图</param>
+        /// <param name="Name">地图名称</param>
+        /// <param name="Width">宽度</param>
+        /// <param name="Height">高度</param>
+        /// <param name="AgvStr">默认0</param>
+        /// <param name="MapType">地图类型 默认0</param>
+        /// <param name="Size">缩放倍数</param>
+        /// <param name="keyValues">Tag集合</param>
+        /// <param name="Area">区域集合</param>
+        /// <param name="TextControl">文字集合</param>
+        /// <param name="Line">线路集合</param>
+        /// <returns></returns>
+        bool SaveAtlas(string Times, bool type, string Name, double Width, double Height, string AgvStr, int MapType, double Size, Dictionary<int, Label> keyValues, Dictionary<int, Label> Area, Dictionary<int, Label> TextControl, List<WirePointArray> Line);
 
     }
 }

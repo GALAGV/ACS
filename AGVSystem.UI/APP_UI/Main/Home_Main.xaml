@@ -357,8 +357,8 @@
 
             </Grid>
 
-            <Border  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Background="#ffff" Margin="0,2,2,5">
-                <Border Grid.Column="2" Grid.Row="2" Margin="3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
+            <Border  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Background="#ffff" Margin="0,2,0,0">
+                <Border Grid.Column="2" Grid.Row="2" Margin="2" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
                     <TabControl Grid.ColumnSpan="5">
                         <TabItem Header="运行信息">
                             <DataGrid x:Name="TabAgvMoveData"  AllowDrop="True" RowHeaderWidth="0"  ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" >
