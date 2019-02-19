@@ -29,12 +29,12 @@
                                     <Setter Property="Background" Value="#191970" />
                                     <Setter Property="Foreground" Value="Black" />
                                 </Trigger>
-                                <!--<Trigger Property="AlternationIndex" Value="0">
-                                    <Setter Property="Background" Value="#e7e7e7" />
+                                <Trigger Property="AlternationIndex" Value="0">
+                                    <Setter Property="Background" Value="White" />
                                 </Trigger>
                                 <Trigger Property="AlternationIndex" Value="1">
                                     <Setter Property="Background" Value="#f2f2f2" />
-                                </Trigger>-->
+                                </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="LightGray" />
                                 </Trigger>

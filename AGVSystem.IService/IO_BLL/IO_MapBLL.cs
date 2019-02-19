@@ -1,4 +1,5 @@
 ﻿using AGVSystem.Model.DrawMap;
+using AGVSystem.Model.Ga_agvModels;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Data;
@@ -116,5 +117,36 @@ namespace AGVSystem.IService.IO_BLL
         bool UpdateSettingMap(long Map, int Mode);
 
         bool SaveMapInfo(string Times, bool type, string Name, double Width, double Height, string AgvStr, int MapType, double Size, Dictionary<int, Label> keyValues, Dictionary<int, Label> Area, Dictionary<int, Label> TextControl, List<WirePointArray> Line);
+
+
+        MySqlDataReader BLLMapRoute(string MapName);
+
+
+        /// <summary>
+        /// 线路保存
+        /// </summary>
+        /// <param name="route"></param>
+        /// <param name="edit">是否编辑</param>
+        /// <returns></returns>
+        bool SaveRouteBLL(Route route, bool edit, long UTCTime);
+
+
+
+        /// <summary>
+        /// 判断线路号是否存在
+        /// </summary>
+        /// <param name="Program"></param>
+        /// <param name="MapTime"></param>
+        /// <param name="UTCTime"></param>
+        /// <returns></returns>
+        bool ExistsProgramBLL(string Program, long MapTime, long UTCTime);
+
+
+        /// <summary>
+        /// 查找关联Tag
+        /// </summary>
+        /// <param name="CreateTime"></param>
+        /// <param name="TagNo"></param>
+        string[] SelectTagBLL(long CreateTime, string TagNo);
     }
 }

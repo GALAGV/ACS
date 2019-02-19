@@ -33,7 +33,7 @@
                 <Separator Width="4" />
                 <MenuItem Header="编辑(_K)" Height="20" FontFamily="微软雅黑" >
                     <MenuItem Header="编辑地图(_G)" Height="20" Name="Com_Map"  Click="Com_Map_Click" Width="150" ></MenuItem>
-                    <MenuItem Header="编辑线路(_H)" Height="20" Width="150"></MenuItem>
+                    <MenuItem Header="编辑线路(_H)" Height="20" Width="150" Name="Edit" Click="Edit_Click"></MenuItem>
                     <MenuItem Header="编辑信标(_Q)" Height="20" Width="150"></MenuItem>
                 </MenuItem>
                 <Separator Width="4" />
@@ -49,7 +49,7 @@
                     <MenuItem Header="关于软件(_A)" Height="20"></MenuItem>
                 </MenuItem>
             </Menu>
-            <ToolBar Grid.Row="1" Grid.ColumnSpan="3" Background="#f0f0f0">
+            <ToolBar Grid.Row="1" Grid.ColumnSpan="3" Background="#f0f0f0" Loaded="ToolBar_Loaded">
                 <Button Cursor="Hand"  Name="Open_Port" Click="Open_Port_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
@@ -107,17 +107,17 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>-->
-                <Separator />
-                <Button Cursor="Hand" >
+                <!--<Separator />-->
+                <!--<Button Cursor="Hand" >
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/send.png"/>
                         </StackPanel>
                     </Button.Content>
-                </Button>
-                <Separator />
+                </Button>-->
+                <!--<Separator />-->
                 <Label Content="地图:" ></Label>
-                <ComboBox Width="125" SelectedIndex="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="MapMenu" SelectionChanged="MapMenu_SelectionChanged" DisplayMemberPath="Name" SelectedValuePath="CreateTime">
+                <ComboBox Width="125" SelectedIndex="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="MapMenu" SelectionChanged="MapMenu_SelectionChanged" DisplayMemberPath="Name" SelectedValuePath="CreateTime">
                 </ComboBox>
             </ToolBar>
             <Border Grid.Column="2" Grid.Row="2"   Background="#ffff" >

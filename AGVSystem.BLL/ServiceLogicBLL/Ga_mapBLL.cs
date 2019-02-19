@@ -2,6 +2,7 @@
 using AGVSystem.IService.IO_BLL;
 using AGVSystem.IService.IO_DAL;
 using AGVSystem.Model.DrawMap;
+using AGVSystem.Model.Ga_agvModels;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Data;
@@ -146,6 +147,26 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         public bool SaveMapInfo(string Times, bool type, string Name, double Width, double Height, string AgvStr, int MapType, double Size, Dictionary<int, Label> keyValues, Dictionary<int, Label> Area, Dictionary<int, Label> TextControl, List<WirePointArray> Line)
         {
             return map.SaveAtlas(Times, type, Name, Width, Height, AgvStr, MapType, Size, keyValues, Area, TextControl, Line);
+        }
+
+        public MySqlDataReader BLLMapRoute(string MapName)
+        {
+            return map.MapRoute(MapName);
+        }
+
+        public bool SaveRouteBLL(Route route, bool edit, long UTCTime)
+        {
+            return map.SaveRoute(route, edit, UTCTime);
+        }
+
+        public bool ExistsProgramBLL(string Program, long MapTime, long UTCTime)
+        {
+            return map.ExistsProgram(Program, MapTime, UTCTime);
+        }
+
+        public string[] SelectTagBLL(long CreateTime, string TagNo)
+        {
+            return map.SelectTag(CreateTime, TagNo);
         }
     }
 }

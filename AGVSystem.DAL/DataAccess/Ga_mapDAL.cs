@@ -8,6 +8,7 @@ using AGVSystem.DAL.DataHelper;
 using System.Windows.Controls;
 using AGVSystem.Infrastructure.agvCommon;
 using AGVSystem.Model.DrawMap;
+using AGVSystem.Model.Ga_agvModels;
 
 namespace AGVSystem.DAL.DataAccess
 {
@@ -577,6 +578,56 @@ namespace AGVSystem.DAL.DataAccess
                 sqlLine.Append(";");
             }
             Sql.Add(sqlLine.ToString());
+        }
+
+        public MySqlDataReader MapRoute(string MapName)
+        {
+           return MySQLHelper.ExecuteReader(string.Format("SELECT * FROM `agv`.`route{0}`", MapName));
+        }
+
+        public bool SaveRoute(Route route, bool edit, long UTCTime)
+        {
+            if (edit)
+            {
+                string sql = string.Format("UPDATE agv.`route{0}` SET  `Name` = '{1}', `Tag` = '{2}', `Speed` = '{3}', `Stop` = '{4}', `Turn` = '{5}', `Direction` = '{6}', Pbs = '{7}', Hook = '{8}', `AGV` = '{9}', `ChangeProgram` = '{10}',`Program` = {11}  WHERE CreateTime = {12}", UTCTime, route.Name, route.Tag, route.Speed, route.Stop, route.Turn, route.Direction, route.Pbs, route.Hook, "0", route.ChangeProgram,route.Program, route.CreateTime);
+                return MySQLHelper.ExecuteNonQuery(sql) > 0 ? true : false;
+            }
+            else
+            {
+                string sql = string.Format("INSERT INTO agv.`route{0}` (`Program`, `Name`, `CreateTime`, `Tag`, `Speed`, `Stop`, `Turn`, `Direction`, `Pbs`, `Hook`, `ChangeProgram`, `AGV`)  VALUES ('{1}', '{2}', {3}, '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}') ", UTCTime, route.Program, route.Name, route.CreateTime, route.Tag, route.Speed, route.Stop, route.Turn, route.Direction, route.Pbs, route.Hook, route.ChangeProgram, "0");
+                return MySQLHelper.ExecuteNonQuery(sql) > 0 ? true : false;
+            }
+        }
+
+        public bool ExistsProgram(string Program, long MapTime, long UTCTime)
+        {
+            DataTable dt = MySQLHelper.ExecuteDataTable(string.Format("SELECT `CreateTime` FROM agv.`route{0}` WHERE `Program` = {1} AND `CreateTime`!={2}", MapTime, Program, UTCTime));
+            return dt.Rows.Count > 0 ? true : false;
+        }
+
+        public string[] SelectTag(long CreateTime, string TagNo)
+        {
+            List<string> listSTag = new List<string>();
+
+            string sql1 = string.Format("SELECT tag1 FROM agv.line{0} WHERE tag2 = 'TA{1}'", CreateTime, TagNo);
+            MySqlDataReader mr1 = MySQLHelper.ExecuteReader(sql1);
+            while (mr1.Read())
+            {
+                StringBuilder sb = new StringBuilder(mr1.GetString(0));
+                listSTag.Add(sb.Remove(0, 2).ToString());
+            }
+            mr1.Close();
+
+            string sql2 = string.Format("SELECT tag2 FROM agv. line{0} WHERE tag1 = 'TA{1}'", CreateTime, TagNo);
+            MySqlDataReader mr2 = MySQLHelper.ExecuteReader(sql2);
+            while (mr2.Read())
+            {
+                StringBuilder sb = new StringBuilder(mr2.GetString(0));
+                listSTag.Add(sb.Remove(0, 2).ToString());
+            }
+            mr2.Close();
+            string[] selectTag = listSTag.ToArray();
+            return selectTag;
         }
     }
 }

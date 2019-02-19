@@ -69,7 +69,7 @@ namespace AGVSystem.Infrastructure.agvCommon
             }
             else
             {
-                return "";
+                return "居中对齐";
             }
         }
 

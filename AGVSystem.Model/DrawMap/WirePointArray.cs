@@ -39,6 +39,7 @@ namespace AGVSystem.Model.DrawMap
         public Path GetPath { get; set; }
 
     }
+
     public class WirePointBroken : WirePointArray
     {
         /// <summary>

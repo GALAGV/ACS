@@ -20,7 +20,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ToolBar Grid.Row="0" Grid.ColumnSpan="3" Background="#f0f0f0">
+            <ToolBar Grid.Row="0" Grid.ColumnSpan="3" Background="#f0f0f0" Loaded="ToolBar_Loaded">
                 <Button Cursor="Hand" ToolTip="保存" Name="SaveMap" Click="SaveMap_Click">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">

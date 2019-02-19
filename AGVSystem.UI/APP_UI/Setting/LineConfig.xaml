@@ -1,0 +1,45 @@
+﻿<Window x:Class="AGVSystem.UI.APP_UI.Setting.LineConfig"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Setting"
+        mc:Ignorable="d"
+        Title="LineConfig" Height="186.881" Width="397.417"    ResizeMode="NoResize" WindowStartupLocation="Manual">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="111*"/>
+            <ColumnDefinition Width="280*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+            <GroupBox Header="线路配置"    Grid.Row="0" Margin="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="名称规则:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+                    <TextBox Grid.Row="0" Text="Ga_[StartTag]-[StopTag]" Grid.Column="1"  Margin="0,5,0,5" VerticalContentAlignment="Center"></TextBox>
+                    <Label Content="方向自动计算" Margin="0,-3,0,0"  Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                    <CheckBox  Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right"></CheckBox>
+                </Grid>
+            </GroupBox>
+            <Button  Grid.Row="1" Grid.Column="1" Width="80" Height="26" BorderBrush="#adadad"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,15,0" >
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="保存"  VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <TextBox Grid.Row="1" Margin="2,0,0,0" AcceptsReturn="True"  BorderThickness="0"  IsReadOnly="True"  Width="280" HorizontalAlignment="Left" Text="注：[StartTag]起始点，[StartTag]结束点" VerticalAlignment="Center"></TextBox>
+        </Grid>
+    </Grid>
+</Window>

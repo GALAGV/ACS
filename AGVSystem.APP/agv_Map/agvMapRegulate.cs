@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using AGVSystem.Infrastructure.agvCommon;
+using System.Collections.ObjectModel;
 
 namespace AGVSystem.APP.agv_Map
 {
@@ -41,24 +42,54 @@ namespace AGVSystem.APP.agv_Map
         /// 加载所有地图数据
         /// </summary>
         /// <returns></returns>
-        public List<Ga_Map> GetMapRegulate()
+        public ObservableCollection<Ga_Map> GetMapRegulate()
         {
-            List<Ga_Map> ga_s = new List<Ga_Map>();
+            ObservableCollection<Ga_Map> ga_s = new ObservableCollection<Ga_Map>();
             MySqlDataReader mySql = IO_AGVMapService.MapArray();
             while (mySql.Read())
             {
-                ga_s.Add(
-                    new Ga_Map()
-                    {
-                        Name = mySql["Name"].ToString(),
-                        Width = Convert.ToDouble(mySql["Width"].ToString()),
-                        Height = Convert.ToDouble(mySql["Height"].ToString()),
-                        ID = Convert.ToInt32(mySql["ID"].ToString()),
-                        CreateTime = UTC.ConvertLongDateTime(long.Parse(mySql["CreateTime"].ToString())).ToString("yyyy-MM-dd HH:mm:ss")
-                    });
+                ga_s.Add(new Ga_Map()
+                {
+                    Name = mySql["Name"].ToString(),
+                    Width = Convert.ToDouble(mySql["Width"].ToString()),
+                    Height = Convert.ToDouble(mySql["Height"].ToString()),
+                    ID = Convert.ToInt32(mySql["ID"].ToString()),
+                    CreateTime = UTC.ConvertLongDateTime(long.Parse(mySql["CreateTime"].ToString())).ToString("yyyy-MM-dd HH:mm:ss")
+                });
             }
             mySql.Close();
             return ga_s;
+        }
+
+        /// <summary>
+        /// 线路集合
+        /// </summary>
+        /// <param name="MapName"></param>
+        /// <returns></returns>
+        public ObservableCollection<Route> GetrouteList(string MapName)
+        {
+            ObservableCollection<Route> routes = new ObservableCollection<Route>();
+            MySqlDataReader mySql = IO_AGVMapService.BLLMapRoute(MapName);
+            while (mySql.Read())
+            {
+                routes.Add(new Route() {
+                    ID= Convert.ToInt32(mySql["ID"].ToString().Trim()),
+                    Name= mySql["Name"].ToString().Trim(),
+                    CreateTime= long.Parse(mySql["CreateTime"].ToString().Trim()),
+                    Tag= mySql["Tag"].ToString().Trim(),
+                    Direction = mySql["Direction"].ToString().Trim(),
+                    ChangeProgram= mySql["ChangeProgram"].ToString().Trim(),
+                    Hook = mySql["Hook"].ToString().Trim(),
+                    Pbs= mySql["Pbs"].ToString().Trim(),
+                    Program= Convert.ToInt32(mySql["Program"].ToString().Trim()),
+                    revPbs= mySql["revPbs"].ToString().Trim(),
+                    Speed= mySql["Speed"].ToString().Trim(),
+                    Stop= mySql["Stop"].ToString().Trim(),
+                    Turn = mySql["Turn"].ToString().Trim()
+                });
+            }
+            mySql.Close();
+            return routes;
         }
 
 
@@ -116,6 +147,21 @@ namespace AGVSystem.APP.agv_Map
         public bool InsertDeviceSetting(long mapTime, DataTable data)
         {
             return IO_AGVMapService.InsertDeviceBLL(mapTime, data);
+        }
+
+        public bool SaveRouteSystem(Route route, bool edit, long UTCTime)
+        {
+            return IO_AGVMapService.SaveRouteBLL(route, edit, UTCTime);
+        }
+
+        public bool ExistsSystem(string Program, long MapTime, long UTCTime)
+        {
+            return IO_AGVMapService.ExistsProgramBLL(Program, MapTime, UTCTime);
+        }
+
+        public string[] SelectTagSystem(long CreateTime, string TagNo)
+        {
+            return IO_AGVMapService.SelectTagBLL(CreateTime, TagNo);
         }
     }
 }

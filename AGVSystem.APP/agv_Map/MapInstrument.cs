@@ -19,9 +19,9 @@ namespace AGVSystem.APP.agv_Map
         private int index = 1;//区域起始索引
         private int TextInx = 1;//文字索引
         public double MapSise = 1; //画布默认缩放大小
-        bool tongs = false; //画布移动标志位
+        private bool tongs = false; //画布移动标志位
         private Painting painting = new Painting();//地图绘制
-        IO_MapBLL IO_AGVMapService = new Ga_mapBLL();
+        private IO_MapBLL IO_AGVMapService = new Ga_mapBLL();
         private Point pos = new Point();//记录移动时Tag位置
         private Point jos = new Point();//记录移动时工作区位置
         public Canvas GetCanvas = new Canvas();//绘制容器
@@ -417,18 +417,21 @@ namespace AGVSystem.APP.agv_Map
         {
             if (tongs)
                 return;
+            if (e.LeftButton == MouseButtonState.Released)
+            {
+                Label tmp = (Label)sender;
+                tmp.ReleaseMouseCapture();
+                Point point = new Point { X = tmp.Margin.Left + 19, Y = tmp.Margin.Top + 11.5 }; //19X轴偏移位置,11.5Y轴偏移位置（信标中心点）
+                if (PathStatic)
+                {
+                    AddCircuit(Convert.ToInt32(tmp.Tag), point);
+                }
+                else
+                {
+                    MouseMove(point, Convert.ToInt32(tmp.Tag));//信标移动
+                }
+            }
 
-            Label tmp = (Label)sender;
-            tmp.ReleaseMouseCapture();
-            Point point = new Point { X = tmp.Margin.Left + 19, Y = tmp.Margin.Top + 11.5 }; //19X轴偏移位置,11.5Y轴偏移位置（信标中心点）
-            if (PathStatic)
-            {
-                AddCircuit(Convert.ToInt32(tmp.Tag), point);
-            }
-            else
-            {
-                MouseMove(point, Convert.ToInt32(tmp.Tag));//信标移动
-            }
         }
 
 
@@ -443,7 +446,7 @@ namespace AGVSystem.APP.agv_Map
             if (tongs)
                 return;
 
-            if (PathStatic)
+            if (PathStatic )
                 return;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -489,10 +492,26 @@ namespace AGVSystem.APP.agv_Map
             if (tongs)
                 return;
 
-            Label tmp = (Label)sender;
-            pos = e.GetPosition(null);
-            tmp.CaptureMouse();
-            tmp.Cursor = Cursors.Hand;
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Label tmp = (Label)sender;
+                pos = e.GetPosition(null);
+                tmp.CaptureMouse();
+                tmp.Cursor = Cursors.Hand;
+            }
+
+
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                if (PathStatic)
+                    return;
+
+
+                MessageBox.Show("");
+                //TagRedact mapRedact = new TagRedact(Convert.ToInt32(tmp.Tag), GetCanvas);
+                //mapRedact.GetMovement += MouseMove;
+                //mapRedact.ShowDialog();
+            }
         }
         #endregion
 
@@ -719,7 +738,7 @@ namespace AGVSystem.APP.agv_Map
             Label label = TagCreate(point, s, false, true);
             label.Background = new SolidColorBrush(Colors.Green);
             GetCanvas.Children.Add(label);
-            
+
         }
 
         /// <summary>
@@ -913,7 +932,7 @@ namespace AGVSystem.APP.agv_Map
         /// 载入编辑地图数据
         /// </summary>
         /// <param name="Time"></param>
-        public void LoadEditMap(long Time, bool event_type)
+        public void LoadEditMap(long Time, bool event_type, bool tagtype)
         {
             wirePointArrays.Clear();
             keyValuePairs.Clear();
@@ -925,7 +944,7 @@ namespace AGVSystem.APP.agv_Map
             LoadLine(Time);
             WidgetLoad(Time, event_type);
 
-            Mapmagnify(MapSise);
+            Mapmagnify(MapSise, tagtype);
         }
 
         /// <summary>
@@ -1028,11 +1047,29 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="Size"></param>
         /// <param name="mainPanel"></param>
         /// <param name="mainPane2"></param>
-        public void Mapmagnify(double Size)
+        public void Mapmagnify(double Size, double Width, double Height, bool type)
+        {
+            GetCanvas.Children.Clear();
+            GetCanvas.Width = Width * Size;
+            GetCanvas.Height = Height * Size;
+            painting.Canvas_X = 10 * Size;
+            painting.Canvas_Y = 10 * Size;
+            painting.Coordinate(GetCanvas);
+            Zoom(Size, GetCanvas, type);
+            siseWin = Size;
+        }
+
+        /// <summary>
+        /// 地图比例尺缩放
+        /// </summary>
+        /// <param name="Size"></param>
+        /// <param name="mainPanel"></param>
+        /// <param name="mainPane2"></param>
+        public void Mapmagnify(double Size, bool type)
         {
             GetCanvas.Children.Clear();
             painting.Coordinate(GetCanvas);
-            Zoom(Size, GetCanvas, false);
+            Zoom(Size, GetCanvas, type);
             siseWin = Size;
         }
 
@@ -1145,7 +1182,7 @@ namespace AGVSystem.APP.agv_Map
             }
             else
             {
-                return "";
+                return "居中对齐";
             }
         }
 

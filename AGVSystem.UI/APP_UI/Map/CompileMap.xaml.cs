@@ -9,6 +9,7 @@ using AGVSystem.APP.agv_Map;
 using AGVSystem.Model.Ga_agvModels;
 using AGVSystem.Infrastructure.agvCommon;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace AGVSystem.UI.APP_UI.Map
 {
@@ -25,7 +26,7 @@ namespace AGVSystem.UI.APP_UI.Map
 
         IO_AGVMapService mapService = new agvMapRegulate(); //业务逻辑接口
 
-        List<Ga_Map> GetMaps = new List<Ga_Map>(); //显示数据源
+        ObservableCollection<Ga_Map> GetMaps = new ObservableCollection<Ga_Map>(); //显示数据源
 
 
         public void Compile()
@@ -53,7 +54,7 @@ namespace AGVSystem.UI.APP_UI.Map
             {
                 if (mapService.Export_Map(UTC.ConvertDateTimeLong(Convert.ToDateTime(ga_Map.CreateTime)), sfd.FileName))
                 {
-                    GetMaps.ForEach(x => x.IsSelected = false); //取消选择
+                    GetMaps.ToList().ForEach(x => x.IsSelected = false); //取消选择
                     MessageBox.Show("导出成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Asterisk, MessageBoxResult.No);
                 }
                 else
@@ -102,7 +103,7 @@ namespace AGVSystem.UI.APP_UI.Map
 
         private void AllCkek_Click(object sender, RoutedEventArgs e)
         {
-            GetMaps.ForEach(x => x.IsSelected = ((CheckBox)sender).IsChecked == true ? true : false); //全选or反选
+            GetMaps.ToList().ForEach(x => x.IsSelected = ((CheckBox)sender).IsChecked == true ? true : false); //全选or反选
         }
 
 

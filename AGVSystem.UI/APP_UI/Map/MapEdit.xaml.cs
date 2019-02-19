@@ -16,8 +16,6 @@ namespace AGVSystem.UI.APP_UI.Map
     {
         Ga_Map GetMap = new Ga_Map();
         Painting GetPainting = new Painting();
-        //Point jos = new Point();
-
         MapInstrument instrument = new MapInstrument();
         double CanvasWidth, CanvasHeight; //初始宽高
         bool editStatic = true;
@@ -46,6 +44,8 @@ namespace AGVSystem.UI.APP_UI.Map
             mainPanel.Width = TopX.Width;
             mainPanel.Height = TopY.Height;
             instrument.GetCanvas = mainPanel;
+            TopX.Children.Clear();
+            TopY.Children.Clear();
             GetPainting.CoordinateX(TopX, TopY); //绘制X轴Y轴刻度
             if (edit)
                 instrument.LoadEditMap(UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)), CanvasWidth, CanvasHeight, true);
@@ -267,6 +267,22 @@ namespace AGVSystem.UI.APP_UI.Map
         private void ClearLine_Click(object sender, RoutedEventArgs e)
         {
             instrument.ClearTen();
+        }
+
+        private void ToolBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            ToolBar toolBar = sender as ToolBar;
+            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
+            if (overflowGrid != null)
+            {
+                overflowGrid.Visibility = Visibility.Collapsed;
+            }
+
+            var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
+            if (mainPanelBorder != null)
+            {
+                mainPanelBorder.Margin = new Thickness(0);
+            }
         }
 
         private static void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)

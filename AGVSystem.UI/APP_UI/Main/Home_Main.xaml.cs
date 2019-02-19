@@ -15,6 +15,8 @@ using AGVSystem.Model.LogicData;
 using System.Windows.Media.Imaging;
 using System.IO;
 using OperateIni;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -31,12 +33,11 @@ namespace AGVSystem.UI.APP_UI.Main
         IO_AGVmanagement Get_AGVmanagement = new agvFunction();
         IO_AGVMapService mapService = new agvMapRegulate(); //业务逻辑接口
         MapInstrument map = new MapInstrument();
-      
         List<Ga_agv> Ga_agvNumArray; //数据源
         Painting GetPainting = new Painting();
-        bool SelectMenu = false;
         bool OpenPort = false;
         bool StartNoopsyche = false;
+        ObservableCollection<Ga_Map> maps = new ObservableCollection<Ga_Map>();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -48,8 +49,23 @@ namespace AGVSystem.UI.APP_UI.Main
         /// </summary>
         public void Setting_Map()
         {
-            SelectMenu = true;
-            MapMenu.ItemsSource = mapService.GetMapRegulate();
+            maps = mapService.GetMapRegulate();
+            MapMenu.ItemsSource = maps;
+            DataTable data = mapService.setting();
+            if (data.Rows.Count > 0)
+            {
+                long DefaultName = long.Parse(data.Rows[0]["Map"].ToString().Trim());
+                MapRegulate.DefaultMap = DefaultName;
+                Ga_Map ga = maps.FirstOrDefault(x => x.CreateTime.Equals(UTC.ConvertLongDateTime(DefaultName).ToString("yyyy-MM-dd HH:mm:ss")));
+                if (ga != null)
+                {
+                    MapMenu.Text = ga.Name;
+                }
+            }
+            else
+            {
+                throw new Exception("默认地图配置丢失！");
+            }
             AgvInfo();
         }
 
@@ -60,16 +76,11 @@ namespace AGVSystem.UI.APP_UI.Main
         {
             try
             {
-                DataTable MapData = mapService.defaultMap(MapRegulate.UTCTime);
-                if (MapData.Rows.Count > 0)
+                Ga_Map GetMap = maps.FirstOrDefault(x => x.CreateTime.Equals(MapMenu.SelectedValue.ToString()));
+                if (GetMap != null)
                 {
-                    Ga_Map GetMap = new Ga_Map()
-                    {
-                        Width = Convert.ToDouble(MapData.Rows[0]["Width"].ToString()),
-                        Height = Convert.ToDouble(MapData.Rows[0]["Height"].ToString())
-                    };
-                    string MapNam = MapData.Rows[0]["Name"].ToString();
-                    MapMenu.Text = MapNam;
+                    TopX.Children.Clear();
+                    TopY.Children.Clear();
                     GetPainting.CoordinateX(TopX, TopY);
                     map.GetCanvas = mainPanel;
                     if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
@@ -83,7 +94,7 @@ namespace AGVSystem.UI.APP_UI.Main
                     TopY.Height = CanvasHeight;
                     mainPanel.Width = CanvasWidth;
                     mainPanel.Height = CanvasHeight;
-                    map.LoadEditMap(MapRegulate.UTCTime, false);
+                    map.LoadEditMap(MapRegulate.UTCTime, false,false);
                     TabAgvMoveInfo(MapRegulate.UTCTime);
                     LoadComInfo(MapRegulate.UTCTime);
                 }
@@ -91,6 +102,7 @@ namespace AGVSystem.UI.APP_UI.Main
                 {
                     throw new Exception("地图数据不存在！");
                 }
+
             }
             catch (Exception ex)
             {
@@ -105,30 +117,15 @@ namespace AGVSystem.UI.APP_UI.Main
         /// <param name="e"></param>
         private void MapMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectionMenu();
+            if (MapMenu.Items.Count > 0 && MapMenu.SelectedValue != null)
+            {
+                SelectionMenu();
+            }
         }
 
         public void SelectionMenu()
         {
-            if (SelectMenu)
-            {
-                DataTable data = mapService.setting();
-                if (data.Rows.Count > 0)
-                {
-                    long DefaultName = long.Parse(data.Rows[0]["Map"].ToString().Trim());
-                    MapRegulate.UTCTime = DefaultName;
-                    MapRegulate.DefaultMap = DefaultName;
-                    SelectMenu = false;
-                }
-                else
-                {
-                    throw new Exception("默认地图配置丢失！");
-                }
-            }
-            else
-            {
-                MapRegulate.UTCTime = UTC.ConvertDateTimeLong(Convert.ToDateTime(MapMenu.SelectedValue.ToString()));
-            }
+            MapRegulate.UTCTime = UTC.ConvertDateTimeLong(Convert.ToDateTime(MapMenu.SelectedValue.ToString()));
             LoadMap();
             Load_agv();
         }
@@ -312,6 +309,28 @@ namespace AGVSystem.UI.APP_UI.Main
         {
             AddMap map = new AddMap();
             map.ShowDialog();
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            EditLine edit = new EditLine(maps);
+            edit.Show();
+        }
+
+        private void ToolBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            ToolBar toolBar = sender as ToolBar;
+            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
+            if (overflowGrid != null)
+            {
+                overflowGrid.Visibility = Visibility.Collapsed;
+            }
+
+            var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
+            if (mainPanelBorder != null)
+            {
+                mainPanelBorder.Margin = new Thickness(0);
+            }
         }
     }
 }

@@ -92,8 +92,14 @@
     <Compile Include="APP_UI\Map\CompileMap.xaml.cs">
       <DependentUpon>CompileMap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="APP_UI\Map\EditLine.xaml.cs">
+      <DependentUpon>EditLine.xaml</DependentUpon>
+    </Compile>
     <Compile Include="APP_UI\Map\MapEdit.xaml.cs">
       <DependentUpon>MapEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="APP_UI\Setting\LineConfig.xaml.cs">
+      <DependentUpon>LineConfig.xaml</DependentUpon>
     </Compile>
     <Compile Include="APP_UI\Setting\SettingForm.xaml.cs">
       <DependentUpon>SettingForm.xaml</DependentUpon>
@@ -140,7 +146,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="APP_UI\Map\EditLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="APP_UI\Map\MapEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="APP_UI\Setting\LineConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -260,6 +274,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="image\clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\Configs.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

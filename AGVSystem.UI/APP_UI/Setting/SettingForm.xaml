@@ -76,7 +76,7 @@
                                     <Button.Content>
                                         <StackPanel Orientation="Horizontal">
                                             <!--<TextBlock Text="&#xf055;" FontSize="18" Style="{DynamicResource FontAwesome}" />-->
-                                            <TextBlock Text="添加" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="添加"  VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>
@@ -84,7 +84,7 @@
                                     <Button.Content>
                                         <StackPanel Orientation="Horizontal">
                                             <!--<TextBlock Text="&#xf014;" FontSize="18" Style="{DynamicResource FontAwesome}" />-->
-                                            <TextBlock Text="删除" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="删除"  VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>
