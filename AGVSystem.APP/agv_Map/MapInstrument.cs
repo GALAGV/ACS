@@ -8,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
-using AGVSystem.IService.IO_BLL;
 using AGVSystem.BLL.ServiceLogicBLL;
 
 namespace AGVSystem.APP.agv_Map
@@ -21,7 +20,7 @@ namespace AGVSystem.APP.agv_Map
         public double MapSise = 1; //画布默认缩放大小
         private bool tongs = false; //画布移动标志位
         private Painting painting = new Painting();//地图绘制
-        private IO_MapBLL IO_AGVMapService = new Ga_mapBLL();
+        private Ga_mapBLL IO_AGVMapService = new Ga_mapBLL();
         private Point pos = new Point();//记录移动时Tag位置
         private Point jos = new Point();//记录移动时工作区位置
         public Canvas GetCanvas = new Canvas();//绘制容器

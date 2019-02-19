@@ -1,6 +1,4 @@
 ﻿using AGVSystem.DAL.DataAccess;
-using AGVSystem.IService.IO_BLL;
-using AGVSystem.IService.IO_DAL;
 using AGVSystem.Model.DrawMap;
 using AGVSystem.Model.Ga_agvModels;
 using MySql.Data.MySqlClient;
@@ -10,9 +8,9 @@ using System.Windows.Controls;
 
 namespace AGVSystem.BLL.ServiceLogicBLL
 {
-    public class Ga_mapBLL : IO_MapBLL
+    public class Ga_mapBLL 
     {
-       private IO_MapDAL map = new Ga_mapDAL();
+       private readonly Ga_mapDAL map = new Ga_mapDAL();
 
         /// <summary>
         /// 导入地图

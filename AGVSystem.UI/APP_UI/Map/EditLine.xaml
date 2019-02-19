@@ -341,14 +341,14 @@
                                 </StackPanel>
                             </ScrollViewer>
 
-                            <!--<ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,20">-->
+                            <ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,20">
                             <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,-1,0,20">
                                 <Canvas Name="TopY" Width="20" HorizontalAlignment="Left" Height="1500"></Canvas>
                             </StackPanel>
-                            <!--</ScrollViewer>-->
+                            </ScrollViewer>
 
 
-                            <ScrollViewer  Name="SrcCount" Grid.Column="1" Grid.Row="2"   HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible"   >
+                            <ScrollViewer  Name="SrcCount" Grid.Column="1" Grid.Row="2"   HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" ScrollChanged="SrcCount_ScrollChanged"  >
 
                                 <Canvas  Name="mainPanel" Background="#ffffff" HorizontalAlignment="Left"  VerticalAlignment="Top" >
 

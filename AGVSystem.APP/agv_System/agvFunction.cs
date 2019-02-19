@@ -1,7 +1,5 @@
-﻿using AGVSystem.IService.IO_System;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using AGVSystem.IService.IO_BLL;
 using AGVSystem.Model.Ga_agvModels;
 using MySql.Data.MySqlClient;
 using AGVSystem.BLL.ServiceLogicBLL;
@@ -11,10 +9,10 @@ using System.Windows.Media;
 
 namespace AGVSystem.APP.agv_System
 {
-    public class agvFunction : IO_AGVmanagement
+    public class agvFunction
     {
-        IO_agvBLL GetAgvBLL = new Ga_agvBLL();
-        IO_MapBLL MapBLL = new Ga_mapBLL();
+        private readonly Ga_agvBLL GetAgvBLL = new Ga_agvBLL();
+        private readonly Ga_mapBLL MapBLL = new Ga_mapBLL();
 
         /// <summary>
         /// AGV信息
@@ -133,7 +131,7 @@ namespace AGVSystem.APP.agv_System
         /// </summary>
         public void OpenPort()
         {
-        
+
 
         }
     }

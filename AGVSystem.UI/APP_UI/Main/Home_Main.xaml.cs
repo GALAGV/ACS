@@ -1,5 +1,4 @@
 ﻿using AGVSystem.APP.agv_System;
-using AGVSystem.IService.IO_System;
 using AGVSystem.UI.APP_UI.Map;
 using AGVSystem.UI.APP_UI.Setting;
 using System;
@@ -30,8 +29,8 @@ namespace AGVSystem.UI.APP_UI.Main
             InitializeComponent();
         }
 
-        IO_AGVmanagement Get_AGVmanagement = new agvFunction();
-        IO_AGVMapService mapService = new agvMapRegulate(); //业务逻辑接口
+        agvFunction Get_AGVmanagement = new agvFunction();
+        agvMapRegulate mapService = new agvMapRegulate(); //业务逻辑接口
         MapInstrument map = new MapInstrument();
         List<Ga_agv> Ga_agvNumArray; //数据源
         Painting GetPainting = new Painting();

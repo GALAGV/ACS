@@ -1,20 +1,18 @@
 ﻿using AGVSystem.DAL.DataAccess;
-using AGVSystem.IService.IO_BLL;
-using AGVSystem.IService.IO_DAL;
 using System.Collections.Generic;
 
 namespace AGVSystem.BLL.ServiceLogicBLL
 {
-    public class Ga_agvBLL : IO_agvBLL
+    public class Ga_agvBLL 
     {
-        private IO_agvDAL GetABB = new Ga_agvDAL();
+        private Ga_agvDAL GetABB = new Ga_agvDAL();
 
         /// <summary>
         /// 查询所有AGV
         /// </summary>
         /// <param name="MapTime"></param>
         /// <returns></returns>
-        List<string> IO_agvBLL.AGVNumList(long MapTime)
+        public List<string> AGVNumList(long MapTime)
         {
             return GetABB.AGVArray(MapTime);
         }

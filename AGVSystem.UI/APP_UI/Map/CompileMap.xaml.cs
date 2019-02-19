@@ -4,7 +4,6 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using AGVSystem.IService.IO_System;
 using AGVSystem.APP.agv_Map;
 using AGVSystem.Model.Ga_agvModels;
 using AGVSystem.Infrastructure.agvCommon;
@@ -24,7 +23,7 @@ namespace AGVSystem.UI.APP_UI.Map
             Compile();
         }
 
-        IO_AGVMapService mapService = new agvMapRegulate(); //业务逻辑接口
+        agvMapRegulate mapService = new agvMapRegulate(); //业务逻辑接口
 
         ObservableCollection<Ga_Map> GetMaps = new ObservableCollection<Ga_Map>(); //显示数据源
 

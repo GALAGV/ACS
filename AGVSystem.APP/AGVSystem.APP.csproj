@@ -64,10 +64,6 @@
       <Project>{efa0d1bd-3d72-45b7-a7d9-66959520ba7b}</Project>
       <Name>AGVSystem.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AGVSystem.IService\AGVSystem.IService.csproj">
-      <Project>{b894994b-925b-4997-b018-da3dcb0ec40a}</Project>
-      <Name>AGVSystem.IService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AGVSystem.Model\AGVSystem.Model.csproj">
       <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
       <Name>AGVSystem.Model</Name>
@@ -76,8 +72,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AutofacConfig\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

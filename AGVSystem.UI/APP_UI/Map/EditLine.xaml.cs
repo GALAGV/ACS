@@ -1,6 +1,5 @@
 ﻿using AGVSystem.APP.agv_Map;
 using AGVSystem.Infrastructure.agvCommon;
-using AGVSystem.IService.IO_System;
 using AGVSystem.Model.DrawMap;
 using AGVSystem.Model.Ga_agvModels;
 using AGVSystem.Model.LogicData;
@@ -28,7 +27,7 @@ namespace AGVSystem.UI.APP_UI.Map
 
         Painting GetPainting = new Painting();
         MapInstrument map = new MapInstrument();
-        IO_AGVMapService mapService = new agvMapRegulate(); //业务逻辑接口
+        agvMapRegulate mapService = new agvMapRegulate(); 
         double CanvasWidth, CanvasHeight; //初始宽高
         ObservableCollection<Ga_Map> MapList = new ObservableCollection<Ga_Map>();
         ObservableCollection<Route> GetRoutes = new ObservableCollection<Route>();
@@ -79,6 +78,7 @@ namespace AGVSystem.UI.APP_UI.Map
             Line.ItemsSource = GetRoutes;
             Line.SelectedIndex = 0;
         }
+
         List<string> associatedTag = new List<string>();
 
         private void Value_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -468,6 +468,12 @@ namespace AGVSystem.UI.APP_UI.Map
         {
             LineConfig line = new LineConfig();
             line.ShowDialog();
+        }
+
+        private void SrcCount_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            SrcX.ScrollToHorizontalOffset(e.HorizontalOffset);//X轴标尺跟随移动
+            SrcY.ScrollToVerticalOffset(e.VerticalOffset); //Y轴标尺等随移动
         }
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)

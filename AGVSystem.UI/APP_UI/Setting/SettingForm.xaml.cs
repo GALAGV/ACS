@@ -1,5 +1,4 @@
-﻿using AGVSystem.IService.IO_BLL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Windows;
@@ -13,7 +12,6 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using AGVSystem.Model.LogicData;
 using System.Data;
-using AGVSystem.IService.IO_System;
 using AGVSystem.APP.agv_Map;
 using OperateIni;
 using System.IO;
@@ -32,8 +30,8 @@ namespace AGVSystem.UI.APP_UI.Setting
         }
 
         private Menutype GetMenutype = Menutype.MapSetting;
-        IO_AGVMapService mapService = new agvMapRegulate(); //业务逻辑接口
-        private IO_MapBLL mapMessage = new Ga_mapBLL();
+        private agvMapRegulate mapService = new agvMapRegulate(); 
+        private Ga_mapBLL mapMessage = new Ga_mapBLL();
         private Grid gridItem = new Grid();
         private int Index = 0;
         public delegate void SettingMap();

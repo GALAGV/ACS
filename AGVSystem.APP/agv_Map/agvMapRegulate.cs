@@ -1,6 +1,4 @@
 ﻿using AGVSystem.BLL.ServiceLogicBLL;
-using AGVSystem.IService.IO_BLL;
-using AGVSystem.IService.IO_System;
 using AGVSystem.Model.Ga_agvModels;
 using MySql.Data.MySqlClient;
 using System;
@@ -12,9 +10,9 @@ using System.Collections.ObjectModel;
 
 namespace AGVSystem.APP.agv_Map
 {
-    public class agvMapRegulate : IO_AGVMapService
+    public class agvMapRegulate 
     {
-        IO_MapBLL IO_AGVMapService = new Ga_mapBLL();
+        Ga_mapBLL IO_AGVMapService = new Ga_mapBLL();
 
 
         /// <summary>

@@ -1,11 +1,10 @@
-﻿using AGVSystem.IService.IO_DAL;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using AGVSystem.DAL.DataHelper;
 
 namespace AGVSystem.DAL.DataAccess
 {
-    public class Ga_agvDAL: IO_agvDAL
+    public class Ga_agvDAL
     {
 
         #region 查询AGV信息

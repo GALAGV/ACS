@@ -1,5 +1,4 @@
-﻿using AGVSystem.IService.IO_DAL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -12,7 +11,7 @@ using AGVSystem.Model.Ga_agvModels;
 
 namespace AGVSystem.DAL.DataAccess
 {
-    public class Ga_mapDAL : IO_MapDAL
+    public class Ga_mapDAL 
     {
         List<string> Sql = new List<string>();
 
