@@ -8,7 +8,6 @@ namespace AGVSystem.APP.agv_Map
 {
     public class Painting
     {
-
         #region 画布参数
 
         /// <summary>
@@ -339,8 +338,5 @@ namespace AGVSystem.APP.agv_Map
         }
 
         #endregion
-
-
-
     }
 }

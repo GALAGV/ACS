@@ -8,6 +8,9 @@ using System.Windows.Controls;
 using AGVSystem.Infrastructure.agvCommon;
 using AGVSystem.Model.DrawMap;
 using AGVSystem.Model.Ga_agvModels;
+using System.Collections.ObjectModel;
+using AGVSystem.Model.LogicData;
+using System.Linq;
 
 namespace AGVSystem.DAL.DataAccess
 {
@@ -34,6 +37,11 @@ namespace AGVSystem.DAL.DataAccess
         public MySqlDataReader MapList()
         {
             return MySQLHelper.ExecuteReader("SELECT * FROM `agv`.`map`");
+        }
+
+        public MySqlDataReader MapArrayDAL()
+        {
+            return MySQLHelper.ExecuteReader("SELECT  `CreateTime`,`Name` FROM `agv`.`map`");
         }
 
         /// <summary>
@@ -270,7 +278,7 @@ namespace AGVSystem.DAL.DataAccess
         /// <returns></returns>
         public MySqlDataReader GetMapTags(string exls)
         {
-            return MySQLHelper.ExecuteReader("SELECT * FROM   `agv`.`tag" + exls + "` order by (TagName+0)");
+            return MySQLHelper.ExecuteReader("SELECT `X`,`Y`,`TagName` FROM   `agv`.`tag" + exls + "` order by (TagName+0)");
         }
 
         /// <summary>
@@ -584,6 +592,11 @@ namespace AGVSystem.DAL.DataAccess
            return MySQLHelper.ExecuteReader(string.Format("SELECT * FROM `agv`.`route{0}`", MapName));
         }
 
+        public MySqlDataReader MapRouteDAL(string MapName)
+        {
+            return MySQLHelper.ExecuteReader(string.Format("SELECT `Program`,`Name`,`CreateTime` FROM `agv`.`route{0}`", MapName));
+        }
+
         public bool SaveRoute(Route route, bool edit, long UTCTime)
         {
             if (edit)
@@ -627,6 +640,45 @@ namespace AGVSystem.DAL.DataAccess
             mr2.Close();
             string[] selectTag = listSTag.ToArray();
             return selectTag;
+        }
+
+
+        /// <summary>
+        /// 删除线路
+        /// </summary>
+        /// <param name="MapTime"></param>
+        /// <param name="Program"></param>
+        /// <returns></returns>
+        public bool DelRoute(long MapTime, int Program)
+        {
+            string sql = string.Format("DELETE FROM agv.`route{0}` WHERE `Program` = {1}", MapTime, Program);
+            return MySQLHelper.ExecuteNonQuery(sql) > 0 ? true : false;
+        }
+
+
+
+        /// <summary>
+        /// 查询所有Tag
+        /// </summary>
+        /// <param name="exls"></param>
+        /// <returns></returns>
+        public MySqlDataReader GetMapTags(long exls)
+        {
+            return MySQLHelper.ExecuteReader("SELECT TagName,NextTag,NextLeftTag,NextRightTag,PreTag,PreLeftTag,PreRightTag,Speed,SpeedRev,StopTime,Pbs,PbsRev,TagTerminal FROM agv.tag" + exls + " ORDER BY (TagName+0)");
+        }
+
+
+        public bool UpdateTagInfo(long MapTime, ObservableCollection<MapTag> MapArray)
+        {
+            var Speed = MainInfo.agvSpeed.ToList();
+            var PBS = MainInfo.agvPbs.ToList();
+            List<string> sqlText = new List<string>();
+            foreach (MapTag item in MapArray)
+            {
+                string sql = string.Format("UPDATE agv.`tag{0}` SET `NextTag` = '{1}',`NextLeftTag` = '{2}', `NextRightTag` = '{3}',`PreTag` = '{4}',`PreLeftTag` = '{5}',`PreRightTag` = '{6}',`Speed` = {7},`SpeedRev` = {8},`StopTime` = {9},`Pbs` = {10},`PbsRev` = {11}, `TagTerminal` = '{12}' WHERE TagName = {13};", MapTime, item.NextTag, item.NextLeftTag, item.NextRightTag, item.PreTag, item.PreLeftTag, item.PreRightTag, Speed.IndexOf(item.Speed).ToString(), Speed.IndexOf(item.SpeedRev).ToString(), item.StopTime, PBS.IndexOf(item.Pbs).ToString(), PBS.IndexOf(item.PbsRev).ToString(), item.TagTerminal, item.TagName);
+                sqlText.Add(sql);
+            }
+            return MySQLHelper.ExecuteSqlTran(sqlText);
         }
     }
 }

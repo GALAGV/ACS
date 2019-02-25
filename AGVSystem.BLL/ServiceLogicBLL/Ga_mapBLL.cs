@@ -3,6 +3,7 @@ using AGVSystem.Model.DrawMap;
 using AGVSystem.Model.Ga_agvModels;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows.Controls;
 
@@ -152,6 +153,11 @@ namespace AGVSystem.BLL.ServiceLogicBLL
             return map.MapRoute(MapName);
         }
 
+        public MySqlDataReader MapArrayBLL()
+        {
+            return map.MapArrayDAL();
+        }
+
         public bool SaveRouteBLL(Route route, bool edit, long UTCTime)
         {
             return map.SaveRoute(route, edit, UTCTime);
@@ -165,6 +171,28 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         public string[] SelectTagBLL(long CreateTime, string TagNo)
         {
             return map.SelectTag(CreateTime, TagNo);
+        }
+
+        /// <summary>
+        /// 删除线路
+        /// </summary>
+        /// <param name="MapTime"></param>
+        /// <param name="Program"></param>
+        /// <returns></returns>
+        public bool DelRouteMap(long MapTime, int Program)
+        {
+            return map.DelRoute(MapTime, Program);
+        }
+
+
+        public MySqlDataReader RataTableBLL(long exls)
+        {
+            return map.GetMapTags(exls);
+        }
+
+        public bool UpdateTagInfoBLL(long MapTime, ObservableCollection<MapTag> MapArray)
+        {
+            return map.UpdateTagInfo(MapTime, MapArray);
         }
     }
 }

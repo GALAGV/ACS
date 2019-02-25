@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using AGVSystem.Model.DrawMap;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace AGVSystem.Infrastructure.agvCommon
 {
@@ -72,7 +74,200 @@ namespace AGVSystem.Infrastructure.agvCommon
                 return "居中对齐";
             }
         }
+        #region 获取/设置背景/字体颜色
 
+
+        /// <summary>
+        /// 区域背景/字体颜色
+        /// </summary>
+        /// <param name="label"></param>
+        /// <returns></returns>
+        public static string AreaColor(string bgColor)
+        {
+            if (bgColor.Equals((Colors.White).ToString()))
+            {
+                return "白色";
+            }
+            else if (bgColor.Equals((Colors.Black).ToString()))
+            {
+                return "黑色";
+            }
+            else if (bgColor.Equals((Colors.Red).ToString()))
+            {
+                return "红色";
+            }
+            else if (bgColor.Equals((Colors.Orange).ToString()))
+            {
+                return "橙色";
+            }
+            else if (bgColor.Equals((Colors.Yellow).ToString()))
+            {
+                return "黄色";
+            }
+            else if (bgColor.Equals((Colors.Green).ToString()))
+            {
+                return "绿色";
+            }
+            else if (bgColor.Equals((Colors.Cyan).ToString()))
+            {
+                return "青色";
+            }
+            else if (bgColor.Equals((Colors.Blue).ToString()))
+            {
+                return "蓝色";
+            }
+            else if (bgColor.Equals((Colors.Violet).ToString()))
+            {
+                return "紫色";
+            }
+            return "";
+        }
+
+        /// <summary>
+        /// 设置颜色
+        /// </summary>
+        /// <param name="control">控件</param>
+        /// <param name="color">颜色名称</param>
+        public static void AreaColor(Control control, string color, Colortype existx)
+        {
+            if (color.Equals("白色"))
+            {
+                if (existx.Equals(Colortype.FontColor))
+                {
+                    control.Foreground = new SolidColorBrush(Colors.White);
+                }
+                else if (existx.Equals(Colortype.BgColor))
+                {
+                    control.Background = new SolidColorBrush(Colors.White);
+                }
+                else if (existx.Equals(Colortype.BrColor))
+                {
+                    control.BorderBrush = new SolidColorBrush(Colors.White);
+                }
+            }
+            else if (color.Equals("黑色"))
+            {
+                if (existx.Equals(Colortype.FontColor))
+                {
+                    control.Foreground = new SolidColorBrush(Colors.Black);
+                }
+                else if (existx.Equals(Colortype.BgColor))
+                {
+                    control.Background = new SolidColorBrush(Colors.Black);
+                }
+                else if (existx.Equals(Colortype.BrColor))
+                {
+                    control.BorderBrush = new SolidColorBrush(Colors.Black);
+                }
+            }
+            else if (color.Equals("红色"))
+            {
+                if (existx.Equals(Colortype.FontColor))
+                {
+                    control.Foreground = new SolidColorBrush(Colors.Red);
+                }
+                else if (existx.Equals(Colortype.BgColor))
+                {
+                    control.Background = new SolidColorBrush(Colors.Red);
+                }
+                else if (existx.Equals(Colortype.BrColor))
+                {
+                    control.BorderBrush = new SolidColorBrush(Colors.Red);
+                }
+            }
+            else if (color.Equals("橙色"))
+            {
+                if (existx.Equals(Colortype.FontColor))
+                {
+                    control.Foreground = new SolidColorBrush(Colors.Orange);
+                }
+                else if (existx.Equals(Colortype.BgColor))
+                {
+                    control.Background = new SolidColorBrush(Colors.Orange);
+                }
+                else if (existx.Equals(Colortype.BrColor))
+                {
+                    control.BorderBrush = new SolidColorBrush(Colors.Orange);
+                }
+            }
+            else if (color.Equals("黄色"))
+            {
+                if (existx.Equals(Colortype.FontColor))
+                {
+                    control.Foreground = new SolidColorBrush(Colors.Yellow);
+                }
+                else if (existx.Equals(Colortype.BgColor))
+                {
+                    control.Background = new SolidColorBrush(Colors.Yellow);
+                }
+                else if (existx.Equals(Colortype.BrColor))
+                {
+                    control.BorderBrush = new SolidColorBrush(Colors.Yellow);
+                }
+            }
+            else if (color.Equals("绿色"))
+            {
+                if (existx.Equals(Colortype.FontColor))
+                {
+                    control.Foreground = new SolidColorBrush(Colors.Green);
+                }
+                else if (existx.Equals(Colortype.BgColor))
+                {
+                    control.Background = new SolidColorBrush(Colors.Green);
+                }
+                else if (existx.Equals(Colortype.BrColor))
+                {
+                    control.BorderBrush = new SolidColorBrush(Colors.Green);
+                }
+            }
+            else if (color.Equals("青色"))
+            {
+                if (existx.Equals(Colortype.FontColor))
+                {
+                    control.Foreground = new SolidColorBrush(Colors.Cyan);
+                }
+                else if (existx.Equals(Colortype.BgColor))
+                {
+                    control.Background = new SolidColorBrush(Colors.Cyan);
+                }
+                else if (existx.Equals(Colortype.BrColor))
+                {
+                    control.BorderBrush = new SolidColorBrush(Colors.Cyan);
+                }
+            }
+            else if (color.Equals("蓝色"))
+            {
+                if (existx.Equals(Colortype.FontColor))
+                {
+                    control.Foreground = new SolidColorBrush(Colors.Blue);
+                }
+                else if (existx.Equals(Colortype.BgColor))
+                {
+                    control.Background = new SolidColorBrush(Colors.Blue);
+                }
+                else if (existx.Equals(Colortype.BrColor))
+                {
+                    control.BorderBrush = new SolidColorBrush(Colors.Blue);
+                }
+            }
+            else if (color.Equals("紫色"))
+            {
+                if (existx.Equals(Colortype.FontColor))
+                {
+                    control.Foreground = new SolidColorBrush(Colors.Violet);
+                }
+                else if (existx.Equals(Colortype.BgColor))
+                {
+                    control.Background = new SolidColorBrush(Colors.Violet);
+                }
+                else if (existx.Equals(Colortype.BrColor))
+                {
+                    control.BorderBrush = new SolidColorBrush(Colors.Violet);
+                }
+            }
+        }
+
+        #endregion
 
     }
 }

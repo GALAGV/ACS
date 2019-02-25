@@ -34,8 +34,10 @@
     <Reference Include="AGVDLL">
       <HintPath>..\AGVSystem.DispatchLogic\bin\Debug\AGVDLL.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="agvCommon\ConnectionStringsConfig.cs" />
     <Compile Include="agvCommon\ControlRegulate.cs" />
     <Compile Include="agvCommon\ConvertCode.cs" />
     <Compile Include="agvCommon\Encryption.cs" />
@@ -54,6 +57,12 @@
     <Compile Include="agvCommon\UTC.cs" />
     <Compile Include="agvCommon\WriteLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AGVSystem.Model\AGVSystem.Model.csproj">
+      <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
+      <Name>AGVSystem.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

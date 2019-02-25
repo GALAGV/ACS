@@ -1,0 +1,437 @@
+﻿<Window x:Class="AGVSystem.UI.APP_UI.Map.EditTag"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Map"
+        mc:Ignorable="d"
+        Title="EditTag" Height="819.921" Width="1545.678" WindowState="Maximized">
+    <Window.Resources>
+        <Style x:Key="FontAwesome">
+            <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Styles/fonts/#FontAwesome" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <ToolBar Grid.Row="0"  Background="#f0f0f0">
+                <Button Cursor="Hand" Name="Magnify" ToolTip="放大" Click="Magnify_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/Magnifying.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand" Name="Shrink" ToolTip="缩小" Click="Shrink_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/magnifying_.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand" Name="Recover" ToolTip="复原地图" Click="Recover_Click" >
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="/image/restoration.png"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+            </ToolBar>
+            <ToolBar Grid.Row="1"  Background="#f0f0f0" ToolBarTray.IsLocked="True">
+                <Separator />
+                <Label Content="地图:"  VerticalAlignment="Center" ></Label>
+                <ComboBox Width="140" SelectionChanged="MapMenu_SelectionChanged"   SelectedIndex="0"  Name="MapMenu"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  DisplayMemberPath="Name" SelectedValuePath="CreateTime">
+                </ComboBox>
+                <Separator />
+                <Button Cursor="Hand" ToolTip="保存数据" Name="TagSave" Click="TagSave_Click" >
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xf0c7;" FontSize="25" Foreground="#515151" Style="{DynamicResource FontAwesome}" />
+                            <TextBlock Text="保存数据"  Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+            </ToolBar>
+            <Grid Grid.Row="2" Background="#f0f0f0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="600"></ColumnDefinition>
+                    <ColumnDefinition Width="2"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border  Grid.Column="0" Background="#ffff" Margin="0,0,2,0">
+                    <Border Grid.Column="2" Grid.Row="2" Margin="3,3,1,3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
+                        <Grid Margin="0,2,0,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="22"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Background="#bfcddb">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image Stretch="Fill" Source="/image/COM.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
+                                <Label Content="信标" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-1,-1,0,0" ></Label>
+                            </Grid>
+                            <DataGrid    BorderBrush="#808080" SelectionUnit="Cell" SelectedCellsChanged="SerialPortData_SelectedCellsChanged"  BeginningEdit="SerialPortData_BeginningEdit"   RowHeaderWidth="0"   Name="SerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1"  ItemsSource="{Binding}" FrozenColumnCount="1"  CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" IsReadOnly="False" >
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Background" Value="#F2F2F2" />
+                                        <Setter Property="Height" Value="25" />
+                                        <Setter Property="Foreground" Value="Black" />
+                                        <Style.Triggers>
+                                            <Trigger Property="AlternationIndex" Value="0">
+                                                <Setter Property="Background" Value="White" />
+                                            </Trigger>
+                                            <Trigger Property="AlternationIndex" Value="1">
+                                                <Setter Property="Background" Value="#f2f2f2" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn  Width="80" IsReadOnly="True">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="信标" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate >
+                                            <DataTemplate>
+                                                <Label Content="{Binding TagName}" Width="80" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#f2f2f2" Foreground="Red"  FontWeight="Black" ></Label>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" Width="100"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="前方" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding NextTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox Height="25"   BorderThickness="0"   Text="{Binding Path= NextTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   Name="listT" DropDownClosed="ListT_DropDownClosed"  DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" ItemsSource="{Binding NextTagList}" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center"  SelectedIndex="0"></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="左前方" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding NextLeftTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" BorderThickness="0" Height="25" DropDownClosed="ListT_DropDownClosed" Text="{Binding NextLeftTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding NextLeftTagList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue"  SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center"  ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="右前方" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding NextRightTag}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" BorderThickness="0" Height="25" DropDownClosed="ListT_DropDownClosed" Text="{Binding NextRightTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding NextRightTagList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue"     SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center"  ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="后方" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding PreTag}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" BorderThickness="0" Height="25" DropDownClosed="ListT_DropDownClosed" Text="{Binding PreTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PreTagList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue"   SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center"  ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="左后方" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding PreLeftTag}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox Height="25" BorderThickness="0" Name="listT" DropDownClosed="ListT_DropDownClosed"  Text="{Binding PreLeftTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PreLeftTagList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue"  SelectedIndex="0" Width="80" FontFamily="微软雅黑" HorizontalContentAlignment="Center"  ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="右后方" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding PreRightTag}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox Height="25"  BorderThickness="0" Name="listT" DropDownClosed="ListT_DropDownClosed" Text="{Binding PreRightTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PreRightTagList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue"  SelectedIndex="0" Width="80" FontFamily="微软雅黑" HorizontalContentAlignment="Center" ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="前进速度" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Speed}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT"  Text="{Binding Speed,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding SpeedList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" BorderThickness="0" Height="25" DropDownClosed="ListT_DropDownClosed"  SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center"  ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="后退速度"  FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding SpeedRev}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" Text="{Binding SpeedRev,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding SpeedRevList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" BorderThickness="0" Height="25" DropDownClosed="ListT_DropDownClosed" SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center" ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="前转弯速度" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding PreTurnSpeed}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" Text="{Binding PreTurnSpeed,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PreTurnSpeedList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" BorderThickness="0" DropDownClosed="ListT_DropDownClosed"  SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center" ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="后转弯速度" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding RevTurnSpeed}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" Text="{Binding RevTurnSpeed,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding RevTurnSpeedList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" BorderThickness="0" DropDownClosed="ListT_DropDownClosed" SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center" ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="前PBS" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Pbs}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" Text="{Binding Pbs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PbsList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" BorderThickness="0" DropDownClosed="ListT_DropDownClosed"  SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center"  ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="后PBS" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding PbsRev}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" Text="{Binding PbsRev,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PbsRevList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" BorderThickness="0" DropDownClosed="ListT_DropDownClosed"  SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center"  ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="前转弯PBS" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding PreTurnPBS}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" Text="{Binding PreTurnPBS,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PreTurnPBSList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" BorderThickness="0" DropDownClosed="ListT_DropDownClosed"  SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center"  ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="后转弯PBS" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding RevTurnPBS}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <ComboBox   Name="listT" Text="{Binding RevTurnPBS,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding RevTurnPBSList}" DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" BorderThickness="0" DropDownClosed="ListT_DropDownClosed"   SelectedIndex="0" Width="80" FontFamily="微软雅黑"  HorizontalContentAlignment="Center"  ></ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <!--<DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="停止时间" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding StopTime}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        --><!--<DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <TextBox   Name="listT" BorderThickness="0"  Width="80" FontFamily="微软雅黑" FontSize="15" ></TextBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>--><!--
+                                    </DataGridTemplateColumn>-->
+                                    <DataGridTextColumn Header="站点" Binding="{Binding StopTime}" Width="80"  >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                <Setter Property="AllowDrop"  Value="False"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="站点" Binding="{Binding TagTerminal}" Width="80"  >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                <Setter Property="AllowDrop"  Value="False"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                </Border>
+                <Border Grid.Column="2"   Background="#ffff" >
+                    <Border Grid.Column="2" Grid.Row="2" Margin="3,3,1,3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
+                        <Grid Margin="2,2,0,2" Background="#f0f0f0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="22"></RowDefinition>
+                                <RowDefinition Height="20"></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <!--<RowDefinition  Height="10"></RowDefinition>-->
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Background="#bfcddb">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"></ColumnDefinition>
+                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image Stretch="Fill" Source="/image/map.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
+                                <Label Content="地图" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-4,-1.4,0,0" ></Label>
+                            </Grid>
+                            <ScrollViewer  Name="SrcX" Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,0">
+                                <StackPanel >
+                                    <Canvas Name="TopX"  HorizontalAlignment="Left" Height="20" Width="20000"></Canvas>
+                                </StackPanel>
+                            </ScrollViewer>
+                            <ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,20">
+                                <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,-1,0,20">
+                                    <Canvas Name="TopY" Width="20" HorizontalAlignment="Left" Height="1500"></Canvas>
+                                </StackPanel>
+                            </ScrollViewer>
+                            <ScrollViewer  Name="SrcCount" Grid.Column="1" Grid.Row="2" ScrollChanged="SrcCount_ScrollChanged"  HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible"  >
+                                <Canvas  Name="mainPanel" Background="#ffffff" HorizontalAlignment="Left"  VerticalAlignment="Top" >
+                                </Canvas>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

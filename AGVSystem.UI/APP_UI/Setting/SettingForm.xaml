@@ -18,7 +18,7 @@
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1" Margin="5">
-                <Grid  Background="#f0f0f0"   Name="agv_map" Panel.ZIndex="5">
+                <Grid  Background="#f0f0f0"   Name="agv_map" >
                     <GroupBox Header="地图设置" Height="140" VerticalAlignment="Top" BorderBrush="#dcdcdc" BorderThickness="1" >
                         <Grid Margin="10">
                             <Grid.RowDefinitions>
@@ -28,13 +28,13 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="63"></ColumnDefinition>
+                                <ColumnDefinition Width="66"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0" Content="默认地图:" Margin="0,5,0,0"></Label>
+                            <Label Grid.Row="0" Grid.Column="0" Content="默认地图：" Margin="0,5,0,0"></Label>
                             <ComboBox  Grid.Row="0" Grid.Column="1" Name="MapList"   Width="200"  DisplayMemberPath="Name" SelectedValuePath="CreateTime" Margin="0,5,0,0" HorizontalAlignment="Left">
                             </ComboBox>
-                            <Label Grid.Row="2" Grid.Column="0" Content="默认倍数:" Margin="0,5,0,0"></Label>
+                            <Label Grid.Row="2" Grid.Column="0" Content="默认倍数：" Margin="0,5,0,0"></Label>
                             <ComboBox  Grid.Row="2" Grid.Column="1" SelectedIndex="0" Name="Map_Size" Margin="0,5,0,0" Width="200"  HorizontalAlignment="Left">
                                 <ComboBoxItem Content="1.0"></ComboBoxItem>
                                 <ComboBoxItem Content="1.2"></ComboBoxItem>
@@ -53,7 +53,7 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <Grid  Background="#f0f0f0"  Name="Port"  Panel.ZIndex="6">
+                <Grid  Background="#f0f0f0"  Name="Port">
                     <GroupBox Header="串口设置" BorderBrush="#dcdcdc" BorderThickness="1" >
                         <Grid>
                             <Grid.RowDefinitions>
@@ -117,22 +117,32 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <Grid  Background="#f0f0f0"  Name="agv_system">
-                    <GroupBox Header="系统设置"  Height="140" BorderBrush="#dcdcdc" VerticalAlignment="Top" BorderThickness="1" >
+                <Grid  Background="#f0f0f0"  Name="agv_system"  Panel.ZIndex="6">
+                    <GroupBox Header="系统设置"  Height="250" BorderBrush="#dcdcdc" VerticalAlignment="Top" BorderThickness="1" >
                         <Grid Margin="10">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"></RowDefinition>
                                 <RowDefinition Height="30"></RowDefinition>
                                 <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200"></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <!--<Label Grid.Row="0" Grid.Column="0" Content="开机启动:" Margin="0,5,0,0"></Label>-->
-                            <CheckBox Grid.Row="0" Grid.Column="0" Content="开机启动" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
-                            <CheckBox Grid.Row="1" Grid.Column="0" Content="开启日志清理服务" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+                            <Label Content="数据库地址："  HorizontalAlignment="Left"  Grid.Column="0" Grid.Row="0"  VerticalAlignment="Center"></Label>
+                            <TextBox Grid.Column="1" Name="Site"  Margin="0,2,150,2" Grid.Row="0"  VerticalContentAlignment="Center"></TextBox>
+                            <Label Content="数据库账号："  HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"></Label>
+                            <TextBox Grid.Column="1" Name="Number" Grid.Row="1" Margin="0,2,150,2" VerticalContentAlignment="Center"></TextBox>
+                            <Label Content="数据库密码："  HorizontalAlignment="Left"  Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"></Label>
+                            <TextBox  Grid.Column="1"  Name="Password" Grid.Row="2" Margin="0,2,150,2" VerticalContentAlignment="Center"></TextBox>
+                            <Button Content="测试连接" Name="Test" Click="Test_Click" Width="90" BorderBrush="#adadad" Grid.Column="0" Grid.Row="3" Height="28"></Button>
+
+                            <CheckBox Grid.Row="4"  Grid.Column="0" Content="开机启动" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+                            <CheckBox Grid.Row="5" Grid.Column="0" Content="日志清理服务" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
                         </Grid>
                     </GroupBox>
                 </Grid>

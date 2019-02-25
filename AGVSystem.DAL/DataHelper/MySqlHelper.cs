@@ -12,7 +12,7 @@ namespace AGVSystem.DAL.DataHelper
 {
     public class MySQLHelper
     {
-        public static string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
+        public static readonly string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
 
         //存储过程
         public static DataTable ExecuteDataTableCommand(string CommandText)

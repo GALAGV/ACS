@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Linq;
+using AGVSystem.UI.APP_UI.Edit;
 
 namespace AGVSystem.UI.APP_UI.Map
 {
@@ -20,7 +22,7 @@ namespace AGVSystem.UI.APP_UI.Map
         double CanvasWidth, CanvasHeight; //初始宽高
         bool editStatic = true;
 
-        public MapEdit(Ga_Map ga_Map,bool edit)
+        public MapEdit(Ga_Map ga_Map, bool edit)
         {
             InitializeComponent();
             GetMap = ga_Map;
@@ -35,12 +37,12 @@ namespace AGVSystem.UI.APP_UI.Map
         public void LoadMap(bool edit)
         {
             this.Title = "地图编辑-" + GetMap.Name;
-            //CanvasWidth = GetMap.Width * 10 > this.Width * 2 ? GetMap.Width *10 : this.Width * 2;
-            //CanvasHeight = GetMap.Height * 10 > this.Height * 2 ? GetMap.Height *10: this.Height * 2;
             CanvasWidth = GetMap.Width * 10;
             CanvasHeight = GetMap.Height * 10;
             TopX.Width = CanvasWidth * instrument.MapSise;
             TopY.Height = CanvasHeight * instrument.MapSise;
+            instrument.action = EditTag;
+            instrument.AreaAction = EditArea;
             mainPanel.Width = TopX.Width;
             mainPanel.Height = TopY.Height;
             instrument.GetCanvas = mainPanel;
@@ -52,6 +54,7 @@ namespace AGVSystem.UI.APP_UI.Map
             else
                 GetPainting.Coordinate(mainPanel);
         }
+
 
         /// <summary>
         /// 生成Tag
@@ -221,11 +224,10 @@ namespace AGVSystem.UI.APP_UI.Map
             }
         }
 
-        public static void SaveCanvas(Window window, Canvas canvas, int dpi, string filename)
+        public void SaveCanvas(Window window, Canvas canvas, int dpi, string filename)
         {
             Size size = new Size(canvas.Width, canvas.Height);
             canvas.Measure(size);
-            //canvas.Arrange(new Rect(size));
 
             var rtb = new RenderTargetBitmap(
                 (int)canvas.Width, //width
@@ -285,7 +287,7 @@ namespace AGVSystem.UI.APP_UI.Map
             }
         }
 
-        private static void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)
+        private void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)
         {
             var enc = new System.Windows.Media.Imaging.PngBitmapEncoder();
             enc.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bmp));
@@ -295,6 +297,59 @@ namespace AGVSystem.UI.APP_UI.Map
                 enc.Save(stm);
             }
         }
+
+        private void EditTag(Label Tagobj)
+        {
+            Edit.Tag tag = new Edit.Tag(Tagobj, instrument.MapSise);
+            tag.action = instrument.MouseMove;
+            tag.exist = Tagexist;
+            tag.ClearTag = DeleteTag;
+            tag.ClearLine = ClearAssociated;
+            tag.ShowDialog();
+        }
+
+        private bool Tagexist(int TagPrimary, int TagNum)
+        {
+            var a = instrument.valuePairs.Where(p => p.Key.Equals(TagNum) && !p.Key.Equals(TagPrimary)).ToList();
+            return instrument.valuePairs.Where(p => p.Key.Equals(TagNum) && !p.Key.Equals(TagPrimary)).ToList().Count() >= 1;
+        }
+
+        private void ClearAssociated(int TagID)
+        {
+            instrument.wirePointArrays.Where(x => x.GetPoint.TagID.Equals(TagID) || x.GetWirePoint.TagID.Equals(TagID)).ToList().ForEach(x => instrument.CrearS(x, false));
+        }
+
+
+        private void DeleteTag(Label label)
+        {
+            int Id = Convert.ToInt32(label.Content.ToString());
+            var TagArray = instrument.valuePairs.FirstOrDefault(x => x.Key.Equals(Id));
+            if (TagArray.Value != null)
+            {
+                instrument.GetCanvas.Children.Remove(TagArray.Value);
+                instrument.valuePairs.Remove(Id);
+                instrument.wirePointArrays.Where(p => p.GetPoint.TagID.Equals(Id) || p.GetWirePoint.TagID.Equals(Id)).ToList().ForEach(x => instrument.CrearS(x, true));
+            }
+        }
+
+
+        private void EditArea(Label label)
+        {
+            Area area = new Area(label, instrument.MapSise);
+            area.ArDelete = DeleteArea;
+            area.ShowDialog();
+        }
+
+        private void DeleteArea(int ID)
+        {
+            var AreaArray = instrument.keyValuePairs.FirstOrDefault(x => x.Key.Equals(ID));
+            if (AreaArray.Value != null)
+            {
+                instrument.keyValuePairs.Remove(AreaArray.Key);
+                instrument.GetCanvas.Children.Remove(AreaArray.Value);
+            }
+        }
+
 
     }
 }

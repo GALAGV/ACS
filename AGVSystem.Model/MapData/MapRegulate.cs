@@ -24,10 +24,5 @@ namespace AGVSystem.Model.MapData
         public static List<Ga_agv> GetAgvs = new List<Ga_agv>(); //所有AGV数据源
 
         public static List<Ga_agvStatus> Ga_AgvStatuses = new List<Ga_agvStatus>(); //默认AGV初始信息
-
-
-
-
-
     }
 }

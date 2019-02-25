@@ -7,7 +7,8 @@ using System.Data;
 using System.IO;
 using AGVSystem.Infrastructure.agvCommon;
 using System.Collections.ObjectModel;
-
+using AGVSystem.Model.LogicData;
+using System.Linq;
 namespace AGVSystem.APP.agv_Map
 {
     public class agvMapRegulate 
@@ -91,6 +92,64 @@ namespace AGVSystem.APP.agv_Map
         }
 
 
+
+        /// <summary>
+        /// 显示所有信标数据
+        /// </summary>
+        /// <param name="Beacon"></param>
+        /// <param name="arr"></param>
+        public ObservableCollection<MapTag> TagManagement(long UTC)
+        {
+            MySqlDataReader data = IO_AGVMapService.RataTableBLL(UTC);
+            ObservableCollection<MapTag> tags = new ObservableCollection<MapTag>();
+            while (data.Read())
+            {
+                MapTag tag = new MapTag();
+                tag.TagName = data["TagName"].ToString();
+                tag.NextTag = data["NextTag"].ToString();
+                tag.PreLeftTag = data["PreLeftTag"].ToString();
+                tag.PreRightTag = data["PreRightTag"].ToString();
+                tag.PreTag = data["PreTag"].ToString();
+                tag.NextLeftTag = data["NextLeftTag"].ToString();
+                tag.NextRightTag = data["NextRightTag"].ToString();
+                tag.Speed = MainInfo.agvSpeed[Convert.ToInt32(data["Speed"].ToString())];
+                tag.SpeedRev = MainInfo.agvSpeed[Convert.ToInt32(data["SpeedRev"].ToString())];
+                tag.StopTime = data["StopTime"].ToString();
+                tag.Pbs = MainInfo.agvPbs[Convert.ToInt32(data["Pbs"].ToString())];
+                tag.PbsRev = MainInfo.agvPbs[Convert.ToInt32(data["PbsRev"].ToString())];
+                tag.TagTerminal = data["TagTerminal"] is DBNull ? null : data["TagTerminal"].ToString();
+                tag.PreTurnSpeed = CheckColumnName(data, "PreTurnSpeed") ? MainInfo.agvSpeed[data.GetInt32("PreTurnSpeed")] : MainInfo.agvSpeed[0];
+                tag.RevTurnSpeed = CheckColumnName(data, "RevTurnSpeed") ? MainInfo.agvSpeed[data.GetInt32("RevTurnSpeed")] : MainInfo.agvSpeed[0];
+                tag.PreTurnPBS = CheckColumnName(data, "PreTurnPBS") ? MainInfo.agvPbs[data.GetInt32("PreTurnPBS")] : MainInfo.agvPbs[0];
+                tag.RevTurnPBS = CheckColumnName(data, "RevTurnPBS") ? MainInfo.agvPbs[data.GetInt32("RevTurnPBS")] : MainInfo.agvPbs[0];
+                tags.Add(tag);
+            }
+            data.Close();
+            return tags;
+        }
+
+        /// <summary>
+        /// 检查 SqlDataReader 实例中是否包含数据表的列
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
+        public bool CheckColumnName(MySqlDataReader reader, string columnName)
+        {
+            bool result = false;
+            DataTable dt = reader.GetSchemaTable();
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["ColumnName"].ToString() == columnName)
+                {
+                    result = true;
+                }
+            }
+            return result; //result 为 true则 列名存在
+        }
+
+
+
         /// <summary>
         /// 删除地图
         /// </summary>
@@ -160,6 +219,16 @@ namespace AGVSystem.APP.agv_Map
         public string[] SelectTagSystem(long CreateTime, string TagNo)
         {
             return IO_AGVMapService.SelectTagBLL(CreateTime, TagNo);
+        }
+
+        public bool DelRouteMapSystem(long MapTime, int Program)
+        {
+            return IO_AGVMapService.DelRouteMap(MapTime, Program);
+        }
+
+        public bool UpdateTagInfoSystem(long MapTime, ObservableCollection<MapTag> MapArray)
+        {
+            return IO_AGVMapService.UpdateTagInfoBLL(MapTime, MapArray);
         }
     }
 }

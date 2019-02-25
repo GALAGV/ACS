@@ -34,7 +34,7 @@
                 <MenuItem Header="编辑(_K)" Height="20" FontFamily="微软雅黑" >
                     <MenuItem Header="编辑地图(_G)" Height="20" Name="Com_Map"  Click="Com_Map_Click" Width="150" ></MenuItem>
                     <MenuItem Header="编辑线路(_H)" Height="20" Width="150" Name="Edit" Click="Edit_Click"></MenuItem>
-                    <MenuItem Header="编辑信标(_Q)" Height="20" Width="150"></MenuItem>
+                    <MenuItem Header="编辑信标(_Q)" Height="20" Width="150" Name="TagEdit" Click="TagEdit_Click"></MenuItem>
                 </MenuItem>
                 <Separator Width="4" />
                 <MenuItem Header="设置(_E)" Height="20" FontFamily="微软雅黑">
@@ -68,54 +68,6 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <!--<Button Cursor="Hand">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="Fill" Source="/image/mouse.png"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>-->
-                <!--<Separator />
-                <Button Cursor="Hand">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="Fill" Source="/image/hand.png"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Separator />-->
-                <!--<Button Cursor="Hand" Name="Magnify" >
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="Fill" Source="/image/Magnify.png"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Separator />-->
-                <!--<Button Cursor="Hand" Name="Shrink"  >
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="Fill" Source="/image/shrink.png"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Separator />
-                <Button Cursor="Hand" Name="Recover" >
-                    <Button.Content >
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="Fill" Source="/image/restoration.png"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>-->
-                <!--<Separator />-->
-                <!--<Button Cursor="Hand" >
-                    <Button.Content >
-                        <StackPanel Orientation="Horizontal">
-                            <Image Stretch="Fill" Source="/image/send.png"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>-->
-                <!--<Separator />-->
                 <Label Content="地图:" ></Label>
                 <ComboBox Width="125" SelectedIndex="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="MapMenu" SelectionChanged="MapMenu_SelectionChanged" DisplayMemberPath="Name" SelectedValuePath="CreateTime">
                 </ComboBox>
@@ -188,27 +140,7 @@
                                 <Label Content="AGV" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-2,-0.5,0,0" ></Label>
                             </Grid>
                             <ScrollViewer  Grid.Row="1" HorizontalScrollBarVisibility="Visible" Name="agvlist" VerticalScrollBarVisibility="Visible" >
-                            <!--<TreeView FontSize="15"    BorderThickness="0,0,0,0" Grid.Row="1">
-                                <TreeView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type TreeViewItem}">
-                                        <Setter Property="IsExpanded" Value="True" />
-                                    </Style>
-                                </TreeView.ItemContainerStyle>
-                                <TreeViewItem Header="agv" Name="agvlist">
-                                    <TreeViewItem Header="agv-001" IsExpanded="True">
-                                    </TreeViewItem>
-                                    <TreeViewItem Header="agv-002">
-   
-                                    </TreeViewItem>
-                                    <TreeViewItem Header="agv-003"></TreeViewItem>
-                                    <TreeViewItem Header="agv-004"></TreeViewItem>
-                                    <TreeViewItem Header="agv-005"></TreeViewItem>
-                                    <TreeViewItem Header="agv-006"></TreeViewItem>
-                                    <TreeViewItem Header="agv-007"></TreeViewItem>
-                                    <TreeViewItem Header="agv-008"></TreeViewItem>
-                                    <TreeViewItem Header="agv-009"></TreeViewItem>
-                                </TreeViewItem>
-                            </TreeView>-->
+
                               
                             </ScrollViewer>
                         </Grid>
@@ -363,14 +295,6 @@
                         <TabItem Header="运行信息">
                             <DataGrid x:Name="TabAgvMoveData"  AllowDrop="True" RowHeaderWidth="0"  ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" >
                                 <DataGrid.Columns>
-                                    <!--<DataGridTextColumn Header="状态" Width="80" Binding="{Binding agvStatic}"  Foreground="Red" >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                                <Setter Property="AllowDrop"  Value="False"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                    </DataGridTextColumn>-->
                                     <DataGridTemplateColumn   Width="80"  >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>

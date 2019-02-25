@@ -1,0 +1,32 @@
+﻿<Window x:Class="AGVSystem.UI.APP_UI.Edit.Tag"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Edit"
+        mc:Ignorable="d"
+        Title="Tag" Height="210.719" Width="242.149" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="编号:" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"></Label>
+            <TextBox  Name="TagNum" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="0,10,10,10"></TextBox>
+            <Label Content="X轴:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+            <TextBox Name="Tag_X" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="0,10,10,10"></TextBox>
+            <Label Content="Y轴:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+            <TextBox Name="Text_Y" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0,10,10,10"></TextBox>
+            <Button Content="确定(_S)" Name="SaveTag" Click="SaveTag_Click"  Grid.Row="3"  BorderBrush="#adadad" Width="80" Height="27" Margin="0,0,78,0" Grid.ColumnSpan="2"   />
+            <Button Content="删除(_N)" Name="DeleteTag"  Click="DeleteTag_Click" Grid.Row="3"  BorderBrush="#adadad" Width="80" Margin="0,0,-55,0" Height="27"  Grid.Column="1"   />
+        </Grid>
+
+    </Grid>
+</Window>

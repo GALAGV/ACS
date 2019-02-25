@@ -16,6 +16,7 @@ using AGVSystem.APP.agv_Map;
 using OperateIni;
 using System.IO;
 using AGVSystem.Infrastructure.agvCommon;
+using System.Configuration;
 
 namespace AGVSystem.UI.APP_UI.Setting
 {
@@ -69,6 +70,7 @@ namespace AGVSystem.UI.APP_UI.Setting
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            ConfigDataBase();
             PortLoad();
             MapList.ItemsSource = mapService.GetMapRegulate();
 
@@ -86,6 +88,25 @@ namespace AGVSystem.UI.APP_UI.Setting
                 Map_Size.Text = Convert.ToDouble(IniFile.ReadIniData("AGV", "MapSise", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini")).ToString("0.0");
             }
         }
+
+        string[] DataBaseStr;
+
+        private void ConfigDataBase()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
+            DataBaseStr = connectionString.Split(';');
+            if (DataBaseStr.Length == 3)
+            {
+                string BaseSite = DataBaseStr[0].Split('=')[1];
+                string BaseName = DataBaseStr[1].Split('=')[1];
+                string BasePassword = DataBaseStr[2].Split('=')[1];
+                Site.Text = BaseSite;
+                Number.Text = BaseName;
+                Password.Text = BasePassword;
+            }
+        }
+
+
         public void PortLoad()
         {
             GetMenutype = Menutype.ProntSetting;
@@ -308,15 +329,19 @@ namespace AGVSystem.UI.APP_UI.Setting
             }
         }
 
+        #region 设置保存
+
         private void SaveSetting_Click(object sender, RoutedEventArgs e)
         {
             switch (GetMenutype)
             {
                 case Menutype.ProntSetting:
                     SavePront();
+                    GetSettingMap();
                     break;
                 case Menutype.MapSetting:
                     MapSave();
+                    GetSettingMap();
                     break;
                 case Menutype.SystemSetting:
                     SystemSave();
@@ -324,8 +349,11 @@ namespace AGVSystem.UI.APP_UI.Setting
                 //default:
                 //    break;
             }
-            GetSettingMap();
+          
         }
+        #endregion
+
+        #region 串口保存
 
         /// <summary>
         /// 串口保存
@@ -467,6 +495,10 @@ namespace AGVSystem.UI.APP_UI.Setting
             }
         }
 
+        #endregion
+
+        #region 地图保存
+
         /// <summary>
         /// 地图保存
         /// </summary>
@@ -483,21 +515,24 @@ namespace AGVSystem.UI.APP_UI.Setting
             }
         }
 
+        #endregion
+
+        #region 系统设置保存
+
         /// <summary>
         /// 系统设置保存
         /// </summary>
         private void SystemSave()
         {
-
-
+            ConnectionStringsConfig.UpdateConnectionStringsConfig("DataBaseText", DataBaseConfig());
+            this.Close();
         }
+        #endregion
 
-
-
-
+        #region 重复
 
         /// <summary>
-        /// for循环
+        /// 重复
         /// </summary>
         /// <param name="yourValue"></param>
         /// <returns></returns>
@@ -518,6 +553,44 @@ namespace AGVSystem.UI.APP_UI.Setting
                 }
             }
             return false;
+        }
+
+        #endregion
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            this.Cursor = Cursors.Wait;
+            string Config = DataBaseConfig();
+
+            using (MySqlConnection connection = new MySqlConnection(Config))
+            {
+                using (MySqlCommand cmd = new MySqlCommand("", connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        MessageBox.Show("连接成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (MySql.Data.MySqlClient.MySqlException ex)
+                    {
+                        MessageBox.Show($"连接失败,错误信息:\r\n{ex.Message}", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    finally
+                    {
+                        connection.Close();
+                        this.Cursor = Cursors.Arrow;
+                    }
+                }
+            }
+           
+        }
+
+        private string DataBaseConfig()
+        {
+            string DataBaseConfig = $"{DataBaseStr[0].Split('=')[0]}={Site.Text.Trim()}";
+            string DataUserConfig = $"{DataBaseStr[1].Split('=')[0]}={Number.Text.Trim()}";
+            string DataPassword = $"{DataBaseStr[2].Split('=')[0]}={Password.Text.Trim()}";
+            return string.Join(";", new string[] { DataBaseConfig, DataUserConfig, DataPassword });
         }
     }
 

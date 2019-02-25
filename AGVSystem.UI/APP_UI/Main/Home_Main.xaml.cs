@@ -86,6 +86,9 @@ namespace AGVSystem.UI.APP_UI.Main
                     {
                         string Size = IniFile.ReadIniData("AGV", "MapSise", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
                         map.MapSise = Convert.ToDouble(Size);
+                        MapRegulate.TemplateName = IniFile.ReadIniData("AGV", "TemplateName", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+                        string DirectionLine = IniFile.ReadIniData("AGV", "DirectionLine", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+                        MapRegulate.DirectionLine = (!string.IsNullOrWhiteSpace(DirectionLine) && FormatVerification.IsFloat(DirectionLine)) ? Convert.ToInt32(DirectionLine) : 0;
                     }
                     double CanvasWidth = GetMap.Width * 10 * map.MapSise > this.Width * 1.2 ? GetMap.Width * 10 * map.MapSise : this.Width * 1.2;
                     double CanvasHeight = GetMap.Height * 10 * map.MapSise > this.Height * 1.2 ? GetMap.Height * 10 * map.MapSise : this.Height * 1.2;
@@ -93,7 +96,7 @@ namespace AGVSystem.UI.APP_UI.Main
                     TopY.Height = CanvasHeight;
                     mainPanel.Width = CanvasWidth;
                     mainPanel.Height = CanvasHeight;
-                    map.LoadEditMap(MapRegulate.UTCTime, false,false);
+                    map.LoadEditMap(MapRegulate.UTCTime, false, false);
                     TabAgvMoveInfo(MapRegulate.UTCTime);
                     LoadComInfo(MapRegulate.UTCTime);
                 }
@@ -101,7 +104,6 @@ namespace AGVSystem.UI.APP_UI.Main
                 {
                     throw new Exception("地图数据不存在！");
                 }
-
             }
             catch (Exception ex)
             {
@@ -330,6 +332,12 @@ namespace AGVSystem.UI.APP_UI.Main
             {
                 mainPanelBorder.Margin = new Thickness(0);
             }
+        }
+
+        private void TagEdit_Click(object sender, RoutedEventArgs e)
+        {
+            EditTag edit = new EditTag();
+            edit.Show();
         }
     }
 }

@@ -58,6 +58,7 @@
       <HintPath>bin\Debug\OperateIni.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,6 +82,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="APP_UI\Edit\Area.xaml.cs">
+      <DependentUpon>Area.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="APP_UI\Edit\Tag.xaml.cs">
+      <DependentUpon>Tag.xaml</DependentUpon>
+    </Compile>
     <Compile Include="APP_UI\Main\Home_Main.xaml.cs">
       <DependentUpon>Home_Main.xaml</DependentUpon>
     </Compile>
@@ -94,6 +101,9 @@
     </Compile>
     <Compile Include="APP_UI\Map\EditLine.xaml.cs">
       <DependentUpon>EditLine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="APP_UI\Map\EditTag.xaml.cs">
+      <DependentUpon>EditTag.xaml</DependentUpon>
     </Compile>
     <Compile Include="APP_UI\Map\MapEdit.xaml.cs">
       <DependentUpon>MapEdit.xaml</DependentUpon>
@@ -131,9 +141,19 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="APP_UI\Edit\Area.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="APP_UI\Edit\Tag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="APP_UI\Main\Home_Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -147,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="APP_UI\Map\EditLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="APP_UI\Map\EditTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,18 +207,15 @@
     <Resource Include="image\start.png" />
     <Resource Include="image\map.png" />
     <Resource Include="image\restoration.png" />
-    <Resource Include="image\手掌.png" />
     <Resource Include="image\hand.png" />
     <Resource Include="image\brokenLine.png" />
     <Resource Include="image\shrink.png" />
     <Resource Include="image\Magnify.png" />
-    <Resource Include="image\文件.png" />
     <Resource Include="image\Text.png" />
     <Resource Include="image\noopsyche.png" />
     <Resource Include="image\sign.png" />
     <Resource Include="image\line.png" />
     <Resource Include="image\equipment.png" />
-    <Resource Include="image\返回.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="image\grab.png" />
@@ -228,9 +249,6 @@
     <Resource Include="image\magnifying_.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\复原.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="image\Gray_s.png" />
     <Resource Include="image\Green_s.gif" />
     <Resource Include="image\Green_s.png" />
@@ -238,9 +256,6 @@
     <Resource Include="image\Red_s.gif" />
     <Resource Include="image\Red_s.png" />
     <Resource Include="image\Yellow_s.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="image\停止.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="image\Stop.png" />
@@ -274,5 +289,6 @@
   <ItemGroup>
     <Resource Include="image\Configs.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

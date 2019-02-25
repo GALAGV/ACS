@@ -97,7 +97,6 @@ namespace AGVSystem.UI.APP_UI.Map
             AddMap map = new AddMap();
             this.Close();
             map.ShowDialog();
-           
         }
 
         private void AllCkek_Click(object sender, RoutedEventArgs e)

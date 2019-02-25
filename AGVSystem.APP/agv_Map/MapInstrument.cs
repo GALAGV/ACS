@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using AGVSystem.BLL.ServiceLogicBLL;
+using AGVSystem.Infrastructure.agvCommon;
 
 namespace AGVSystem.APP.agv_Map
 {
@@ -33,7 +34,8 @@ namespace AGVSystem.APP.agv_Map
         public Dictionary<int, Label> valuePairs = new Dictionary<int, Label>();//信标集合
         public Dictionary<int, Label> GetKeyValues = new Dictionary<int, Label>();//文字集合
         public Dictionary<int, WirePointArray> wires = new Dictionary<int, WirePointArray>();//暂时存放拖动时所用关联线路（线路起始点和结束点存在共用情况需做判断）
-
+        public Action<Label> action; //编辑信标委托
+        public Action<Label> AreaAction; //编辑区域委托
 
         #region 创建Tag
         /// <summary>
@@ -146,17 +148,12 @@ namespace AGVSystem.APP.agv_Map
                     if (!lineExistx)//线路不存在则绘制线路
                     {
                         AddLine();
-                        //foreach (WirePoint item in Pairsarray)//重新添加Tag 
-                        //{
-                        //    GetCanvas.Children.Add(valuePairs[item.TagID]);
-                        //}
-
                     }
                     Pairsarray.Clear();//移除暂存起始结束点
                 }
                 else if (GetCircuitType.Equals(CircuitType.Clear))
                 {
-                    ClearCircuit();//清除路线
+                    ClearCircuit(Pairsarray[0].TagID, Pairsarray[1].TagID);//清除路线
                 }
                 else if (GetCircuitType.Equals(CircuitType.Align))
                 {
@@ -184,38 +181,23 @@ namespace AGVSystem.APP.agv_Map
 
         #region 清除线路
 
-
         /// <summary>
         /// 清除线路
         /// </summary>
-        public void ClearCircuit()
+        public void ClearCircuit(int GetPointID,int GetWirePointID)
         {
-            //double ey = Pairsarray[0].SetPoint.X - Pairsarray[1].SetPoint.X; //大于0下方上方小于0上方
             foreach (WirePointArray item in wirePointArrays.ToArray())
             {
-                if ((item.GetPoint.TagID.Equals(Pairsarray[0].TagID) && item.GetWirePoint.TagID.Equals(Pairsarray[1].TagID)) || (item.GetPoint.TagID.Equals(Pairsarray[1].TagID) && item.GetWirePoint.TagID.Equals(Pairsarray[0].TagID)))
+                if ((item.GetPoint.TagID.Equals(GetPointID) && item.GetWirePoint.TagID.Equals(GetWirePointID)) || (item.GetPoint.TagID.Equals(GetWirePointID) && item.GetWirePoint.TagID.Equals(GetPointID)))
                 {
-                    //if (item.circuitType.Equals(CircuitType.Broken))
-                    //{
-                    CrearS(item);
+                    CrearS(item,true);
                     break;
-                    //}
-                    //else if (item.circuitType.Equals(CircuitType.Semicircle))
-                    //{
-                    //    CrearS(item);
-                    //    break;
-                    //}
-                    //else
-                    //{
-                    //    CrearS(item);
-                    //    break;
-                    //}
                 }
             }
             Pairsarray.Clear();
         }
 
-        public void CrearS(WirePointArray item)
+        public void CrearS(WirePointArray item, bool type)
         {
             if (item.circuitType == CircuitType.Line || item.circuitType == CircuitType.Semicircle)
             {
@@ -231,8 +213,12 @@ namespace AGVSystem.APP.agv_Map
                     }
                 }
             }
-            wirePointArrays.Remove(item);
+            if (type)
+                wirePointArrays.Remove(item);
         }
+
+
+
 
         public void DeleteLine()
         {
@@ -416,7 +402,7 @@ namespace AGVSystem.APP.agv_Map
         {
             if (tongs)
                 return;
-            if (e.LeftButton == MouseButtonState.Released)
+            if (e.ChangedButton==MouseButton.Left)
             {
                 Label tmp = (Label)sender;
                 tmp.ReleaseMouseCapture();
@@ -490,26 +476,19 @@ namespace AGVSystem.APP.agv_Map
         {
             if (tongs)
                 return;
-
+            Label tmp = (Label)sender;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                Label tmp = (Label)sender;
+
                 pos = e.GetPosition(null);
                 tmp.CaptureMouse();
                 tmp.Cursor = Cursors.Hand;
             }
-
-
-            if (e.RightButton == MouseButtonState.Pressed)
+            else if (e.RightButton == MouseButtonState.Pressed)
             {
                 if (PathStatic)
                     return;
-
-
-                MessageBox.Show("");
-                //TagRedact mapRedact = new TagRedact(Convert.ToInt32(tmp.Tag), GetCanvas);
-                //mapRedact.GetMovement += MouseMove;
-                //mapRedact.ShowDialog();
+                action.Invoke(tmp);
             }
         }
         #endregion
@@ -565,7 +544,7 @@ namespace AGVSystem.APP.agv_Map
                 Cursor = Cursors.Hand,
                 Tag = ArID,
             };
-            aAlignment(FontPosition, labelArea);
+            ControlRegulate.aAlignment(FontPosition, labelArea);
             if (Areaevent)
             {
                 labelArea.MouseDown += LabelArea_MouseDown;
@@ -606,7 +585,7 @@ namespace AGVSystem.APP.agv_Map
                 Label tmp = (Label)sender;
                 double dx = e.GetPosition(null).X - jos.X + tmp.Margin.Left;
                 double dy = e.GetPosition(null).Y - jos.Y + tmp.Margin.Top;
-                if (dx > 0 && dy > 0)
+                if (dx > 0 && dy > 0 && dx < GetCanvas.Width - tmp .Width  && dy < GetCanvas.Height - tmp.Height )
                 {
                     tmp.Margin = new Thickness(dx, dy, 0, 0);
                 }
@@ -630,8 +609,7 @@ namespace AGVSystem.APP.agv_Map
             tmp.Cursor = Cursors.Hand;
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                //MapRedact mapRedact = new MapRedact(Convert.ToInt32(tmp.Tag), GetCanvas);
-                //mapRedact.ShowDialog();
+                AreaAction(tmp);
             }
         }
 
@@ -1012,6 +990,7 @@ namespace AGVSystem.APP.agv_Map
                     TextInx = Indexs;
                 }
             }
+            item.Close();
             TextInx++;
             index++;
         }
@@ -1145,273 +1124,6 @@ namespace AGVSystem.APP.agv_Map
                 GetKeyValues[item].Margin = new Thickness((GetKeyValues[item].Margin.Left / siseWin) * Sise, (GetKeyValues[item].Margin.Top / siseWin) * Sise, 0, 0);
                 GetKeyValues[item].FontSize = GetKeyValues[item].FontSize / siseWin * Sise;
                 mainPan.Children.Add(GetKeyValues[item]);
-            }
-        }
-
-        #endregion
-
-        #region 获取/设置字体对齐方式
-
-        /// <summary>
-        /// 区域文字对齐方式
-        /// </summary>
-        /// <param name="label"></param>
-        /// <returns></returns>
-        public string aAlignment(Label label)
-        {
-            if (label.HorizontalContentAlignment.Equals(HorizontalAlignment.Center) && label.VerticalContentAlignment.Equals(VerticalAlignment.Center))
-            {
-                return "居中对齐";
-            }
-            else if (label.HorizontalContentAlignment.Equals(HorizontalAlignment.Left) && label.VerticalContentAlignment.Equals(VerticalAlignment.Center))
-            {
-                return "靠左对齐";
-            }
-            else if (label.HorizontalContentAlignment.Equals(HorizontalAlignment.Right) && label.VerticalContentAlignment.Equals(VerticalAlignment.Center))
-            {
-                return "靠右对齐";
-            }
-            else if (label.HorizontalContentAlignment.Equals(HorizontalAlignment.Center) && label.VerticalContentAlignment.Equals(VerticalAlignment.Top))
-            {
-                return "顶部对齐";
-            }
-            else if (label.HorizontalContentAlignment.Equals(HorizontalAlignment.Center) && label.VerticalContentAlignment.Equals(VerticalAlignment.Bottom))
-            {
-                return "底部对齐";
-            }
-            else
-            {
-                return "居中对齐";
-            }
-        }
-
-
-        /// <summary>
-        /// 设置文字对齐方式
-        /// </summary>
-        /// <param name="alignment">对齐方式</param>
-        /// <param name="label">控件</param>
-        public void aAlignment(string alignment, Label label)
-        {
-            if (alignment.Equals("居中对齐") || alignment.Equals("水平居中"))
-            {
-                label.HorizontalContentAlignment = HorizontalAlignment.Center;
-                label.VerticalContentAlignment = VerticalAlignment.Center;
-            }
-            else if (alignment.Equals("靠左对齐"))
-            {
-                label.HorizontalContentAlignment = HorizontalAlignment.Left;
-                label.VerticalContentAlignment = VerticalAlignment.Center;
-            }
-            else if (alignment.Equals("靠右对齐"))
-            {
-                label.HorizontalContentAlignment = HorizontalAlignment.Right;
-                label.VerticalContentAlignment = VerticalAlignment.Center;
-            }
-            else if (alignment.Equals("顶部对齐"))
-            {
-                label.HorizontalContentAlignment = HorizontalAlignment.Center;
-                label.VerticalContentAlignment = VerticalAlignment.Top;
-            }
-            else if (alignment.Equals("底部对齐"))
-            {
-                label.HorizontalContentAlignment = HorizontalAlignment.Center;
-                label.VerticalContentAlignment = VerticalAlignment.Bottom;
-            }
-        }
-
-        #endregion
-
-        #region 获取/设置背景/字体颜色
-
-
-        /// <summary>
-        /// 区域背景/字体颜色
-        /// </summary>
-        /// <param name="label"></param>
-        /// <returns></returns>
-        public string AreaColor(string bgColor)
-        {
-            if (bgColor.Equals((Colors.White).ToString()))
-            {
-                return "白色";
-            }
-            else if (bgColor.Equals((Colors.Black).ToString()))
-            {
-                return "黑色";
-            }
-            else if (bgColor.Equals((Colors.Red).ToString()))
-            {
-                return "红色";
-            }
-            else if (bgColor.Equals((Colors.Orange).ToString()))
-            {
-                return "橙色";
-            }
-            else if (bgColor.Equals((Colors.Yellow).ToString()))
-            {
-                return "黄色";
-            }
-            else if (bgColor.Equals((Colors.Green).ToString()))
-            {
-                return "绿色";
-            }
-            else if (bgColor.Equals((Colors.Cyan).ToString()))
-            {
-                return "青色";
-            }
-            else if (bgColor.Equals((Colors.Blue).ToString()))
-            {
-                return "蓝色";
-            }
-            else if (bgColor.Equals((Colors.Violet).ToString()))
-            {
-                return "紫色";
-            }
-            return "";
-        }
-
-        /// <summary>
-        /// 设置颜色
-        /// </summary>
-        /// <param name="control">控件</param>
-        /// <param name="color">颜色名称</param>
-        public void AreaColor(Control control, string color, Colortype existx)
-        {
-            if (color.Equals("白色"))
-            {
-                if (existx.Equals(Colortype.FontColor))
-                {
-                    control.Foreground = new SolidColorBrush(Colors.White);
-                }
-                else if (existx.Equals(Colortype.BgColor))
-                {
-                    control.Background = new SolidColorBrush(Colors.White);
-                }
-                else if (existx.Equals(Colortype.BrColor))
-                {
-                    control.BorderBrush = new SolidColorBrush(Colors.White);
-                }
-            }
-            else if (color.Equals("黑色"))
-            {
-                if (existx.Equals(Colortype.FontColor))
-                {
-                    control.Foreground = new SolidColorBrush(Colors.Black);
-                }
-                else if (existx.Equals(Colortype.BgColor))
-                {
-                    control.Background = new SolidColorBrush(Colors.Black);
-                }
-                else if (existx.Equals(Colortype.BrColor))
-                {
-                    control.BorderBrush = new SolidColorBrush(Colors.Black);
-                }
-            }
-            else if (color.Equals("红色"))
-            {
-                if (existx.Equals(Colortype.FontColor))
-                {
-                    control.Foreground = new SolidColorBrush(Colors.Red);
-                }
-                else if (existx.Equals(Colortype.BgColor))
-                {
-                    control.Background = new SolidColorBrush(Colors.Red);
-                }
-                else if (existx.Equals(Colortype.BrColor))
-                {
-                    control.BorderBrush = new SolidColorBrush(Colors.Red);
-                }
-            }
-            else if (color.Equals("橙色"))
-            {
-                if (existx.Equals(Colortype.FontColor))
-                {
-                    control.Foreground = new SolidColorBrush(Colors.Orange);
-                }
-                else if (existx.Equals(Colortype.BgColor))
-                {
-                    control.Background = new SolidColorBrush(Colors.Orange);
-                }
-                else if (existx.Equals(Colortype.BrColor))
-                {
-                    control.BorderBrush = new SolidColorBrush(Colors.Orange);
-                }
-            }
-            else if (color.Equals("黄色"))
-            {
-                if (existx.Equals(Colortype.FontColor))
-                {
-                    control.Foreground = new SolidColorBrush(Colors.Yellow);
-                }
-                else if (existx.Equals(Colortype.BgColor))
-                {
-                    control.Background = new SolidColorBrush(Colors.Yellow);
-                }
-                else if (existx.Equals(Colortype.BrColor))
-                {
-                    control.BorderBrush = new SolidColorBrush(Colors.Yellow);
-                }
-            }
-            else if (color.Equals("绿色"))
-            {
-                if (existx.Equals(Colortype.FontColor))
-                {
-                    control.Foreground = new SolidColorBrush(Colors.Green);
-                }
-                else if (existx.Equals(Colortype.BgColor))
-                {
-                    control.Background = new SolidColorBrush(Colors.Green);
-                }
-                else if (existx.Equals(Colortype.BrColor))
-                {
-                    control.BorderBrush = new SolidColorBrush(Colors.Green);
-                }
-            }
-            else if (color.Equals("青色"))
-            {
-                if (existx.Equals(Colortype.FontColor))
-                {
-                    control.Foreground = new SolidColorBrush(Colors.Cyan);
-                }
-                else if (existx.Equals(Colortype.BgColor))
-                {
-                    control.Background = new SolidColorBrush(Colors.Cyan);
-                }
-                else if (existx.Equals(Colortype.BrColor))
-                {
-                    control.BorderBrush = new SolidColorBrush(Colors.Cyan);
-                }
-            }
-            else if (color.Equals("蓝色"))
-            {
-                if (existx.Equals(Colortype.FontColor))
-                {
-                    control.Foreground = new SolidColorBrush(Colors.Blue);
-                }
-                else if (existx.Equals(Colortype.BgColor))
-                {
-                    control.Background = new SolidColorBrush(Colors.Blue);
-                }
-                else if (existx.Equals(Colortype.BrColor))
-                {
-                    control.BorderBrush = new SolidColorBrush(Colors.Blue);
-                }
-            }
-            else if (color.Equals("紫色"))
-            {
-                if (existx.Equals(Colortype.FontColor))
-                {
-                    control.Foreground = new SolidColorBrush(Colors.Violet);
-                }
-                else if (existx.Equals(Colortype.BgColor))
-                {
-                    control.Background = new SolidColorBrush(Colors.Violet);
-                }
-                else if (existx.Equals(Colortype.BrColor))
-                {
-                    control.BorderBrush = new SolidColorBrush(Colors.Violet);
-                }
             }
         }
 

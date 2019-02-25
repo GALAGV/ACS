@@ -118,7 +118,12 @@
                                 <Image Stretch="Fill" Source="/image/COM.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
                                 <Label Content="路线" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-1,-1,0,0" ></Label>
                             </Grid>
-                            <DataGrid   BorderBrush="#808080" SelectedCellsChanged="SerialPortData_SelectedCellsChanged" RowHeaderWidth="0"   Name="SerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1"  ItemsSource="{Binding}" FrozenColumnCount="1"  CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" IsReadOnly="False" >
+                            <DataGrid  SelectionUnit="Cell" BorderBrush="#808080" CellEditEnding="SerialPortData_CellEditEnding"   SelectedCellsChanged="SerialPortData_SelectedCellsChanged"  RowHeaderWidth="0"   Name="SerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1"  ItemsSource="{Binding}"  CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" IsReadOnly="False" >
+                                <!--<DataGrid.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <EventSetter Event="GotFocus" Handler="SerialPortData_GotFocus"></EventSetter>
+                                    </Style>
+                                </DataGrid.CellStyle>-->
                                 <DataGrid.RowStyle>
                                     <Style TargetType="DataGridRow">
                                         <Setter Property="Background" Value="#F2F2F2" />
@@ -151,7 +156,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBlock  FontWeight="Black"   Foreground="{Binding TagColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Tag}"/>
+                                                <TextBlock  FontWeight="Black"   VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding TagColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Tag}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -171,12 +176,12 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock   Foreground="{Binding SpeedColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Speed}"/>
+                                                <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="{Binding SpeedColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Speed,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox   Name="listSeep" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetSpeed}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox  BorderThickness="0" Text="{Binding Path= Speed,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" HorizontalAlignment="Center" Name="listT" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetSpeed}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -196,12 +201,12 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock  Foreground="{Binding PbsColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Pbs}"/>
+                                                <TextBlock   VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding PbsColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Pbs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox   Name="listPBS" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetPBS}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox Name="listT" BorderThickness="0" Text="{Binding Path= Pbs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetPBS}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -221,12 +226,12 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock  Foreground="{Binding TurnColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Turn}"/>
+                                                <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding TurnColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Turn,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox   Name="listTurn" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetTurn}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox BorderThickness="0" Text="{Binding Path= Turn,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   Name="listT" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetTurn}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -246,12 +251,12 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock  Foreground="{Binding DirectionColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Direction}"/>
+                                                <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding DirectionColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Direction,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox   Name="listDirection" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetDirection}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox   BorderThickness="0" Text="{Binding Path= Direction,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Name="listT" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetDirection}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -271,12 +276,12 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock  Foreground="{Binding HookColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Hook}"/>
+                                                <TextBlock   VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding HookColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Hook,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox   Name="listHook" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetHook}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox  Name="listT" BorderThickness="0" Text="{Binding Path= Hook,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetHook}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -340,18 +345,13 @@
                                     <Canvas Name="TopX"  HorizontalAlignment="Left" Height="20" Width="20000"></Canvas>
                                 </StackPanel>
                             </ScrollViewer>
-
                             <ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,20">
-                            <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,-1,0,20">
-                                <Canvas Name="TopY" Width="20" HorizontalAlignment="Left" Height="1500"></Canvas>
-                            </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,-1,0,20">
+                                    <Canvas Name="TopY" Width="20" HorizontalAlignment="Left" Height="1500"></Canvas>
+                                </StackPanel>
                             </ScrollViewer>
-
-
                             <ScrollViewer  Name="SrcCount" Grid.Column="1" Grid.Row="2"   HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" ScrollChanged="SrcCount_ScrollChanged"  >
-
                                 <Canvas  Name="mainPanel" Background="#ffffff" HorizontalAlignment="Left"  VerticalAlignment="Top" >
-
                                 </Canvas>
                             </ScrollViewer>
                         </Grid>
