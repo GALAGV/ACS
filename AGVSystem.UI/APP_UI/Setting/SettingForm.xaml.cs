@@ -17,6 +17,7 @@ using OperateIni;
 using System.IO;
 using AGVSystem.Infrastructure.agvCommon;
 using System.Configuration;
+using System.Linq;
 
 namespace AGVSystem.UI.APP_UI.Setting
 {
@@ -33,8 +34,10 @@ namespace AGVSystem.UI.APP_UI.Setting
         private Menutype GetMenutype = Menutype.MapSetting;
         private agvMapRegulate mapService = new agvMapRegulate(); 
         private Ga_mapBLL mapMessage = new Ga_mapBLL();
-        private Grid gridItem = new Grid();
+        private Grid gridItem = new Grid();  //端口绘制容器
+        private Grid gridNetwork = new Grid(); //网络绘制容器
         private int Index = 0;
+        private int NetworkIndex = 0;
         public delegate void SettingMap();
         public SettingMap GetSettingMap;
 
@@ -43,6 +46,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             Panel.SetZIndex(Port, 3);
             Panel.SetZIndex(agv_system, 2);
             Panel.SetZIndex(agv_map, 1);
+            Panel.SetZIndex(network, 0);
             GetMenutype = Menutype.ProntSetting;
         }
 
@@ -51,6 +55,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             Panel.SetZIndex(Port, 1);
             Panel.SetZIndex(agv_system, 2);
             Panel.SetZIndex(agv_map, 3);
+            Panel.SetZIndex(network, 0);
             GetMenutype = Menutype.MapSetting;
         }
 
@@ -59,6 +64,7 @@ namespace AGVSystem.UI.APP_UI.Setting
             Panel.SetZIndex(Port, 1);
             Panel.SetZIndex(agv_system, 3);
             Panel.SetZIndex(agv_map, 2);
+            Panel.SetZIndex(network, 0);
             GetMenutype = Menutype.SystemSetting;
         }
 
@@ -73,7 +79,6 @@ namespace AGVSystem.UI.APP_UI.Setting
             ConfigDataBase();
             PortLoad();
             MapList.ItemsSource = mapService.GetMapRegulate();
-
             DataTable MapData = mapService.defaultMap(MapRegulate.DefaultMap);
             if (MapData.Rows.Count > 0)
             {
@@ -113,6 +118,9 @@ namespace AGVSystem.UI.APP_UI.Setting
             gridItem.VerticalAlignment = VerticalAlignment.Top;
             gridItem.HorizontalAlignment = HorizontalAlignment.Center;
             CountMap.Content = gridItem;
+            gridNetwork.VerticalAlignment = VerticalAlignment.Top;
+            gridNetwork.HorizontalAlignment = HorizontalAlignment.Left;
+            networkCount.Content = gridNetwork;
             MySqlDataReader PortData = mapMessage.ListDevice(MapRegulate.UTCTime);
             int i = 0;
             while (PortData.Read())
@@ -126,7 +134,24 @@ namespace AGVSystem.UI.APP_UI.Setting
             {
                 DeletePort.IsEnabled = false;
             }
+            MySqlDataReader reader = mapMessage.SelectNetworkBLL(MapRegulate.UTCTime);
+            if (reader != null)
+            {
+                int id = 0;
+                while (reader.Read())
+                {
+                    AddNetwork(id, reader["IP_Address"].ToString(), reader["IP_Port"].ToString());
+                    NetworkIndex = id;
+                    id++;
+                }
+            }
+            if (gridNetwork.RowDefinitions.Count.Equals(1) || gridNetwork.RowDefinitions.Count.Equals(0))
+            {
+                Network_Delete.IsEnabled = false;
+            }
         }
+
+        #region 添加串口
 
         List<Label> GetTs = new List<Label>();
         List<ComboBox> combos = new List<ComboBox>();
@@ -243,6 +268,110 @@ namespace AGVSystem.UI.APP_UI.Setting
             Combos.Add(combo3);
         }
 
+        #endregion
+
+        #region 添加网络
+
+      
+        List<Label> IpName = new List<Label>();
+        List<TextBox> Ipsite = new List<TextBox>();
+        List<Label> PortName = new List<Label>();
+        List<TextBox> PortData = new List<TextBox>();
+        List<RowDefinition> NetworkRows = new List<RowDefinition>();
+        private void AddNetwork(int Index, string IP, string Port)
+        {
+            //创建行
+            RowDefinition row = new RowDefinition();
+            gridNetwork.RowDefinitions.Add(row);
+            for (int s = 0; s < 4; s++)
+            {
+                //创建列
+                ColumnDefinition column = new ColumnDefinition();
+                gridNetwork.ColumnDefinitions.Add(column);
+            }
+            NetworkRows.Add(row);
+            Label label = new Label();
+            label.Content = "IP地址：";
+            label.Foreground = new SolidColorBrush(Colors.Black);
+            label.HorizontalAlignment = HorizontalAlignment.Center;
+            label.VerticalAlignment = VerticalAlignment.Center;
+            label.Margin = new Thickness(10, 2, 10, 2);
+            Grid.SetColumn(label, 0);
+            Grid.SetRow(label, Index);
+            gridNetwork.Children.Add(label);
+            IpName.Add(label);
+
+
+            TextBox combo = new TextBox();
+            combo.Text = IP;
+            combo.Width = 170;
+            combo.VerticalContentAlignment = VerticalAlignment.Center;
+            combo.Margin = new Thickness(0, 2, 10, 2);
+            Grid.SetColumn(combo, 1);
+            Grid.SetRow(combo, Index);
+            gridNetwork.Children.Add(combo);
+            Ipsite.Add(combo);
+
+            Label labe2 = new Label();
+            labe2.Content = "端口号：";
+            labe2.HorizontalAlignment = HorizontalAlignment.Center;
+            labe2.VerticalAlignment = VerticalAlignment.Center;
+            labe2.Margin = new Thickness(20, 2, 10, 2);
+
+            Grid.SetColumn(labe2, 2);
+            Grid.SetRow(labe2, Index);
+            gridNetwork.Children.Add(labe2);
+            PortName.Add(labe2);
+
+            TextBox combo2 = new TextBox();
+            combo2.Text = Port;
+            combo2.Margin = new Thickness(0, 2, 10, 2);
+            combo2.Width = 170;
+            combo2.VerticalContentAlignment = VerticalAlignment.Center;
+            Grid.SetColumn(combo2, 3);
+            Grid.SetRow(combo2, Index);
+            gridNetwork.Children.Add(combo2);
+            PortData.Add(combo2);
+        }
+
+        #endregion
+
+        #region 删除网络
+
+        private void Network_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (gridNetwork.RowDefinitions.Count.Equals(1) || gridNetwork.RowDefinitions.Count.Equals(0))
+            {
+                return;
+            }
+            gridNetwork.Children.Remove(IpName[NetworkIndex]);
+            gridNetwork.Children.Remove(Ipsite[NetworkIndex]);
+            gridNetwork.Children.Remove(PortName[NetworkIndex]);
+            gridNetwork.Children.Remove(PortData[NetworkIndex]);
+
+            IpName.Remove(IpName[NetworkIndex]);
+            Ipsite.Remove(Ipsite[NetworkIndex]);
+            PortName.Remove(PortName[NetworkIndex]);
+            PortData.Remove(PortData[NetworkIndex]);
+
+            gridNetwork.RowDefinitions.Remove(NetworkRows[NetworkIndex]);
+            NetworkRows.Remove(NetworkRows[NetworkIndex]);
+            for (int i = 0; i < IpName.Count; i++)
+            {
+                Grid.SetRow(IpName[i], i);
+                Grid.SetRow(Ipsite[i], i);
+                Grid.SetRow(PortName[i], i);
+                Grid.SetRow(PortData[i], i);
+            }
+            NetworkIndex--;
+            if (gridNetwork.RowDefinitions.Count.Equals(1))
+            {
+                Network_Delete.IsEnabled = false;
+            }
+        }
+        #endregion
+
+
         private void Combo_DropDownOpened(object sender, EventArgs e)
         {
             ComboBox box = (ComboBox)sender;
@@ -261,6 +390,9 @@ namespace AGVSystem.UI.APP_UI.Setting
             }
         }
 
+        #region 内容过滤
+
+       
         private void Combo3_KeyDown(object sender, KeyEventArgs e)
         {
             ComboBox box = (ComboBox)sender;
@@ -281,6 +413,7 @@ namespace AGVSystem.UI.APP_UI.Setting
                 }
             }
         }
+        #endregion
 
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
@@ -291,6 +424,9 @@ namespace AGVSystem.UI.APP_UI.Setting
             AddRows(Index, "", "", "");
         }
 
+        #region 删除串口
+
+       
         private void DeletePort_Click(object sender, RoutedEventArgs e)
         {
             if (gridItem.RowDefinitions.Count.Equals(1) || gridItem.RowDefinitions.Count.Equals(0))
@@ -328,6 +464,7 @@ namespace AGVSystem.UI.APP_UI.Setting
                 DeletePort.IsEnabled = false;
             }
         }
+        #endregion
 
         #region 设置保存
 
@@ -346,10 +483,47 @@ namespace AGVSystem.UI.APP_UI.Setting
                 case Menutype.SystemSetting:
                     SystemSave();
                     break;
-                //default:
-                //    break;
+                case Menutype.Network:
+                    NetworkSave();
+                    break;
+                    //default:
+                    //    break;
             }
           
+        }
+        #endregion
+
+        #region 网络保存
+
+        private void NetworkSave()
+        {
+            bool verify = true;
+            for (int i = 0; i < Ipsite.Count; i++)
+            {
+                if (!FormatVerification.HasIP(Ipsite[i].Text.Trim()) || !FormatVerification.IsFloat(PortData[i].Text.Trim()))
+                {
+                    verify = false;
+                }
+            }
+            if (verify)
+            {
+                PortInfo.IP.Clear();
+                PortInfo.Port.Clear();
+                if (mapMessage.SavenetworkBLL(MapRegulate.UTCTime, Ipsite.Select(p => p.Text.Trim()).ToList(), PortData.Select(p => p.Text.Trim()).ToList()))
+                {
+                    MessageBox.Show("保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("保存失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("格式输入错误！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
         #endregion
 
@@ -557,6 +731,8 @@ namespace AGVSystem.UI.APP_UI.Setting
 
         #endregion
 
+        #region 测试连接
+
         private void Test_Click(object sender, RoutedEventArgs e)
         {
             this.Cursor = Cursors.Wait;
@@ -573,7 +749,7 @@ namespace AGVSystem.UI.APP_UI.Setting
                     }
                     catch (MySql.Data.MySqlClient.MySqlException ex)
                     {
-                        MessageBox.Show($"连接失败,错误信息:\r\n{ex.Message}", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"连接失败，错误信息：\r\n{ex.Message}", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     finally
                     {
@@ -584,6 +760,8 @@ namespace AGVSystem.UI.APP_UI.Setting
             }
            
         }
+        #endregion
+
 
         private string DataBaseConfig()
         {
@@ -591,6 +769,24 @@ namespace AGVSystem.UI.APP_UI.Setting
             string DataUserConfig = $"{DataBaseStr[1].Split('=')[0]}={Number.Text.Trim()}";
             string DataPassword = $"{DataBaseStr[2].Split('=')[0]}={Password.Text.Trim()}";
             return string.Join(";", new string[] { DataBaseConfig, DataUserConfig, DataPassword });
+        }
+
+        private void IP_Selected(object sender, RoutedEventArgs e)
+        {
+            Panel.SetZIndex(Port, 1);
+            Panel.SetZIndex(agv_system, 2);
+            Panel.SetZIndex(agv_map, 3);
+            Panel.SetZIndex(network, 4);
+            GetMenutype = Menutype.Network;
+        }
+
+        private void Network_Add_Click(object sender, RoutedEventArgs e)
+        {
+            if (gridNetwork.RowDefinitions.Count.Equals(0))
+            { NetworkIndex = 0; }
+            else
+            { NetworkIndex++; Network_Delete.IsEnabled = true; }
+            AddNetwork(NetworkIndex, "", "");
         }
     }
 
@@ -610,6 +806,12 @@ namespace AGVSystem.UI.APP_UI.Setting
         /// </summary>
         [Description("地图设置")]
         MapSetting,
+
+        /// <summary>
+        /// 网络设置
+        /// </summary>
+        [Description("网络设置")]
+        Network,
 
         /// <summary>
         /// 系统设置

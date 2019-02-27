@@ -44,7 +44,7 @@
                 </Button>
                 <Separator />
             </ToolBar>
-            <ToolBar Grid.Row="1"  Background="#f0f0f0" ToolBarTray.IsLocked="True">
+            <ToolBar Grid.Row="1"  Background="#f0f0f0" ToolBarTray.IsLocked="True" Loaded="ToolBar_Loaded">
                 <Separator />
                 <Label Content="地图:"  VerticalAlignment="Center" ></Label>
                 <ComboBox Width="140" SelectionChanged="MapMenu_SelectionChanged"   SelectedIndex="0"  Name="MapMenu"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  DisplayMemberPath="Name" SelectedValuePath="CreateTime">
@@ -82,7 +82,7 @@
                                 <Image Stretch="Fill" Source="/image/COM.png" Width="15" Height="15" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Image>
                                 <Label Content="信标" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-1,-1,0,0" ></Label>
                             </Grid>
-                            <DataGrid    BorderBrush="#808080" SelectionUnit="Cell" SelectedCellsChanged="SerialPortData_SelectedCellsChanged"  BeginningEdit="SerialPortData_BeginningEdit"   RowHeaderWidth="0"   Name="SerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1"  ItemsSource="{Binding}" FrozenColumnCount="1"  CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" IsReadOnly="False" >
+                            <DataGrid   CellEditEnding="SerialPortData_CellEditEnding"  BorderBrush="#808080" SelectionUnit="Cell" SelectedCellsChanged="SerialPortData_SelectedCellsChanged"  BeginningEdit="SerialPortData_BeginningEdit"   RowHeaderWidth="0"   Name="SerialPortData" BorderThickness="0,1,0,0"  AllowDrop="True" Grid.Row="1"  ItemsSource="{Binding}" FrozenColumnCount="1"  CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" IsReadOnly="False" >
                                 <DataGrid.RowStyle>
                                     <Style TargetType="DataGridRow">
                                         <Setter Property="Background" Value="#F2F2F2" />
@@ -124,7 +124,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding NextTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                                <TextBlock  Foreground="{Binding NextTagColor}"  Text="{Binding NextTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -141,7 +141,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding NextLeftTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                                <TextBlock  Foreground="{Binding NextLeftTagColor}"  Text="{Binding NextLeftTag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -158,7 +158,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding NextRightTag}"></TextBlock>
+                                                <TextBlock Text="{Binding NextRightTag}"   Foreground="{Binding NextRightTagColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -175,7 +175,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding PreTag}"></TextBlock>
+                                                <TextBlock Text="{Binding PreTag}" Foreground="{Binding PreTagColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -192,7 +192,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding PreLeftTag}"></TextBlock>
+                                                <TextBlock Text="{Binding PreLeftTag}"  Foreground="{Binding PreLeftTagColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -209,7 +209,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding PreRightTag}"></TextBlock>
+                                                <TextBlock Text="{Binding PreRightTag}" Foreground="{Binding PreRightTagColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -226,7 +226,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Speed}"></TextBlock>
+                                                <TextBlock Text="{Binding Speed}" Foreground="{Binding SpeedColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -243,7 +243,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding SpeedRev}"></TextBlock>
+                                                <TextBlock Text="{Binding SpeedRev}" Foreground="{Binding SpeedRevColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -260,7 +260,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding PreTurnSpeed}"></TextBlock>
+                                                <TextBlock Text="{Binding PreTurnSpeed}" Foreground="{Binding PreTurnSpeedColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -277,7 +277,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding RevTurnSpeed}"></TextBlock>
+                                                <TextBlock Text="{Binding RevTurnSpeed}" Foreground="{Binding RevTurnSpeedColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -294,7 +294,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Pbs}"></TextBlock>
+                                                <TextBlock Text="{Binding Pbs}" Foreground="{Binding PbsColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -311,7 +311,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding PbsRev}"></TextBlock>
+                                                <TextBlock Text="{Binding PbsRev}" Foreground="{Binding PbsRevColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -328,7 +328,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding PreTurnPBS}"></TextBlock>
+                                                <TextBlock Text="{Binding PreTurnPBS}" Foreground="{Binding PreTurnPBSColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -345,7 +345,7 @@
                                         </DataGridTemplateColumn.HeaderTemplate>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding RevTurnPBS}"></TextBlock>
+                                                <TextBlock Text="{Binding RevTurnPBS}" Foreground="{Binding RevTurnPBSColor}"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -354,24 +354,7 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
-                                    <!--<DataGridTemplateColumn  Width="80">
-                                        <DataGridTemplateColumn.HeaderTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="停止时间" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.HeaderTemplate>
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding StopTime}"></TextBlock>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                        --><!--<DataGridTemplateColumn.CellEditingTemplate>
-                                            <DataTemplate>
-                                                <TextBox   Name="listT" BorderThickness="0"  Width="80" FontFamily="微软雅黑" FontSize="15" ></TextBox>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellEditingTemplate>--><!--
-                                    </DataGridTemplateColumn>-->
-                                    <DataGridTextColumn Header="站点" Binding="{Binding StopTime}" Width="80"  >
+                                    <DataGridTextColumn Header="停止时间" Binding="{Binding StopTime}" Width="80"  >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>

@@ -21,9 +21,19 @@ namespace AGVSystem.Infrastructure.agvCommon
         /// </summary>
         /// <param name="str">需要判断的字符串</param>
         /// <returns>判断结果</returns>
-        public bool HasChinese(string str)
+        public static bool HasChinese(string str)
         {
             return Regex.IsMatch(str, @"[\u4e00-\u9fa5]|[a-zA-Z]");
+        }
+
+        /// <summary>
+        /// 匹配是否为IP
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool HasIP(string str)
+        {
+            return Regex.IsMatch(str, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
         }
     }
 }

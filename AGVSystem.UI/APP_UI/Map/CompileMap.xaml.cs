@@ -48,7 +48,7 @@ namespace AGVSystem.UI.APP_UI.Map
 
             Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
             sfd.Filter = "地图信息文件|*.tll";
-            sfd.FileName = "(" + ga_Map.Name + ")" + DateTime.Now.ToString("yyyyMMdd");
+            sfd.FileName = "" + ga_Map.Name + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
             if (sfd.ShowDialog() == true)
             {
                 if (mapService.Export_Map(UTC.ConvertDateTimeLong(Convert.ToDateTime(ga_Map.CreateTime)), sfd.FileName))

@@ -27,5 +27,9 @@ namespace AGVSystem.Model.LogicData
         public static List<int> chargeCom = new List<int>();
         public static List<int> chargeBaud = new List<int>();
         public static List<string> chargeStr = new List<string>();
+
+        //网络
+        public static List<string> IP = new List<string>();
+        public static List<int> Port = new List<int>();
     }
 }

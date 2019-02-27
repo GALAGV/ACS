@@ -84,7 +84,7 @@ namespace AGVSystem.UI.APP_UI.Map
             Line.SelectedIndex = 0;
         }
 
-        List<string> associatedTag = new List<string>();
+        List<string> associatedTag = new List<string>(); //关联Tag集合
 
         private void Value_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

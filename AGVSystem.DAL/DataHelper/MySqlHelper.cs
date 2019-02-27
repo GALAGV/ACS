@@ -241,7 +241,7 @@ namespace AGVSystem.DAL.DataHelper
                     tx.Commit();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     tx.Rollback();
                     return false;

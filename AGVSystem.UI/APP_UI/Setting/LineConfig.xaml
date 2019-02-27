@@ -28,8 +28,8 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="名称规则:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
                     <TextBox Grid.Row="0" Name="Template" Text="" Grid.Column="1"  Margin="0,5,0,5" VerticalContentAlignment="Center"></TextBox>
-                    <Label Content="方向自动计算" Margin="0,-3,0,0"  Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
-                    <CheckBox  Grid.Column="0" Name="Direction"  Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right"></CheckBox>
+                    <Label Content="方向自动计算" Margin="0,-3,0,0" Visibility="Hidden"  Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                    <CheckBox  Grid.Column="0" Name="Direction" Visibility="Hidden"  Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right"></CheckBox>
                 </Grid>
             </GroupBox>
             <Button  Grid.Row="1" Grid.Column="1" Width="80" Height="26" BorderBrush="#adadad"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,15,0" Name="Save" Click="Save_Click">

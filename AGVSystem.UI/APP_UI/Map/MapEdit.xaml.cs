@@ -186,6 +186,8 @@ namespace AGVSystem.UI.APP_UI.Map
 
             if (instrument.MapPreserve(UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)).ToString(), !editStatic, GetMap.Name, CanvasWidth, CanvasHeight))
             {
+                if (!editStatic)
+                    editStatic = true;
                 MessageBox.Show("保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else

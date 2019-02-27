@@ -6,12 +6,14 @@ using OperateIni;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace AGVSystem.UI.APP_UI.Map
 {
@@ -176,6 +178,7 @@ namespace AGVSystem.UI.APP_UI.Map
                 {
                     Tags[Rowsindex].RevTurnPBSList = pbs;
                 }
+                AssociatedTag(Convert.ToInt32(route.TagName));
             }
         }
 
@@ -221,8 +224,125 @@ namespace AGVSystem.UI.APP_UI.Map
             }
         }
 
+        private void SerialPortData_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            int indexs = e.Column.DisplayIndex;
+            int index = e.Row.GetIndex();
+            MapTag route = e.Row.DataContext as MapTag;
+            if (route != null)
+            {
+                if (indexs.Equals(1))
+                {
+                    Tags[index].NextTagColor = route.NextTag != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(2))
+                {
+                    Tags[index].NextLeftTagColor = route.NextLeftTag != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(3))
+                {
+                    Tags[index].NextRightTagColor = route.NextRightTag != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(4))
+                {
+                    Tags[index].PreTagColor = route.PreTag != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(5))
+                {
+                    Tags[index].PreLeftTagColor = route.PreLeftTag != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(6))
+                {
+                    Tags[index].PreRightTagColor = route.PreRightTag != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
+                    AssociatedTag(Convert.ToInt32(route.TagName));
+                }
+                else if (indexs.Equals(7))
+                {
+                    Tags[index].SpeedColor = route.Speed != "0: 5" && route.Speed != "无变化" ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(8))
+                {
+                    Tags[index].SpeedRevColor = route.SpeedRev != "0: 5" && route.SpeedRev != "无变化" ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(9))
+                {
+                    Tags[index].PreTurnSpeedColor = route.PreTurnSpeed != "0: 5" && route.PreTurnSpeed != "无变化" ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(10))
+                {
+                    Tags[index].RevTurnSpeedColor = route.RevTurnSpeed != "0: 5" && route.RevTurnSpeed != "无变化" ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(11))
+                {
+                    Tags[index].PbsColor = route.Pbs != "区域0" && route.Pbs != "无变化" ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(12))
+                {
+                    Tags[index].PbsRevColor = route.PbsRev != "区域0" && route.PbsRev != "无变化" ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(13))
+                {
+                    Tags[index].PreTurnPBSColor = route.PreTurnPBS != "区域0" && route.PreTurnPBS != "无变化" ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
+                }
+                else if (indexs.Equals(14))
+                {
+                    Tags[index].RevTurnPBSColor = route.RevTurnPBS != "区域0" && route.RevTurnPBS != "无变化" ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
+                }
+                TagRecover();
+            }
+        }
+
+        private void TagRecover()
+        {
+            map.valuePairs.Select(p => p.Value).ToList().ForEach(p => p.Background = new SolidColorBrush(Colors.Black));
+        }
+
+
+        private void AssociatedTag(int TagID)
+        {
+            string[] TagArray = mapService.SelectTagSystem(UTCTime, TagID.ToString());
+            TagRecover();
+             map.valuePairs.FirstOrDefault(p => p.Key.Equals(TagID)).Value.Background = new SolidColorBrush(Colors.Red);
+            Label label = map.valuePairs.FirstOrDefault(p => p.Key.Equals(TagID)).Value;
+            SrcCount.ScrollToHorizontalOffset(label.Margin.Left - 600);//滚动条X轴跟随移动
+            SrcCount.ScrollToVerticalOffset(label.Margin.Top - 500); ///滚动条Y轴等随移动
+            for (int i = 0; i < TagArray.Length; i++)
+            {
+                map.valuePairs.FirstOrDefault(p => p.Key.Equals(Convert.ToInt32(TagArray[i]))).Value.Background = new SolidColorBrush(Colors.Green);
+            }
+        }
+
+        private void SerialPortData_BeginningEdit_1(object sender, DataGridBeginningEditEventArgs e)
+        {
+
+        }
+
+        private void ToolBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            ToolBar toolBar = sender as ToolBar;
+            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
+            if (overflowGrid != null)
+            {
+                overflowGrid.Visibility = Visibility.Collapsed;
+            }
+
+            var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
+            if (mainPanelBorder != null)
+            {
+                mainPanelBorder.Margin = new Thickness(0);
+            }
+        }
+
         public void LoadMap(Ga_Map GetMap)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            UTCTime = UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime));
+            stopwatch.Start();
+            Tags = mapService.TagManagement(UTCTime);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            SerialPortData.AutoGenerateColumns = false;
+            SerialPortData.ItemsSource = Tags;
             CanvasWidth = GetMap.Width * 10;
             CanvasHeight = GetMap.Height * 10;
             double CanvasWidths = GetMap.Width * 10 * map.MapSise;
@@ -234,12 +354,11 @@ namespace AGVSystem.UI.APP_UI.Map
             map.GetCanvas = mainPanel;
             TopX.Children.Clear();
             TopY.Children.Clear();
+            stopwatch.Start();
             GetPainting.CoordinateX(TopX, TopY);
-            UTCTime = UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime));
             map.LoadEditMap(UTCTime, false, true);
-            Tags = mapService.TagManagement(UTCTime);
-            SerialPortData.AutoGenerateColumns = false;
-            SerialPortData.ItemsSource = Tags;
+            stopwatch.Start();
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
         }
     }
 }

@@ -16,6 +16,7 @@ using System.IO;
 using OperateIni;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -40,6 +41,7 @@ namespace AGVSystem.UI.APP_UI.Main
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Task.Factory.StartNew(() => { mapService.DataBase(); });
             Setting_Map();
         }
 
@@ -326,7 +328,6 @@ namespace AGVSystem.UI.APP_UI.Main
             {
                 overflowGrid.Visibility = Visibility.Collapsed;
             }
-
             var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
             if (mainPanelBorder != null)
             {

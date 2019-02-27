@@ -194,5 +194,20 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         {
             return map.UpdateTagInfo(MapTime, MapArray);
         }
+
+        public void CreationBase()
+        {
+            map.CreateDB();
+        }
+
+        public bool SavenetworkBLL(long CreateTime, List<string> Ip, List<string> port)
+        {
+            return map.Savenetwork(CreateTime, Ip, port);
+        }
+
+        public MySqlDataReader SelectNetworkBLL(long CreateTime)
+        {
+            return map.SelectNetwork(CreateTime);
+        }
     }
 }

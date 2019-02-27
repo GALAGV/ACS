@@ -9,6 +9,8 @@ using AGVSystem.Infrastructure.agvCommon;
 using System.Collections.ObjectModel;
 using AGVSystem.Model.LogicData;
 using System.Linq;
+using System.Windows.Media;
+
 namespace AGVSystem.APP.agv_Map
 {
     public class agvMapRegulate 
@@ -107,21 +109,35 @@ namespace AGVSystem.APP.agv_Map
                 MapTag tag = new MapTag();
                 tag.TagName = data["TagName"].ToString();
                 tag.NextTag = data["NextTag"].ToString();
+                tag.NextTagColor = data["NextTag"].ToString() != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
                 tag.PreLeftTag = data["PreLeftTag"].ToString();
+                tag.PreLeftTagColor = data["PreLeftTag"].ToString() != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
                 tag.PreRightTag = data["PreRightTag"].ToString();
+                tag.PreRightTagColor = data["PreRightTag"].ToString() != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
                 tag.PreTag = data["PreTag"].ToString();
+                tag.PreTagColor = data["PreTag"].ToString() != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
                 tag.NextLeftTag = data["NextLeftTag"].ToString();
+                tag.NextLeftTagColor = data["NextLeftTag"].ToString() != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
                 tag.NextRightTag = data["NextRightTag"].ToString();
+                tag.NextRightTagColor = data["NextRightTag"].ToString() != "N/A" ? new SolidColorBrush(Colors.Blue) : new SolidColorBrush(Colors.Black);
                 tag.Speed = MainInfo.agvSpeed[Convert.ToInt32(data["Speed"].ToString())];
+                tag.SpeedColor = Convert.ToInt32(data["Speed"].ToString()) != 0 && Convert.ToInt32(data["Speed"].ToString()) != 10 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
                 tag.SpeedRev = MainInfo.agvSpeed[Convert.ToInt32(data["SpeedRev"].ToString())];
+                tag.SpeedRevColor= Convert.ToInt32(data["SpeedRev"].ToString()) != 0 && Convert.ToInt32(data["SpeedRev"].ToString()) != 10 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
                 tag.StopTime = data["StopTime"].ToString();
                 tag.Pbs = MainInfo.agvPbs[Convert.ToInt32(data["Pbs"].ToString())];
+                tag.PbsColor= Convert.ToInt32(data["Pbs"].ToString()) !=16 && Convert.ToInt32(data["Pbs"].ToString()) != 0 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
                 tag.PbsRev = MainInfo.agvPbs[Convert.ToInt32(data["PbsRev"].ToString())];
+                tag.PbsRevColor= Convert.ToInt32(data["PbsRev"].ToString()) != 16 && Convert.ToInt32(data["PbsRev"].ToString()) != 0 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
                 tag.TagTerminal = data["TagTerminal"] is DBNull ? null : data["TagTerminal"].ToString();
                 tag.PreTurnSpeed = CheckColumnName(data, "PreTurnSpeed") ? MainInfo.agvSpeed[data.GetInt32("PreTurnSpeed")] : MainInfo.agvSpeed[0];
+                tag.PreTurnSpeedColor= CheckColumnName(data, "PreTurnSpeed") ? (data.GetInt32("PreTurnSpeed")!=0 && data.GetInt32("PreTurnSpeed") != 10 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) : new SolidColorBrush(Colors.Black);
                 tag.RevTurnSpeed = CheckColumnName(data, "RevTurnSpeed") ? MainInfo.agvSpeed[data.GetInt32("RevTurnSpeed")] : MainInfo.agvSpeed[0];
+                tag.RevTurnSpeedColor= CheckColumnName(data, "RevTurnSpeed") ? (data.GetInt32("RevTurnSpeed") != 0 && data.GetInt32("RevTurnSpeed") != 10 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) : new SolidColorBrush(Colors.Black);
                 tag.PreTurnPBS = CheckColumnName(data, "PreTurnPBS") ? MainInfo.agvPbs[data.GetInt32("PreTurnPBS")] : MainInfo.agvPbs[0];
+                tag.PreTurnPBSColor = CheckColumnName(data, "PreTurnPBS") ? (data.GetInt32("PreTurnPBS") != 0 && data.GetInt32("PreTurnPBS") != 16 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) : new SolidColorBrush(Colors.Black);
                 tag.RevTurnPBS = CheckColumnName(data, "RevTurnPBS") ? MainInfo.agvPbs[data.GetInt32("RevTurnPBS")] : MainInfo.agvPbs[0];
+                tag.RevTurnPBSColor= CheckColumnName(data, "RevTurnPBS") ? (data.GetInt32("RevTurnPBS") != 0 && data.GetInt32("RevTurnPBS") != 16 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) : new SolidColorBrush(Colors.Black);
                 tags.Add(tag);
             }
             data.Close();
@@ -229,6 +245,12 @@ namespace AGVSystem.APP.agv_Map
         public bool UpdateTagInfoSystem(long MapTime, ObservableCollection<MapTag> MapArray)
         {
             return IO_AGVMapService.UpdateTagInfoBLL(MapTime, MapArray);
+        }
+
+
+        public void DataBase()
+        {
+            IO_AGVMapService.CreationBase();
         }
     }
 }

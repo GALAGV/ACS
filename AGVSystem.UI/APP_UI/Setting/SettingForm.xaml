@@ -32,10 +32,10 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Content="默认地图：" Margin="0,5,0,0"></Label>
-                            <ComboBox  Grid.Row="0" Grid.Column="1" Name="MapList"   Width="200"  DisplayMemberPath="Name" SelectedValuePath="CreateTime" Margin="0,5,0,0" HorizontalAlignment="Left">
+                            <ComboBox  Grid.Row="0" Grid.Column="1" Name="MapList"  VerticalContentAlignment="Center"  Width="200"  DisplayMemberPath="Name" SelectedValuePath="CreateTime" Margin="0,5,0,0" HorizontalAlignment="Left">
                             </ComboBox>
                             <Label Grid.Row="2" Grid.Column="0" Content="默认倍数：" Margin="0,5,0,0"></Label>
-                            <ComboBox  Grid.Row="2" Grid.Column="1" SelectedIndex="0" Name="Map_Size" Margin="0,5,0,0" Width="200"  HorizontalAlignment="Left">
+                            <ComboBox  Grid.Row="2" Grid.Column="1" SelectedIndex="0" VerticalContentAlignment="Center" Name="Map_Size" Margin="0,5,0,0" Width="200"  HorizontalAlignment="Left">
                                 <ComboBoxItem Content="1.0"></ComboBoxItem>
                                 <ComboBoxItem Content="1.2"></ComboBoxItem>
                                 <ComboBoxItem Content="1.4"></ComboBoxItem>
@@ -53,7 +53,7 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <Grid  Background="#f0f0f0"  Name="Port">
+                <Grid  Background="#f0f0f0"  Name="Port" Panel.ZIndex="9">
                     <GroupBox Header="串口设置" BorderBrush="#dcdcdc" BorderThickness="1" >
                         <Grid>
                             <Grid.RowDefinitions>
@@ -80,19 +80,13 @@
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>
-                                <Button  Grid.Column="3" Margin="10,0,0,0" BorderBrush="#adadad" Name="DeletePort"  Click="DeletePort_Click">
-                                    <Button.Content>
-                                        <StackPanel Orientation="Horizontal">
-                                            <!--<TextBlock Text="&#xf014;" FontSize="18" Style="{DynamicResource FontAwesome}" />-->
-                                            <TextBlock Text="删除"  VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button.Content>
+                                <Button  Grid.Column="3" Content="删除" Margin="10,0,0,0" BorderBrush="#adadad" Name="DeletePort"  Click="DeletePort_Click">
                                 </Button>
                             </Grid>
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <Grid  Background="#f0f0f0">
+                <Grid  Background="#f0f0f0"  Name="network"  >
                     <GroupBox Header="网络设置" BorderBrush="#dcdcdc" BorderThickness="1" >
                         <Grid>
                             <Grid.RowDefinitions>
@@ -100,7 +94,7 @@
                                 <RowDefinition Height="50"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Border BorderBrush="#898c95" Grid.Row="0" Background="#ffff" BorderThickness="1,1,1,1" Margin="0,10,0,0">
-                                <ScrollViewer  HorizontalScrollBarVisibility="Auto"   VerticalScrollBarVisibility="Auto" Padding="5,10,5,5" >
+                                <ScrollViewer Name="networkCount" HorizontalScrollBarVisibility="Auto"   VerticalScrollBarVisibility="Auto" Padding="5,10,5,5" >
 
                                 </ScrollViewer>
                             </Border>
@@ -111,13 +105,13 @@
                                     <ColumnDefinition Width="90"></ColumnDefinition>
                                     <ColumnDefinition Width="90"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Button  Grid.Column="2" Content="添加网络" Margin="10,0,0,0" BorderBrush="#adadad"></Button>
-                                <Button  Grid.Column="3" Content="删除网络" Margin="10,0,0,0" BorderBrush="#adadad"></Button>
+                                <Button  Grid.Column="2" Content="添加" Margin="10,0,0,0" Name="Network_Add" Click="Network_Add_Click" BorderBrush="#adadad"></Button>
+                                <Button  Grid.Column="3" Content="删除" Margin="10,0,0,0" Name="Network_Delete" Click="Network_Delete_Click" BorderBrush="#adadad"></Button>
                             </Grid>
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <Grid  Background="#f0f0f0"  Name="agv_system"  Panel.ZIndex="6">
+                <Grid  Background="#f0f0f0"  Name="agv_system" >
                     <GroupBox Header="系统设置"  Height="250" BorderBrush="#dcdcdc" VerticalAlignment="Top" BorderThickness="1" >
                         <Grid Margin="10">
                             <Grid.RowDefinitions>
@@ -157,7 +151,7 @@
                 <Label Content="选择设置：" Grid.Row="0" VerticalAlignment="Center" Margin="3,0,0,0"></Label>
                 <TreeView  Grid.Row="1" Margin="8,0,0,0" >
                     <TreeViewItem Header="串口设置" Name="Com"  IsSelected="True" Selected="Com_Selected"></TreeViewItem>
-                    <TreeViewItem Header="网络设置" ></TreeViewItem>
+                    <TreeViewItem Header="网络设置" Name="IP" Selected="IP_Selected"></TreeViewItem>
                     <TreeViewItem Header="地图设置" Name="Map"  Selected="Map_Selected"></TreeViewItem>
                     <TreeViewItem Header="系统配置" Name="system" Selected="System_Selected"></TreeViewItem>
                 </TreeView>
