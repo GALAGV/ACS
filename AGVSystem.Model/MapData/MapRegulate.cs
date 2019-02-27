@@ -1,6 +1,7 @@
 ﻿using AGVSystem.Model.Ga_agvModels;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
 namespace AGVSystem.Model.MapData
@@ -20,6 +21,8 @@ namespace AGVSystem.Model.MapData
         public static ConcurrentDictionary<int, Image> GetValuePairs = new ConcurrentDictionary<int, Image>(); //AGV状态Img列表
 
         public static List<Ga_PortInfo> GetPortInfos = new List<Ga_PortInfo>(); //串口数据源
+
+        public static List<NetworkInfo> networkInfos = new List<NetworkInfo>();
 
         public static List<Ga_agv> GetAgvs = new List<Ga_agv>(); //所有AGV数据源
 

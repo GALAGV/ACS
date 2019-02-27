@@ -1,9 +1,12 @@
-﻿namespace AGVSystem.Model.Ga_agvModels
+﻿using System.ComponentModel;
+using System.Windows.Media;
+
+namespace AGVSystem.Model.Ga_agvModels
 {
     /// <summary>
     /// 串口实体类
     /// </summary>
-    public class Ga_PortInfo
+    public class Ga_PortInfo : INotifyPropertyChanged
     {
         /// <summary>
         /// 串口编号
@@ -20,5 +23,28 @@
         /// </summary>
         public string ComStatic { get; set; }
 
+        private Brush comStaticColor;
+        public Brush ComStaticColor
+        {
+            get { return comStaticColor; }
+            set
+            {
+                comStaticColor = value;
+                GetChanged("ComStaticColor");
+            }
+        }
+
+        /// <summary>
+        /// 属性更改通知客户端事件
+        /// </summary>
+        private void GetChanged(string Name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(Name));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

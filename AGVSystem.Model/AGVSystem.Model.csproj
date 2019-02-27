@@ -54,6 +54,7 @@
     <Compile Include="Ga_agvModels\Ga_Map.cs" />
     <Compile Include="Ga_agvModels\Ga_PortInfo.cs" />
     <Compile Include="Ga_agvModels\MapTag.cs" />
+    <Compile Include="Ga_agvModels\NetworkInfo.cs" />
     <Compile Include="Ga_agvModels\Route.cs" />
     <Compile Include="LogicData\MainInfo.cs" />
     <Compile Include="LogicData\PortInfo.cs" />

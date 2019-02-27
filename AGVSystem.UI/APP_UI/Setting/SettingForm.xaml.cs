@@ -485,6 +485,7 @@ namespace AGVSystem.UI.APP_UI.Setting
                     break;
                 case Menutype.Network:
                     NetworkSave();
+                    GetSettingMap();
                     break;
                     //default:
                     //    break;
@@ -584,25 +585,25 @@ namespace AGVSystem.UI.APP_UI.Setting
             }
             if (Textnull)
             {
-                PortInfo.AGVCom.Clear();
-                PortInfo.Baud.Clear();
-                PortInfo.agv.Clear();
+                //PortInfo.AGVCom.Clear();
+                //PortInfo.Baud.Clear();
+                //PortInfo.agv.Clear();
 
 
-                PortInfo.buttonPort.Clear();
-                PortInfo.buttonCom.Clear();
-                PortInfo.buttonBaud.Clear();
-                PortInfo.buttonStr.Clear();
+                //PortInfo.buttonPort.Clear();
+                //PortInfo.buttonCom.Clear();
+                //PortInfo.buttonBaud.Clear();
+                //PortInfo.buttonStr.Clear();
 
-                PortInfo.plcPort.Clear();
-                PortInfo.plcCom.Clear();
-                PortInfo.plcBaud.Clear();
-                PortInfo.plcStr.Clear();
+                //PortInfo.plcPort.Clear();
+                //PortInfo.plcCom.Clear();
+                //PortInfo.plcBaud.Clear();
+                //PortInfo.plcStr.Clear();
 
-                PortInfo.chargePort.Clear();
-                PortInfo.chargeCom.Clear();
-                PortInfo.chargeBaud.Clear();
-                PortInfo.chargeStr.Clear();
+                //PortInfo.chargePort.Clear();
+                //PortInfo.chargeCom.Clear();
+                //PortInfo.chargeBaud.Clear();
+                //PortInfo.chargeStr.Clear();
                 DataTable dr = new DataTable();
                 for (int i = 0; i < 3; i++)
                 {
@@ -618,36 +619,36 @@ namespace AGVSystem.UI.APP_UI.Setting
                         dt[0] = combos[i].Text.ToString().Trim().Substring(3);
                         dt[1] = TextBoxes[i].Text.ToString().Trim();
                         dt[2] = "Button";
-                        PortInfo.buttonCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
-                        PortInfo.buttonBaud.Add(Convert.ToInt32(TextBoxes[i].Text.ToString().Trim()));
-                        PortInfo.buttonStr.Add("Button");
+                        //PortInfo.buttonCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        //PortInfo.buttonBaud.Add(Convert.ToInt32(TextBoxes[i].Text.ToString().Trim()));
+                        //PortInfo.buttonStr.Add("Button");
                     }
                     else if (type.Equals("充电机"))
                     {
                         dt[0] = combos[i].Text.ToString().Trim().Substring(3);
                         dt[1] = TextBoxes[i].Text.ToString().Trim();
                         dt[2] = "Charge";
-                        PortInfo.buttonCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
-                        PortInfo.buttonBaud.Add(Convert.ToInt32(TextBoxes[i].Text.ToString().Trim()));
-                        PortInfo.chargeStr.Add("Charge");
+                        //PortInfo.buttonCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        //PortInfo.buttonBaud.Add(Convert.ToInt32(TextBoxes[i].Text.ToString().Trim()));
+                        //PortInfo.chargeStr.Add("Charge");
                     }
                     else if (type.Equals("PLC"))
                     {
                         dt[0] = combos[i].Text.ToString().Trim().Substring(3);
                         dt[1] = TextBoxes[i].Text.ToString().Trim();
                         dt[2] = "Plc";
-                        PortInfo.plcCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
-                        PortInfo.plcBaud.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
-                        PortInfo.plcStr.Add("Plc");
+                        //PortInfo.plcCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        //PortInfo.plcBaud.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        //PortInfo.plcStr.Add("Plc");
                     }
                     else 
                     {
                         dt[0] = combos[i].Text.ToString().Trim().Substring(3);
                         dt[1] = TextBoxes[i].Text.ToString().Trim();
                         dt[2] = Combos[i].Text.Replace('，', ',').ToString().Trim();
-                        PortInfo.buttonCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
-                        PortInfo.buttonBaud.Add(Convert.ToInt32(TextBoxes[i].Text.ToString().Trim()));
-                        PortInfo.agv.Add(Combos[i].Text.Replace('，', ',').ToString().Trim());
+                        //PortInfo.buttonCom.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
+                        //PortInfo.buttonBaud.Add(Convert.ToInt32(TextBoxes[i].Text.ToString().Trim()));
+                        //PortInfo.agv.Add(Combos[i].Text.Replace('，', ',').ToString().Trim());
                     }
                     dr.Rows.Add(dt);
                 }

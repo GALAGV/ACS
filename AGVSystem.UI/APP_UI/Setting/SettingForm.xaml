@@ -53,7 +53,7 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <Grid  Background="#f0f0f0"  Name="Port" Panel.ZIndex="9">
+                <Grid  Background="#f0f0f0"  Name="Port" >
                     <GroupBox Header="串口设置" BorderBrush="#dcdcdc" BorderThickness="1" >
                         <Grid>
                             <Grid.RowDefinitions>
@@ -111,7 +111,7 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <Grid  Background="#f0f0f0"  Name="agv_system" >
+                <Grid  Background="#f0f0f0"  Name="agv_system" Panel.ZIndex="9">
                     <GroupBox Header="系统设置"  Height="250" BorderBrush="#dcdcdc" VerticalAlignment="Top" BorderThickness="1" >
                         <Grid Margin="10">
                             <Grid.RowDefinitions>

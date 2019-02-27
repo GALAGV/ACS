@@ -101,6 +101,7 @@ namespace AGVSystem.UI.APP_UI.Main
                     map.LoadEditMap(MapRegulate.UTCTime, false, false);
                     TabAgvMoveInfo(MapRegulate.UTCTime);
                     LoadComInfo(MapRegulate.UTCTime);
+                    InitializeNetwork(MapRegulate.UTCTime);
                 }
                 else
                 {
@@ -193,6 +194,14 @@ namespace AGVSystem.UI.APP_UI.Main
             SerialPortData.AutoGenerateColumns = false;
         }
 
+
+        public void InitializeNetwork(long Time)
+        {
+            MapRegulate.networkInfos = Get_AGVmanagement.LoadNetwork(Time);
+            TabSerialPortDatas.DataContext = MapRegulate.networkInfos;
+            TabSerialPortDatas.AutoGenerateColumns = false;
+        }
+
         /// <summary>
         /// 显示所有AGV初始信息
         /// </summary>
@@ -225,7 +234,7 @@ namespace AGVSystem.UI.APP_UI.Main
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            this.Close();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

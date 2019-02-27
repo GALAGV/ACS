@@ -6,6 +6,8 @@ using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.Model.LogicData;
 using System.IO.Ports;
 using System.Windows.Media;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace AGVSystem.APP.agv_System
 {
@@ -119,12 +121,41 @@ namespace AGVSystem.APP.agv_System
                     {
                         ComNumber = "COM" + Read["Com"].ToString().Trim(),
                         ComPortType = Port_type,
-                        ComStatic = "关闭"
+                        ComStatic = "关闭",
+                        ComStaticColor=  new SolidColorBrush(Colors.Red)
                     });
             }
             Read.Close();
             return portInfos;
         }
+
+        /// <summary>
+        /// 加载网络数据
+        /// </summary>
+        /// <param name="UTCTime"></param>
+        /// <returns></returns>
+        public List<NetworkInfo> LoadNetwork(long UTCTime)
+        {
+            MySqlDataReader reader = MapBLL.SelectNetworkBLL(UTCTime);
+            List<NetworkInfo> Net = new List<NetworkInfo>();
+            if (reader != null)
+            {
+                while (reader.Read())
+                {
+                    Net.Add(new NetworkInfo()
+                    {
+                        IP_Address = reader.GetString("IP_Address"),
+                        IP_Port = reader.GetInt32("IP_Port"),
+                        IP_Static = "断开",
+                        IP_StaticColor = new SolidColorBrush(Colors.Red)
+                    });
+                }
+                reader.Close();
+            }
+            return Net;
+        }
+
+
 
         /// <summary>
         /// 打开串口
