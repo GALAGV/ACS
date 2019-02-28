@@ -112,7 +112,7 @@
                     </GroupBox>
                 </Grid>
                 <Grid  Background="#f0f0f0"  Name="agv_system" Panel.ZIndex="9">
-                    <GroupBox Header="系统设置"  Height="250" BorderBrush="#dcdcdc" VerticalAlignment="Top" BorderThickness="1" >
+                    <GroupBox Header="系统设置"  Height="290" BorderBrush="#dcdcdc" VerticalAlignment="Top" BorderThickness="1" >
                         <Grid Margin="10">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"></RowDefinition>
@@ -135,8 +135,12 @@
                             <TextBox  Grid.Column="1"  Name="Password" Grid.Row="2" Margin="0,2,150,2" VerticalContentAlignment="Center"></TextBox>
                             <Button Content="测试连接" Name="Test" Click="Test_Click" Width="90" BorderBrush="#adadad" Grid.Column="0" Grid.Row="3" Height="28"></Button>
 
-                            <CheckBox Grid.Row="4"  Grid.Column="0" Content="开机启动" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
-                            <CheckBox Grid.Row="5" Grid.Column="0" Content="日志清理服务" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+                            <Label Grid.Row="4" Content="日志清理间隔：" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                            <TextBox Grid.Row="4" Grid.Column="1" Name="interval"  VerticalContentAlignment="Center" Margin="0,2,250,2"></TextBox>
+                            <Button Content="启动服务" Name="Start_Service" Click="Start_Service_Click" Grid.Row="4" Grid.Column="1" Margin="80,0,0,0" Width="90" Height="28" BorderBrush="#adadad"></Button>
+                            <Button Content="卸载服务" Name="Stop_Service" Click="Stop_Service_Click" Grid.Row="4" Margin="300,0,0,0" Grid.Column="1"   Width="90" Height="28" BorderBrush="#adadad"></Button>
+                            <CheckBox Grid.Row="5"  Grid.Column="0" Content="开机启动" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+                            <!--<CheckBox Grid.Row="5" Grid.Column="0" Content="日志清理服务" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>-->
                         </Grid>
                     </GroupBox>
                 </Grid>

@@ -778,11 +778,21 @@ namespace AGVSystem.DAL.DataAccess
 
         public MySqlDataReader SelectNetwork(long CreateTime)
         {
-            DataTable dt = MySQLHelper.ExecuteDataTable($"SELECT table_name FROM information_schema.TABLES WHERE table_name ='networkconfig{CreateTime}';");
+            DataTable dt = TableNotexist($"networkconfig{CreateTime}");
             if (dt.Rows.Count > 0)
                 return MySQLHelper.ExecuteReader($"SELECT * FROM agv.`networkconfig{CreateTime}`");
             else
                 return null;
+        }
+
+        public DataTable TableNotexist(string TableName)
+        {
+            return MySQLHelper.ExecuteDataTable($"SELECT table_name FROM information_schema.TABLES WHERE table_name ='{TableName}';");
+        }
+
+        public bool ClearLog(string TableName)
+        {
+            return MySQLHelper.ExecuteNonQuery($"DROP TABLE  `agv`.`{TableName}`") > 0;
         }
     }
 }

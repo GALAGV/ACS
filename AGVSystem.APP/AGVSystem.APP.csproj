@@ -36,6 +36,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="OperateIni">
+      <HintPath>..\AGVSystem.UI\bin\Debug\OperateIni.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -53,6 +56,7 @@
     <Compile Include="agv_Map\MapInstrument.cs" />
     <Compile Include="agv_Map\Painting.cs" />
     <Compile Include="agv_System\agvFunction.cs" />
+    <Compile Include="LogClearService\LogServe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

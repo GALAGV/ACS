@@ -16,7 +16,6 @@ using AGVSystem.APP.agv_Map;
 using OperateIni;
 using System.IO;
 using AGVSystem.Infrastructure.agvCommon;
-using System.Configuration;
 using System.Linq;
 
 namespace AGVSystem.UI.APP_UI.Setting
@@ -40,6 +39,37 @@ namespace AGVSystem.UI.APP_UI.Setting
         private int NetworkIndex = 0;
         public delegate void SettingMap();
         public SettingMap GetSettingMap;
+        private string ServePath { get; set; }
+        private string ServeName { get; set; }
+
+
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
+            {
+                Map_Size.Text = Convert.ToDouble(IniFile.ReadIniData("AGV", "MapSise", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini")).ToString("0.0");
+                interval.Text = IniFile.ReadIniData("Table", "interval", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+                ServePath = $"{AppDomain.CurrentDomain.BaseDirectory}{IniFile.ReadIniData("Table", "ServeNameEXE", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini")}";
+                ServeName = $"{IniFile.ReadIniData("Table", "ServeName", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini")}";
+            }
+            ConfigDataBase();
+            PortLoad();
+            MapList.ItemsSource = mapService.GetMapRegulate();
+            DataTable MapData = mapService.defaultMap(MapRegulate.DefaultMap);
+            if (MapData.Rows.Count > 0)
+            {
+                MapList.Text = MapData.Rows[0]["Name"].ToString();
+            }
+            else
+            {
+                MapList.SelectedIndex = 0;
+            }
+        }
+
+
+        #region 菜单
 
         private void Com_Selected(object sender, RoutedEventArgs e)
         {
@@ -49,7 +79,6 @@ namespace AGVSystem.UI.APP_UI.Setting
             Panel.SetZIndex(network, 0);
             GetMenutype = Menutype.ProntSetting;
         }
-
         private void Map_Selected(object sender, RoutedEventArgs e)
         {
             Panel.SetZIndex(Port, 1);
@@ -68,37 +97,28 @@ namespace AGVSystem.UI.APP_UI.Setting
             GetMenutype = Menutype.SystemSetting;
         }
 
+        private void IP_Selected(object sender, RoutedEventArgs e)
+        {
+            Panel.SetZIndex(Port, 1);
+            Panel.SetZIndex(agv_system, 2);
+            Panel.SetZIndex(agv_map, 3);
+            Panel.SetZIndex(network, 4);
+            GetMenutype = Menutype.Network;
+        }
+
+
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        #endregion
 
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ConfigDataBase();
-            PortLoad();
-            MapList.ItemsSource = mapService.GetMapRegulate();
-            DataTable MapData = mapService.defaultMap(MapRegulate.DefaultMap);
-            if (MapData.Rows.Count > 0)
-            {
-                MapList.Text = MapData.Rows[0]["Name"].ToString();
-            }
-            else
-            {
-                MapList.SelectedIndex = 0;
-            }
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
-            {
-                Map_Size.Text = Convert.ToDouble(IniFile.ReadIniData("AGV", "MapSise", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini")).ToString("0.0");
-            }
-        }
+        #region 获取数据库参数
 
         string[] DataBaseStr;
-
         private void ConfigDataBase()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
+            string connectionString = IniFile.ReadIniData("DB", "MySql", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
             DataBaseStr = connectionString.Split(';');
             if (DataBaseStr.Length == 3)
             {
@@ -110,6 +130,16 @@ namespace AGVSystem.UI.APP_UI.Setting
                 Password.Text = BasePassword;
             }
         }
+        private string DataBaseConfig()
+        {
+            string DataBaseConfig = $"{DataBaseStr[0].Split('=')[0]}={Site.Text.Trim()}";
+            string DataUserConfig = $"{DataBaseStr[1].Split('=')[0]}={Number.Text.Trim()}";
+            string DataPassword = $"{DataBaseStr[2].Split('=')[0]}={Password.Text.Trim()}";
+            return string.Join(";", new string[] { DataBaseConfig, DataUserConfig, DataPassword });
+        }
+        #endregion
+
+        #region 加载串口/网络
 
 
         public void PortLoad()
@@ -150,6 +180,7 @@ namespace AGVSystem.UI.APP_UI.Setting
                 Network_Delete.IsEnabled = false;
             }
         }
+        #endregion
 
         #region 添加串口
 
@@ -371,15 +402,14 @@ namespace AGVSystem.UI.APP_UI.Setting
         }
         #endregion
 
+        #region 串口选项更改
 
+       
         private void Combo_DropDownOpened(object sender, EventArgs e)
         {
             ComboBox box = (ComboBox)sender;
             string str = box.Text;
             box.Items.Clear();
-            //ComboBoxItem it = new ComboBoxItem();
-            //it.Content = str;
-            //box.Items.Add(it);
             box.Text = str;
             string[] polist = SerialPort.GetPortNames();
             for (int i = 0; i < polist.Length; i++)
@@ -389,10 +419,11 @@ namespace AGVSystem.UI.APP_UI.Setting
                 box.Items.Add(ite);
             }
         }
+        #endregion
 
         #region 内容过滤
 
-       
+
         private void Combo3_KeyDown(object sender, KeyEventArgs e)
         {
             ComboBox box = (ComboBox)sender;
@@ -415,6 +446,8 @@ namespace AGVSystem.UI.APP_UI.Setting
         }
         #endregion
 
+        #region 添加串口
+
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
             if (gridItem.RowDefinitions.Count.Equals(0))
@@ -423,10 +456,11 @@ namespace AGVSystem.UI.APP_UI.Setting
             { Index++; DeletePort.IsEnabled = true; }
             AddRows(Index, "", "", "");
         }
+        #endregion
 
         #region 删除串口
 
-       
+
         private void DeletePort_Click(object sender, RoutedEventArgs e)
         {
             if (gridItem.RowDefinitions.Count.Equals(1) || gridItem.RowDefinitions.Count.Equals(0))
@@ -699,12 +733,21 @@ namespace AGVSystem.UI.APP_UI.Setting
         /// </summary>
         private void SystemSave()
         {
-            ConnectionStringsConfig.UpdateConnectionStringsConfig("DataBaseText", DataBaseConfig());
-            this.Close();
+            if (FormatVerification.IsFloat(interval.Text.Trim()))
+            {
+                IniFile.WriteIniData("DB", "MySql", DataBaseConfig(), AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+                IniFile.WriteIniData("Table", "interval", interval.Text.Trim(), AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+                ConnectionStringsConfig.UpdateConnectionStringsConfig("DataBaseText", DataBaseConfig());
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("格式错误！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         #endregion
 
-        #region 重复
+        #region 重复判断
 
         /// <summary>
         /// 重复
@@ -763,23 +806,7 @@ namespace AGVSystem.UI.APP_UI.Setting
         }
         #endregion
 
-
-        private string DataBaseConfig()
-        {
-            string DataBaseConfig = $"{DataBaseStr[0].Split('=')[0]}={Site.Text.Trim()}";
-            string DataUserConfig = $"{DataBaseStr[1].Split('=')[0]}={Number.Text.Trim()}";
-            string DataPassword = $"{DataBaseStr[2].Split('=')[0]}={Password.Text.Trim()}";
-            return string.Join(";", new string[] { DataBaseConfig, DataUserConfig, DataPassword });
-        }
-
-        private void IP_Selected(object sender, RoutedEventArgs e)
-        {
-            Panel.SetZIndex(Port, 1);
-            Panel.SetZIndex(agv_system, 2);
-            Panel.SetZIndex(agv_map, 3);
-            Panel.SetZIndex(network, 4);
-            GetMenutype = Menutype.Network;
-        }
+        #region 添加网络设置
 
         private void Network_Add_Click(object sender, RoutedEventArgs e)
         {
@@ -789,6 +816,43 @@ namespace AGVSystem.UI.APP_UI.Setting
             { NetworkIndex++; Network_Delete.IsEnabled = true; }
             AddNetwork(NetworkIndex, "", "");
         }
+        #endregion
+
+        #region 服务安装卸载
+
+
+        private void Start_Service_Click(object sender, RoutedEventArgs e)
+        {
+            if (!ServiceFactory.IsServiceExisted(ServeName))
+            {
+                this.Cursor = Cursors.Wait;
+                ServiceFactory.InstallService(ServePath);
+                ServiceFactory.ServiceStart(ServeName);
+                this.Cursor = Cursors.Arrow;
+                MessageBox.Show("服务安装成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("服务已存在！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Stop_Service_Click(object sender, RoutedEventArgs e)
+        {
+            if (ServiceFactory.IsServiceExisted(ServeName))
+            {
+                this.Cursor = Cursors.Wait;
+                ServiceFactory.ServiceStop(ServeName);
+                ServiceFactory.UninstallService(ServePath);
+                this.Cursor = Cursors.Arrow;
+                MessageBox.Show("卸载成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("服务不存在！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
     }
 
     /// <summary>

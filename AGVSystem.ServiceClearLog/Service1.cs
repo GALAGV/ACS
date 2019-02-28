@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
+﻿using AGVSystem.APP.LogClearService;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGVSystem.ServiceClearLog
 {
     public partial class Service1 : ServiceBase
     {
+        LogServe serve = new LogServe();
+
         public Service1()
         {
             InitializeComponent();
@@ -19,12 +14,12 @@ namespace AGVSystem.ServiceClearLog
 
         protected override void OnStart(string[] args)
         {
-
+            serve.LogOnStart();
         }
 
         protected override void OnStop()
         {
-
+            serve.LogOnStop();
         }
     }
 }

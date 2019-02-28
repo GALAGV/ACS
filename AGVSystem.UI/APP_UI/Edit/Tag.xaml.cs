@@ -40,8 +40,8 @@ namespace AGVSystem.UI.APP_UI.Edit
                 {
                     ClearLine(Convert.ToInt32(ObjTag.Content.ToString()));
                     ObjTag.Margin = new Thickness(Convert.ToDouble(Tag_X.Text.Trim()) * MapSize, Convert.ToDouble(Text_Y.Text.Trim()) * MapSize, 0, 0);
-                    action(new Point() { X = ObjTag.Margin.Left + 19, Y = ObjTag.Margin.Top + 11.5 }, Convert.ToInt32(ObjTag.Content));
                     ObjTag.Content = TagNum.Text.ToString();
+                    action(new Point() { X = ObjTag.Margin.Left + 19, Y = ObjTag.Margin.Top + 11.5 }, Convert.ToInt32(ObjTag.Content));
                     this.Close();
                 }
                 else

@@ -17,7 +17,11 @@ namespace AGVSystem.Infrastructure.agvCommon
             {
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName);
             }
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + LogName + DateTime.Now.ToString("yyyyMMdd") + ".txt";
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + DateTime.Now.ToString("yyyyMMdd")))
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + DateTime.Now.ToString("yyyyMMdd"));
+            }
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + DateTime.Now.ToString("yyyyMMdd") + "\\" + LogName + DateTime.Now.ToString("yyyyMMdd") + ".txt";
             if (!File.Exists(filePath))
             {
                 File.Create(filePath).Close();

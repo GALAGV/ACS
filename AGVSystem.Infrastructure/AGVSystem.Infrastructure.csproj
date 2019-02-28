@@ -38,7 +38,9 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,9 +53,11 @@
     <Compile Include="agvCommon\ConnectionStringsConfig.cs" />
     <Compile Include="agvCommon\ControlRegulate.cs" />
     <Compile Include="agvCommon\ConvertCode.cs" />
+    <Compile Include="agvCommon\DataTimeTool.cs" />
     <Compile Include="agvCommon\Encryption.cs" />
     <Compile Include="agvCommon\FormatVerification.cs" />
     <Compile Include="agvCommon\Md5.cs" />
+    <Compile Include="agvCommon\ServiceFactory.cs" />
     <Compile Include="agvCommon\UTC.cs" />
     <Compile Include="agvCommon\WriteLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

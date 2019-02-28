@@ -209,5 +209,15 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         {
             return map.SelectNetwork(CreateTime);
         }
+
+        public DataTable TableNotexistBLL(string TableName)
+        {
+            return map.TableNotexist(TableName);
+        }
+
+        public bool ClearLogBLL(string TableName)
+        {
+            return map.ClearLog(TableName);
+        }
     }
 }

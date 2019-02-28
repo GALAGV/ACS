@@ -1,18 +1,31 @@
 ﻿using MySql.Data.MySqlClient;
+using OperateIni;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace AGVSystem.DAL.DataHelper
 {
-    public class MySQLHelper
+    public static class MySQLHelper
     {
-        public static readonly string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
+        private static string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
+
+        #region 构造函数
+
+        static MySQLHelper()
+        {
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
+            {
+                connectionString= IniFile.ReadIniData("DB", "MySql", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+            }
+        }
+        #endregion
+
+        #region 存储过程
+
 
         //存储过程
         public static DataTable ExecuteDataTableCommand(string CommandText)
@@ -40,6 +53,7 @@ namespace AGVSystem.DAL.DataHelper
                 }
             }
         }
+        #endregion
 
         #region ExecuteNonQuery
 
@@ -483,6 +497,8 @@ namespace AGVSystem.DAL.DataHelper
 
         #endregion ExecuteDataTable
 
+        #region 获取分页数据
+
         /// <summary>
         /// 获取分页数据 在不用存储过程情况下
         /// </summary>
@@ -520,6 +536,7 @@ namespace AGVSystem.DAL.DataHelper
             recordCount = rows;
             return dt;
         }
+        #endregion
 
         #region 创建command
 

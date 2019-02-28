@@ -4,6 +4,11 @@ namespace AGVSystem.Infrastructure.agvCommon
 {
     public  class UTC
     {
+        /// <summary>
+        /// DateTime 转UTC时间
+        /// </summary>
+        /// <param name="Time"></param>
+        /// <returns></returns>
         public static long ConvertDateTimeLong(DateTime Time)//DateTime time = System.DateTime.UtcNow;
         {
             double doubleResult = 0;
@@ -13,6 +18,11 @@ namespace AGVSystem.Infrastructure.agvCommon
             return (long)(doubleResult);
         }
 
+        /// <summary>
+        /// UTC转 DateTime
+        /// </summary>
+        /// <param name="UTCTime"></param>
+        /// <returns></returns>
         public static DateTime ConvertLongDateTime(long UTCTime)
         {
             DateTime time = DateTime.MinValue;

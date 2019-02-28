@@ -313,7 +313,21 @@ namespace AGVSystem.UI.APP_UI.Map
         private bool Tagexist(int TagPrimary, int TagNum)
         {
             var a = instrument.valuePairs.Where(p => p.Key.Equals(TagNum) && !p.Key.Equals(TagPrimary)).ToList();
-            return instrument.valuePairs.Where(p => p.Key.Equals(TagNum) && !p.Key.Equals(TagPrimary)).ToList().Count() >= 1;
+            if (instrument.valuePairs.Where(p => p.Key.Equals(TagNum) && !p.Key.Equals(TagPrimary)).ToList().Count() >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                var Tagobj = instrument.valuePairs.FirstOrDefault(x => x.Key.Equals(TagPrimary)).Value;
+                Tagobj.Content = TagNum;
+                Tagobj.Tag = TagNum;
+                instrument.valuePairs.Remove(TagPrimary);
+                instrument.valuePairs.Add(TagNum, Tagobj);
+                instrument.wirePointArrays.Where(p => p.GetPoint.TagID.Equals(TagPrimary)).ToList().ForEach(x => { x.GetPoint.TagID = TagNum; });
+                instrument.wirePointArrays.Where(p => p.GetWirePoint.TagID.Equals(TagPrimary)).ToList().ForEach(x => { x.GetWirePoint.TagID = TagNum; });
+                return false;
+            }
         }
 
         private void ClearAssociated(int TagID)
