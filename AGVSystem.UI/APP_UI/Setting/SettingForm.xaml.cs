@@ -31,7 +31,7 @@ namespace AGVSystem.UI.APP_UI.Setting
         }
 
         private Menutype GetMenutype = Menutype.MapSetting;
-        private agvMapRegulate mapService = new agvMapRegulate(); 
+        private agvMapRegulate mapService = new agvMapRegulate();
         private Ga_mapBLL mapMessage = new Ga_mapBLL();
         private Grid gridItem = new Grid();  //端口绘制容器
         private Grid gridNetwork = new Grid(); //网络绘制容器
@@ -41,18 +41,17 @@ namespace AGVSystem.UI.APP_UI.Setting
         public SettingMap GetSettingMap;
         private string ServePath { get; set; }
         private string ServeName { get; set; }
-
-
-
+        private int isRun { get; set; }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
+            if (OperateIniTool.Exist)
             {
-                Map_Size.Text = Convert.ToDouble(IniFile.ReadIniData("AGV", "MapSise", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini")).ToString("0.0");
-                interval.Text = IniFile.ReadIniData("Table", "interval", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
-                ServePath = $"{AppDomain.CurrentDomain.BaseDirectory}{IniFile.ReadIniData("Table", "ServeNameEXE", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini")}";
-                ServeName = $"{IniFile.ReadIniData("Table", "ServeName", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini")}";
+                Map_Size.Text = OperateIniTool.OperateIniRead("AGV", "MapSise");
+                interval.Text = OperateIniTool.OperateIniRead("Table", "interval");
+                ServePath = $"{AppDomain.CurrentDomain.BaseDirectory}{OperateIniTool.OperateIniRead("Table", "ServeNameEXE")}";
+                ServeName = OperateIniTool.OperateIniRead("Table", "ServeName");
+                isRun = OperateIniTool.OperateIniRead("AGV", "IsStart").TransformInt();
             }
             ConfigDataBase();
             PortLoad();
@@ -66,8 +65,43 @@ namespace AGVSystem.UI.APP_UI.Setting
             {
                 MapList.SelectedIndex = 0;
             }
+            RunStart();
         }
 
+        #region 开机启动
+
+        private void RunStart()
+        {
+            if (isRun.Equals(0))
+            {
+                Run.IsChecked = false;
+            }
+            else
+            {
+                Run.IsChecked = true;
+            }
+        }
+
+        private void SaveRun()
+        {
+            if (Run.IsChecked == true)
+            {
+                if (!AppSelfStarting.IsExistKey("AGVSystem"))
+                {
+                    AppSelfStarting.SelfRunning(true, "AGVSystem", $"{AppDomain.CurrentDomain.BaseDirectory}AGVSystem.exe");
+                }
+                IniFile.WriteIniData("AGV", "IsStart", "1", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+            }
+            else
+            {
+                if (AppSelfStarting.IsExistKey("AGVSystem"))
+                {
+                    AppSelfStarting.SelfRunning(false, "AGVSystem", $"{AppDomain.CurrentDomain.BaseDirectory}AGVSystem.exe");
+                }
+                IniFile.WriteIniData("AGV", "IsStart", "0", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+            }
+        }
+        #endregion
 
         #region 菜单
 
@@ -303,7 +337,7 @@ namespace AGVSystem.UI.APP_UI.Setting
 
         #region 添加网络
 
-      
+
         List<Label> IpName = new List<Label>();
         List<TextBox> Ipsite = new List<TextBox>();
         List<Label> PortName = new List<Label>();
@@ -404,7 +438,7 @@ namespace AGVSystem.UI.APP_UI.Setting
 
         #region 串口选项更改
 
-       
+
         private void Combo_DropDownOpened(object sender, EventArgs e)
         {
             ComboBox box = (ComboBox)sender;
@@ -524,7 +558,7 @@ namespace AGVSystem.UI.APP_UI.Setting
                     //default:
                     //    break;
             }
-          
+
         }
         #endregion
 
@@ -675,7 +709,7 @@ namespace AGVSystem.UI.APP_UI.Setting
                         //PortInfo.plcBaud.Add(Convert.ToInt32(combos[i].Text.ToString().Trim().Substring(3)));
                         //PortInfo.plcStr.Add("Plc");
                     }
-                    else 
+                    else
                     {
                         dt[0] = combos[i].Text.ToString().Trim().Substring(3);
                         dt[1] = TextBoxes[i].Text.ToString().Trim();
@@ -715,7 +749,7 @@ namespace AGVSystem.UI.APP_UI.Setting
         {
             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
             {
-               IniFile.WriteIniData("AGV", "MapSise", Map_Size.Text, AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
+                IniFile.WriteIniData("AGV", "MapSise", Map_Size.Text, AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
             }
             if (mapMessage.UpdateSettingMap(UTC.ConvertDateTimeLong(Convert.ToDateTime(MapList.SelectedValue.ToString())), 1))
             {
@@ -735,14 +769,22 @@ namespace AGVSystem.UI.APP_UI.Setting
         {
             if (FormatVerification.IsFloat(interval.Text.Trim()))
             {
-                IniFile.WriteIniData("DB", "MySql", DataBaseConfig(), AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
-                IniFile.WriteIniData("Table", "interval", interval.Text.Trim(), AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
-                ConnectionStringsConfig.UpdateConnectionStringsConfig("DataBaseText", DataBaseConfig());
-                this.Close();
+                if (OperateIniTool.Exist)
+                {
+                    DataBaseConfig().OperateIniWrite("DB", "MySql");
+                    interval.Text.Trim().OperateIniWrite("Table", "interval");
+                    ConnectionStringsConfig.UpdateConnectionStringsConfig("DataBaseText", DataBaseConfig());
+                    SaveRun();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBoxTool.Error("配置文件丢失！");
+                }
             }
             else
             {
-                MessageBox.Show("格式错误！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxTool.Error("格式错误！");
             }
         }
         #endregion
@@ -802,7 +844,7 @@ namespace AGVSystem.UI.APP_UI.Setting
                     }
                 }
             }
-           
+
         }
         #endregion
 
@@ -820,7 +862,6 @@ namespace AGVSystem.UI.APP_UI.Setting
 
         #region 服务安装卸载
 
-
         private void Start_Service_Click(object sender, RoutedEventArgs e)
         {
             if (!ServiceFactory.IsServiceExisted(ServeName))
@@ -829,11 +870,11 @@ namespace AGVSystem.UI.APP_UI.Setting
                 ServiceFactory.InstallService(ServePath);
                 ServiceFactory.ServiceStart(ServeName);
                 this.Cursor = Cursors.Arrow;
-                MessageBox.Show("服务安装成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxTool.Succeed("服务安装成功！");
             }
             else
             {
-                MessageBox.Show("服务已存在！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxTool.Error("服务已存在！");
             }
         }
 
@@ -845,11 +886,11 @@ namespace AGVSystem.UI.APP_UI.Setting
                 ServiceFactory.ServiceStop(ServeName);
                 ServiceFactory.UninstallService(ServePath);
                 this.Cursor = Cursors.Arrow;
-                MessageBox.Show("卸载成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxTool.Succeed("卸载成功！");
             }
             else
             {
-                MessageBox.Show("服务不存在！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxTool.Error("服务不存在！");
             }
         }
         #endregion

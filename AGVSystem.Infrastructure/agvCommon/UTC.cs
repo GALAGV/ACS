@@ -2,7 +2,7 @@
 
 namespace AGVSystem.Infrastructure.agvCommon
 {
-    public  class UTC
+    public class UTC
     {
         /// <summary>
         /// DateTime 转UTC时间

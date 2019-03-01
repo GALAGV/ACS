@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Configuration.Install;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AGVSystem.Infrastructure.agvCommon
 {
+    /// <summary>
+    /// 服务帮助类
+    /// </summary>
     public class ServiceFactory
     {
-        //判断服务是否存在
+        /// <summary>
+        /// 判断服务是否存在
+        /// </summary>
+        /// <param name="serviceName">服务名称</param>
+        /// <returns></returns>
         public static bool IsServiceExisted(string serviceName)
         {
             ServiceController[] services = ServiceController.GetServices();
@@ -25,7 +27,10 @@ namespace AGVSystem.Infrastructure.agvCommon
             return false;
         }
 
-        //安装服务
+        /// <summary>
+        /// 安装服务
+        /// </summary>
+        /// <param name="serviceFilePath">服务路径</param>
         public static void InstallService(string serviceFilePath)
         {
             using (AssemblyInstaller installer = new AssemblyInstaller())
@@ -38,7 +43,10 @@ namespace AGVSystem.Infrastructure.agvCommon
             }
         }
 
-        //卸载服务
+        /// <summary>
+        /// 卸载服务
+        /// </summary>
+        /// <param name="serviceFilePath">服务路径</param>
         public static void UninstallService(string serviceFilePath)
         {
             using (AssemblyInstaller installer = new AssemblyInstaller())
@@ -48,7 +56,11 @@ namespace AGVSystem.Infrastructure.agvCommon
                 installer.Uninstall(null);
             }
         }
-        //启动服务
+
+        /// <summary>
+        /// 启动服务
+        /// </summary>
+        /// <param name="serviceName">服务名称</param>
         public static void ServiceStart(string serviceName)
         {
             using (ServiceController control = new ServiceController(serviceName))
@@ -60,7 +72,10 @@ namespace AGVSystem.Infrastructure.agvCommon
             }
         }
 
-        //停止服务
+        /// <summary>
+        /// 停止服务
+        /// </summary>
+        /// <param name="serviceName">服务名称</param>
         public static void ServiceStop(string serviceName)
         {
             using (ServiceController control = new ServiceController(serviceName))

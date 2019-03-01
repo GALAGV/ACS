@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace AGVSystem.Infrastructure.agvCommon
 {
-   public  static class ConnectionStringsConfig
+    public  static class ConnectionStringsConfig
     {
         public static void UpdateConnectionStringsConfig(string key, string conString)
         {

@@ -38,7 +38,7 @@ namespace AGVSystem.UI.APP_UI.Main
         bool OpenPort = false;
         bool StartNoopsyche = false;
         ObservableCollection<Ga_Map> maps = new ObservableCollection<Ga_Map>();
-
+  
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Task.Factory.StartNew(() => { mapService.DataBase(); });
@@ -84,13 +84,13 @@ namespace AGVSystem.UI.APP_UI.Main
                     TopY.Children.Clear();
                     GetPainting.CoordinateX(TopX, TopY);
                     map.GetCanvas = mainPanel;
-                    if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
+                    if (OperateIniTool.Exist)
                     {
-                        string Size = IniFile.ReadIniData("AGV", "MapSise", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
-                        map.MapSise = Convert.ToDouble(Size);
-                        MapRegulate.TemplateName = IniFile.ReadIniData("AGV", "TemplateName", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
-                        string DirectionLine = IniFile.ReadIniData("AGV", "DirectionLine", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
-                        MapRegulate.DirectionLine = (!string.IsNullOrWhiteSpace(DirectionLine) && FormatVerification.IsFloat(DirectionLine)) ? Convert.ToInt32(DirectionLine) : 0;
+                        string SiseResult = OperateIniTool.OperateIniRead("AGV", "MapSise");
+                        map.MapSise = !string.IsNullOrEmpty(SiseResult) ? Convert.ToDouble(SiseResult) : 2;
+                        MapRegulate.TemplateName = OperateIniTool.OperateIniRead("AGV", "TemplateName");
+                        string LineResult = OperateIniTool.OperateIniRead("AGV", "DirectionLine");
+                        MapRegulate.DirectionLine= LineResult.TransformInt();
                     }
                     double CanvasWidth = GetMap.Width * 10 * map.MapSise > this.Width * 1.2 ? GetMap.Width * 10 * map.MapSise : this.Width * 1.2;
                     double CanvasHeight = GetMap.Height * 10 * map.MapSise > this.Height * 1.2 ? GetMap.Height * 10 * map.MapSise : this.Height * 1.2;

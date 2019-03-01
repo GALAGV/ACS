@@ -13,22 +13,22 @@ namespace AGVSystem.Infrastructure.agvCommon
         /// <param name="LogInfo">日志内容</param>
         public static void writeLogInfo(string DireName, string LogName, string LogInfo)
         {
+            string Time = DateTime.Now.ToString("yyyyMMdd");
             if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName))
             {
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName);
             }
-            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + DateTime.Now.ToString("yyyyMMdd")))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + Time))
             {
-                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + DateTime.Now.ToString("yyyyMMdd"));
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + Time);
             }
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + DateTime.Now.ToString("yyyyMMdd") + "\\" + LogName + DateTime.Now.ToString("yyyyMMdd") + ".txt";
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + Time + "\\" + LogName + Time + ".txt";
             if (!File.Exists(filePath))
             {
                 File.Create(filePath).Close();
             }
             FileStream fs = new FileStream(filePath, FileMode.Append);
             StreamWriter sw = new StreamWriter(fs);
-
             sw.Write(DateTime.Now.ToString() + " " + LogInfo + "\r\n");
             sw.Close();
             fs.Close();

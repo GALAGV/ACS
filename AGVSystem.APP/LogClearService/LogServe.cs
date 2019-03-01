@@ -1,8 +1,6 @@
 ﻿using AGVSystem.Infrastructure.agvCommon;
-using OperateIni;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
@@ -16,9 +14,8 @@ namespace AGVSystem.APP.LogClearService
     public class LogServe
     {
         private CancellationTokenSource cancellationTokenSource { get; set; } //Task的控制，如取消、定时取消
-        private string path { get; set; } //应用程序启动路径
         private List<string> Table { get; set; } //待清理日志表名称集合
-        private int interval { get; set; }  //日期间隔 单位一个月 ，如上个月：-1 下个月：+1
+        private int interval { get; set; }  //日期间隔 单位一个月 ，如上个月：-1 
         private Ga_mapBLL _Serve { get; set; } 
 
         #region 构造函数
@@ -26,9 +23,8 @@ namespace AGVSystem.APP.LogClearService
         public LogServe()
         {
             this.cancellationTokenSource = new CancellationTokenSource();
-            this.path = AppDomain.CurrentDomain.BaseDirectory;
             this.Table = new List<string>();
-            this.interval = 0;
+            this.interval = 1;
             this._Serve = new Ga_mapBLL();
         }
         #endregion
@@ -39,11 +35,16 @@ namespace AGVSystem.APP.LogClearService
         {
             try
             {
-                if (File.Exists(path + "\\setting.ini"))
+                if (OperateIniTool.Exist)
                 {
-                    interval = Convert.ToInt32(IniFile.ReadIniData("Table", "interval", "", path + "\\setting.ini"));
-                    Table = IniFile.ReadIniData("Table", "Name", "", path + "\\setting.ini").Split(',').ToList();
+                    interval = OperateIniTool.OperateIniRead("Table", "interval").TransformInt();
+                    string Tableresult = OperateIniTool.OperateIniRead("Table", "Name");
+                    Table = !string.IsNullOrEmpty(Tableresult) ? Tableresult.Split(',').ToList() : new List<string>();
                     WriteLog.writeLogInfo("LogClear", "Log", "配置读取成功");
+                }
+                else
+                {
+                    WriteLog.writeLogInfo("LogClear", "Log", "配置文件丢失");
                 }
                 Task.Factory.StartNew(() =>
                 {
@@ -96,12 +97,12 @@ namespace AGVSystem.APP.LogClearService
                 if (ThisDate.Equals(LastDate))
                 {
                     //本月最后一天清理上个月所有日志
-                    TimeTable(DataTimeTool.FirstDayOfMonth(DateTime.Now.AddMonths(-interval)), DataTimeTool.LastDayOfMonth(DateTime.Now.AddMonths(-interval)));
+                    ClearTable(DataTimeTool.FirstDayOfMonth(DateTime.Now.AddMonths(-interval)), DataTimeTool.LastDayOfMonth(DateTime.Now.AddMonths(-interval)));
                 }
                 else
                 {
                     //清理上个月一号到上个月相同日期所有日志
-                    TimeTable(DataTimeTool.FirstDayOfMonth(DateTime.Now.AddMonths(-interval)), DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd")).AddMonths(-1));
+                    ClearTable(DataTimeTool.FirstDayOfMonth(DateTime.Now.AddMonths(-interval)), DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd")).AddMonths(-1));
                 }
                 Thread.Sleep(1000);
             }
@@ -121,7 +122,7 @@ namespace AGVSystem.APP.LogClearService
         /// <param name="start"></param>
         /// <param name="lastTime"></param>
         /// <param name="Table"></param>
-        public void TimeTable(DateTime start, DateTime lastTime)
+        public void ClearTable(DateTime start, DateTime lastTime)
         {
             for (DateTime dt = start; dt < lastTime; dt = dt.AddDays(1))
             {
@@ -138,11 +139,5 @@ namespace AGVSystem.APP.LogClearService
         }
 
         #endregion
-
-
-       
-
-
-
     }
 }

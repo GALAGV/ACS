@@ -1,0 +1,757 @@
+2019/2/21 10:10:44 【InnerException】Table 'agv.tag0' doesn't exist
+   在 AGVSystem.DAL.DataHelper.MySQLHelper.ExecuteReader(String strSQL) 位置 D:\Git\AGV\AGVSystem.DAL\DataHelper\MySQLHelper.cs:行号 344
+   在 AGVSystem.DAL.DataAccess.Ga_mapDAL.GetMapTags(Int64 exls) 位置 D:\Git\AGV\AGVSystem.DAL\DataAccess\Ga_mapDAL.cs:行号 664
+   在 AGVSystem.BLL.ServiceLogicBLL.Ga_mapBLL.RataTableBLL(Int64 exls) 位置 D:\Git\AGV\AGVSystem.BLL\ServiceLogicBLL\Ga_mapBLL.cs:行号 189
+   在 AGVSystem.APP.agv_Map.agvMapRegulate.TagManagement(Int64 UTC) 位置 D:\Git\AGV\AGVSystem.APP\agv_Map\agvMapRegulate.cs:行号 103
+   在 AGVSystem.UI.APP_UI.Map.EditTag.<LoadMap>b__16_0() 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditTag.xaml.cs:行号 117
+   在 System.Threading.Tasks.Task.InnerInvoke()
+   在 System.Threading.Tasks.Task.Execute()
+未通过等待任务或访问任务的 Exception 属性观察到任务的异常。因此，终结器线程重新引发了未观察到的异常。
+
+2019/2/21 10:14:13 【InnerException】Table 'agv.tag0' doesn't exist
+   在 AGVSystem.DAL.DataHelper.MySQLHelper.ExecuteReader(String strSQL) 位置 D:\Git\AGV\AGVSystem.DAL\DataHelper\MySQLHelper.cs:行号 344
+   在 AGVSystem.DAL.DataAccess.Ga_mapDAL.GetMapTags(Int64 exls) 位置 D:\Git\AGV\AGVSystem.DAL\DataAccess\Ga_mapDAL.cs:行号 664
+   在 AGVSystem.BLL.ServiceLogicBLL.Ga_mapBLL.RataTableBLL(Int64 exls) 位置 D:\Git\AGV\AGVSystem.BLL\ServiceLogicBLL\Ga_mapBLL.cs:行号 189
+   在 AGVSystem.APP.agv_Map.agvMapRegulate.TagManagement(Int64 UTC) 位置 D:\Git\AGV\AGVSystem.APP\agv_Map\agvMapRegulate.cs:行号 103
+   在 AGVSystem.UI.APP_UI.Map.EditTag.<LoadMap>b__16_0() 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditTag.xaml.cs:行号 117
+   在 System.Threading.Tasks.Task.InnerInvoke()
+   在 System.Threading.Tasks.Task.Execute()
+未通过等待任务或访问任务的 Exception 属性观察到任务的异常。因此，终结器线程重新引发了未观察到的异常。
+
+2019/2/21 10:17:41 【InnerException】Table 'agv.tag0' doesn't exist
+   在 AGVSystem.DAL.DataHelper.MySQLHelper.ExecuteReader(String strSQL) 位置 D:\Git\AGV\AGVSystem.DAL\DataHelper\MySQLHelper.cs:行号 344
+   在 AGVSystem.DAL.DataAccess.Ga_mapDAL.GetMapTags(Int64 exls) 位置 D:\Git\AGV\AGVSystem.DAL\DataAccess\Ga_mapDAL.cs:行号 664
+   在 AGVSystem.BLL.ServiceLogicBLL.Ga_mapBLL.RataTableBLL(Int64 exls) 位置 D:\Git\AGV\AGVSystem.BLL\ServiceLogicBLL\Ga_mapBLL.cs:行号 189
+   在 AGVSystem.APP.agv_Map.agvMapRegulate.TagManagement(Int64 UTC) 位置 D:\Git\AGV\AGVSystem.APP\agv_Map\agvMapRegulate.cs:行号 103
+   在 AGVSystem.UI.APP_UI.Map.EditTag.<LoadMap>b__16_0() 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditTag.xaml.cs:行号 119
+   在 System.Threading.Tasks.Task.InnerInvoke()
+   在 System.Threading.Tasks.Task.Execute()
+未通过等待任务或访问任务的 Exception 属性观察到任务的异常。因此，终结器线程重新引发了未观察到的异常。
+
+2019/2/21 10:38:33 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:33 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:33 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 325
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:33 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 330
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:33 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 325
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:33 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 325
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:33 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:33 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:34 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:34 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:34 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:34 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:34 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:34 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:34 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:35 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:35 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:38:35 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:41:52 【InnerException】Table 'agv.tag0' doesn't exist
+   在 AGVSystem.DAL.DataHelper.MySQLHelper.ExecuteReader(String strSQL) 位置 D:\Git\AGV\AGVSystem.DAL\DataHelper\MySQLHelper.cs:行号 344
+   在 AGVSystem.DAL.DataAccess.Ga_mapDAL.GetMapTags(Int64 exls) 位置 D:\Git\AGV\AGVSystem.DAL\DataAccess\Ga_mapDAL.cs:行号 664
+   在 AGVSystem.BLL.ServiceLogicBLL.Ga_mapBLL.RataTableBLL(Int64 exls) 位置 D:\Git\AGV\AGVSystem.BLL\ServiceLogicBLL\Ga_mapBLL.cs:行号 189
+   在 AGVSystem.APP.agv_Map.agvMapRegulate.TagManagement(Int64 UTC) 位置 D:\Git\AGV\AGVSystem.APP\agv_Map\agvMapRegulate.cs:行号 103
+   在 AGVSystem.UI.APP_UI.Map.EditTag.<LoadMap>b__17_0() 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditTag.xaml.cs:行号 117
+   在 System.Threading.Tasks.Task.InnerInvoke()
+   在 System.Threading.Tasks.Task.Execute()
+未通过等待任务或访问任务的 Exception 属性观察到任务的异常。因此，终结器线程重新引发了未观察到的异常。
+
+2019/2/21 10:41:57 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 330
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:42:01 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 330
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:42:05 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:42:17 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 320
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:42:25 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 325
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:42:50 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 330
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:50:57 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 324
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:51:00 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 324
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:51:03 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 324
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:51:08 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 329
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:51:11 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 334
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:51:14 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 339
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:51:27 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 329
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:51:30 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 319
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:52:07 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 319
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:52:18 索引超出范围。必须为非负值并小于集合大小。
+参数名: index
+   在 System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   在 System.Collections.Generic.List`1.get_Item(Int32 index)
+   在 System.Collections.ObjectModel.Collection`1.get_Item(Int32 index)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.ListT_DropDownClosed(Object sender, EventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 329
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.ComboBox.OnDropDownClosed(EventArgs e)
+   在 System.Windows.Controls.ComboBox.OnPopupClosed(Object source, EventArgs e)
+   在 System.Windows.FrameworkElement.RaiseClrEvent(EventPrivateKey key, EventArgs args)
+   在 System.Windows.Controls.Primitives.Popup.OnClosed(EventArgs e)
+   在 System.Windows.Controls.Primitives.Popup.DestroyWindow()
+   在 System.Windows.Controls.Primitives.Popup.<HideWindow>b__122_0(Object sender, EventArgs args)
+   在 System.Windows.Threading.DispatcherTimer.FireTick(Object unused)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 10:56:01 【InnerException】Table 'agv.tag0' doesn't exist
+   在 AGVSystem.DAL.DataHelper.MySQLHelper.ExecuteReader(String strSQL) 位置 D:\Git\AGV\AGVSystem.DAL\DataHelper\MySQLHelper.cs:行号 344
+   在 AGVSystem.DAL.DataAccess.Ga_mapDAL.GetMapTags(Int64 exls) 位置 D:\Git\AGV\AGVSystem.DAL\DataAccess\Ga_mapDAL.cs:行号 664
+   在 AGVSystem.BLL.ServiceLogicBLL.Ga_mapBLL.RataTableBLL(Int64 exls) 位置 D:\Git\AGV\AGVSystem.BLL\ServiceLogicBLL\Ga_mapBLL.cs:行号 189
+   在 AGVSystem.APP.agv_Map.agvMapRegulate.TagManagement(Int64 UTC) 位置 D:\Git\AGV\AGVSystem.APP\agv_Map\agvMapRegulate.cs:行号 103
+   在 AGVSystem.UI.APP_UI.Map.EditTag.<LoadMap>b__17_0() 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditTag.xaml.cs:行号 117
+   在 System.Threading.Tasks.Task.InnerInvoke()
+   在 System.Threading.Tasks.Task.Execute()
+未通过等待任务或访问任务的 Exception 属性观察到任务的异常。因此，终结器线程重新引发了未观察到的异常。
+
+2019/2/21 11:29:40 【InnerException】Table 'agv.tag0' doesn't exist
+   在 AGVSystem.DAL.DataHelper.MySQLHelper.ExecuteReader(String strSQL) 位置 D:\Git\AGV\AGVSystem.DAL\DataHelper\MySQLHelper.cs:行号 344
+   在 AGVSystem.DAL.DataAccess.Ga_mapDAL.GetMapTags(Int64 exls) 位置 D:\Git\AGV\AGVSystem.DAL\DataAccess\Ga_mapDAL.cs:行号 664
+   在 AGVSystem.BLL.ServiceLogicBLL.Ga_mapBLL.RataTableBLL(Int64 exls) 位置 D:\Git\AGV\AGVSystem.BLL\ServiceLogicBLL\Ga_mapBLL.cs:行号 189
+   在 AGVSystem.APP.agv_Map.agvMapRegulate.TagManagement(Int64 UTC) 位置 D:\Git\AGV\AGVSystem.APP\agv_Map\agvMapRegulate.cs:行号 103
+   在 AGVSystem.UI.APP_UI.Map.EditTag.<LoadMap>b__17_0() 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditTag.xaml.cs:行号 117
+   在 System.Threading.Tasks.Task.InnerInvoke()
+   在 System.Threading.Tasks.Task.Execute()
+未通过等待任务或访问任务的 Exception 属性观察到任务的异常。因此，终结器线程重新引发了未观察到的异常。
+
+2019/2/21 11:51:13 【InnerException】Table 'agv.tag0' doesn't exist
+   在 AGVSystem.DAL.DataHelper.MySQLHelper.ExecuteReader(String strSQL) 位置 D:\Git\AGV\AGVSystem.DAL\DataHelper\MySQLHelper.cs:行号 344
+   在 AGVSystem.DAL.DataAccess.Ga_mapDAL.GetMapTags(Int64 exls) 位置 D:\Git\AGV\AGVSystem.DAL\DataAccess\Ga_mapDAL.cs:行号 664
+   在 AGVSystem.BLL.ServiceLogicBLL.Ga_mapBLL.RataTableBLL(Int64 exls) 位置 D:\Git\AGV\AGVSystem.BLL\ServiceLogicBLL\Ga_mapBLL.cs:行号 189
+   在 AGVSystem.APP.agv_Map.agvMapRegulate.TagManagement(Int64 UTC) 位置 D:\Git\AGV\AGVSystem.APP\agv_Map\agvMapRegulate.cs:行号 103
+   在 AGVSystem.UI.APP_UI.Map.EditTag.<LoadMap>b__17_0() 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditTag.xaml.cs:行号 117
+   在 System.Threading.Tasks.Task.InnerInvoke()
+   在 System.Threading.Tasks.Task.Execute()
+未通过等待任务或访问任务的 Exception 属性观察到任务的异常。因此，终结器线程重新引发了未观察到的异常。
+
+2019/2/21 13:37:01 【InnerException】Table 'agv.tag0' doesn't exist
+   在 AGVSystem.DAL.DataHelper.MySQLHelper.ExecuteReader(String strSQL) 位置 D:\Git\AGV\AGVSystem.DAL\DataHelper\MySQLHelper.cs:行号 344
+   在 AGVSystem.DAL.DataAccess.Ga_mapDAL.GetMapTags(Int64 exls) 位置 D:\Git\AGV\AGVSystem.DAL\DataAccess\Ga_mapDAL.cs:行号 664
+   在 AGVSystem.BLL.ServiceLogicBLL.Ga_mapBLL.RataTableBLL(Int64 exls) 位置 D:\Git\AGV\AGVSystem.BLL\ServiceLogicBLL\Ga_mapBLL.cs:行号 189
+   在 AGVSystem.APP.agv_Map.agvMapRegulate.TagManagement(Int64 UTC) 位置 D:\Git\AGV\AGVSystem.APP\agv_Map\agvMapRegulate.cs:行号 103
+   在 AGVSystem.UI.APP_UI.Map.EditTag.<LoadMap>b__17_0() 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditTag.xaml.cs:行号 117
+   在 System.Threading.Tasks.Task.InnerInvoke()
+   在 System.Threading.Tasks.Task.Execute()
+未通过等待任务或访问任务的 Exception 属性观察到任务的异常。因此，终结器线程重新引发了未观察到的异常。
+
+2019/2/21 16:37:12 值不能为 null。
+参数名: templatedParent
+   在 System.Windows.FrameworkTemplate.FindName(String name, FrameworkElement templatedParent)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.SerialPortData_SelectedCellsChanged(Object sender, SelectedCellsChangedEventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 328
+   在 System.Windows.Controls.DataGrid.OnSelectedCellsChanged(SelectedCellsChangedEventArgs e)
+   在 System.Windows.Controls.DataGrid.NotifySelectedCellsChanged()
+   在 System.Windows.Controls.DataGrid.ChangingSelectedCellsHelper.Dispose()
+   在 System.Windows.Controls.DataGrid.OnItemsCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
+   在 System.Collections.Specialized.NotifyCollectionChangedEventHandler.Invoke(Object sender, NotifyCollectionChangedEventArgs e)
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(NotifyCollectionChangedEventArgs args)
+   在 System.Windows.Controls.ItemCollection.OnViewCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
+   在 System.Windows.WeakEventManager.ListenerList`1.DeliverEvent(Object sender, EventArgs e, Type managerType)
+   在 System.Windows.WeakEventManager.DeliverEvent(Object sender, EventArgs args)
+   在 System.Collections.Specialized.CollectionChangedEventManager.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(NotifyCollectionChangedEventArgs args)
+   在 System.Windows.Data.ListCollectionView.RefreshOverride()
+   在 System.Windows.Data.CollectionView.RefreshInternal()
+   在 System.Windows.Data.CollectionView.Refresh()
+   在 System.Windows.Data.CollectionView.EndDefer()
+   在 System.Windows.Data.CollectionView.DeferHelper.Dispose()
+   在 System.Windows.Controls.ItemCollection.SetCollectionView(CollectionView view)
+   在 System.Windows.Controls.ItemCollection.SetItemsSource(IEnumerable value, Func`2 GetSourceItem)
+   在 System.Windows.Controls.ItemsControl.OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+   在 System.Windows.DependencyObject.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+   在 System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+   在 System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
+   在 System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
+   在 System.Windows.DependencyObject.InvalidateProperty(DependencyProperty dp, Boolean preserveCurrentValue)
+   在 System.Windows.Data.BindingExpressionBase.Invalidate(Boolean isASubPropertyChange)
+   在 System.Windows.Data.BindingExpression.TransferValue(Object newValue, Boolean isASubPropertyChange)
+   在 System.Windows.Data.BindingExpression.Activate(Object item)
+   在 System.Windows.Data.BindingExpression.OnDataContextChanged(DependencyObject contextElement)
+   在 System.Windows.Data.BindingExpression.HandlePropertyInvalidation(DependencyObject d, DependencyPropertyChangedEventArgs args)
+   在 System.Windows.Data.BindingExpressionBase.OnPropertyInvalidation(DependencyObject d, DependencyPropertyChangedEventArgs args)
+   在 System.Windows.Data.BindingExpression.OnPropertyInvalidation(DependencyObject d, DependencyPropertyChangedEventArgs args)
+   在 System.Windows.DependentList.InvalidateDependents(DependencyObject source, DependencyPropertyChangedEventArgs sourceArgs)
+   在 System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
+   在 System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
+   在 System.Windows.DependencyObject.SetValueCommon(DependencyProperty dp, Object value, PropertyMetadata metadata, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType, Boolean isInternal)
+   在 System.Windows.DependencyObject.SetValue(DependencyProperty dp, Object value)
+   在 System.Windows.FrameworkElement.set_DataContext(Object value)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.Line_SelectionChanged(Object sender, SelectionChangedEventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 269
+   在 System.Windows.Controls.SelectionChangedEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+   在 System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseEvent(RoutedEventArgs e)
+   在 System.Windows.Controls.ComboBox.OnSelectionChanged(SelectionChangedEventArgs e)
+   在 System.Windows.Controls.Primitives.Selector.InvokeSelectionChanged(List`1 unselectedInfos, List`1 selectedInfos)
+   在 System.Windows.Controls.Primitives.Selector.SelectionChanger.End()
+   在 System.Windows.Controls.Primitives.Selector.SelectionChanger.SelectJustThisItem(ItemInfo info, Boolean assumeInItemsCollection)
+   在 System.Windows.Controls.ComboBox.NotifyComboBoxItemMouseUp(ComboBoxItem comboBoxItem)
+   在 System.Windows.Controls.ComboBoxItem.OnMouseLeftButtonUp(MouseButtonEventArgs e)
+   在 System.Windows.UIElement.OnMouseLeftButtonUpThunk(Object sender, MouseButtonEventArgs e)
+   在 System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+   在 System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+   在 System.Windows.UIElement.OnMouseUpThunk(Object sender, MouseButtonEventArgs e)
+   在 System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+   在 System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseEvent(RoutedEventArgs args, Boolean trusted)
+   在 System.Windows.Input.InputManager.ProcessStagingArea()
+   在 System.Windows.Input.InputManager.ProcessInput(InputEventArgs input)
+   在 System.Windows.Input.InputProviderSite.ReportInput(InputReport inputReport)
+   在 System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
+   在 System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2019/2/21 16:39:03 值不能为 null。
+参数名: templatedParent
+   在 System.Windows.FrameworkTemplate.FindName(String name, FrameworkElement templatedParent)
+   在 AGVSystem.UI.APP_UI.Map.EditLine.SerialPortData_SelectedCellsChanged(Object sender, SelectedCellsChangedEventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 328
+   在 System.Windows.Controls.DataGrid.OnSelectedCellsChanged(SelectedCellsChangedEventArgs e)
+   在 System.Windows.Controls.DataGrid.NotifySelectedCellsChanged()
+   在 System.Windows.Controls.DataGrid.ChangingSelectedCellsHelper.Dispose()
+   在 System.Windows.Controls.DataGrid.OnItemsCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
+   在 System.Collections.Specialized.NotifyCollectionChangedEventHandler.Invoke(Object sender, NotifyCollectionChangedEventArgs e)
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(NotifyCollectionChangedEventArgs args)
+   在 System.Windows.Controls.ItemCollection.OnViewCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
+   在 System.Windows.WeakEventManager.ListenerList`1.DeliverEvent(Object sender, EventArgs e, Type managerType)
+   在 System.Windows.WeakEventManager.DeliverEvent(Object sender, EventArgs args)
+   在 System.Collections.Specialized.CollectionChangedEventManager.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(NotifyCollectionChangedEventArgs args)
+   在 System.Windows.Data.ListCollectionView.RefreshOverride()
+   在 System.Windows.Data.CollectionView.RefreshInternal()
+   在 System.Windows.Data.CollectionView.RefreshOrDefer()
+   在 System.Windows.Data.ListCollectionView.ProcessCollectionChanged(NotifyCollectionChangedEventArgs args)
+   在 System.Windows.Data.CollectionView.OnCollectionChanged(Object sender, NotifyCollectionChangedEventArgs args)
+   在 System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+   在 System.Collections.ObjectModel.ObservableCollection`1.ClearItems()
+   在 System.Collections.ObjectModel.Collection`1.Clear()
+   在 AGVSystem.UI.APP_UI.Map.EditLine.Line_Add_Click(Object sender, RoutedEventArgs e) 位置 D:\Git\AGV\AGVSystem.UI\APP_UI\Map\EditLine.xaml.cs:行号 389
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseEvent(RoutedEventArgs e)
+   在 System.Windows.Controls.Primitives.ButtonBase.OnClick()
+   在 System.Windows.Controls.Button.OnClick()
+   在 System.Windows.Controls.Primitives.ButtonBase.OnMouseLeftButtonUp(MouseButtonEventArgs e)
+   在 System.Windows.UIElement.OnMouseLeftButtonUpThunk(Object sender, MouseButtonEventArgs e)
+   在 System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+   在 System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+   在 System.Windows.UIElement.OnMouseUpThunk(Object sender, MouseButtonEventArgs e)
+   在 System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+   在 System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   在 System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   在 System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   在 System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
+   在 System.Windows.UIElement.RaiseEvent(RoutedEventArgs args, Boolean trusted)
+   在 System.Windows.Input.InputManager.ProcessStagingArea()
+   在 System.Windows.Input.InputManager.ProcessInput(InputEventArgs input)
+   在 System.Windows.Input.InputProviderSite.ReportInput(InputReport inputReport)
+   在 System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
+   在 System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)

@@ -1,18 +1,8 @@
 ﻿using AGVSystem.Infrastructure.agvCommon;
 using AGVSystem.Model.DrawMap;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AGVSystem.UI.APP_UI.Edit
 {
@@ -21,10 +11,10 @@ namespace AGVSystem.UI.APP_UI.Edit
     /// </summary>
     public partial class Area : Window
     {
-        private Label GetLabel;
-        public Action<int> ArDelete;
-        private double SiseWin;
-        public Area(Label label,double Size)
+        private Label GetLabel { get; set; }
+        public Action<int> ArDelete { get; set; }
+        private double SiseWin { get; set; }
+        public Area(Label label, double Size)
         {
             InitializeComponent();
             this.GetLabel = label;
