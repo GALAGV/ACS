@@ -42,7 +42,7 @@
                 </MenuItem>
                 <Separator Width="4" />
                 <MenuItem Header="历史(_E)" Height="20" FontFamily="微软雅黑">
-                    <MenuItem Header="历史信息" Height="20" Width="150"></MenuItem>
+                    <MenuItem Header="历史信息" Height="20" Width="150" Name="Log_AGV" Click="Log_AGV_Click"></MenuItem>
                 </MenuItem>
                 <Separator Width="4" />
                 <MenuItem Header="帮助(_H)" Height="20" FontFamily="微软雅黑">

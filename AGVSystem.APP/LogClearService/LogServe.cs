@@ -108,7 +108,6 @@ namespace AGVSystem.APP.LogClearService
             }
             catch (Exception ex)
             {
-                cancellationTokenSource.Cancel();
                 WriteLog.writeLogInfo("LogClear", "Log", "服务运行中出错，错误信息：" + ex.ToString() + "");
             }
         }

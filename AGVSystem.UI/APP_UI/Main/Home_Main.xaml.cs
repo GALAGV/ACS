@@ -17,6 +17,7 @@ using OperateIni;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using AGVSystem.UI.APP_UI.Log;
 
 namespace AGVSystem.UI.APP_UI.Main
 {
@@ -348,6 +349,12 @@ namespace AGVSystem.UI.APP_UI.Main
         {
             EditTag edit = new EditTag();
             edit.Show();
+        }
+
+        private void Log_AGV_Click(object sender, RoutedEventArgs e)
+        {
+            LogForm log = new LogForm();
+            log.Show();
         }
     }
 }

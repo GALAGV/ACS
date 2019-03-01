@@ -92,6 +92,9 @@
     <Compile Include="APP_UI\Edit\Tag.xaml.cs">
       <DependentUpon>Tag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="APP_UI\Log\LogForm.xaml.cs">
+      <DependentUpon>LogForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="APP_UI\Main\Home_Main.xaml.cs">
       <DependentUpon>Home_Main.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="APP_UI\Edit\Tag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="APP_UI\Log\LogForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -294,6 +301,5 @@
   <ItemGroup>
     <Resource Include="image\Configs.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

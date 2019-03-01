@@ -29,7 +29,6 @@ namespace AGVSystem.UI.APP_UI.Setting
         {
             InitializeComponent();
         }
-
         private Menutype GetMenutype = Menutype.MapSetting;
         private agvMapRegulate mapService = new agvMapRegulate();
         private Ga_mapBLL mapMessage = new Ga_mapBLL();
