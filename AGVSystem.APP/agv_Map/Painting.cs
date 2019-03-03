@@ -68,7 +68,7 @@ namespace AGVSystem.APP.agv_Map
         /// <summary>
         /// 线路宽度
         /// </summary>
-        public int Line_Width { get; set; }
+        public double Line_Width { get; set; }
 
         /// <summary>
         /// 半圆角度
@@ -103,7 +103,7 @@ namespace AGVSystem.APP.agv_Map
             this.CanvasBackground_Color = new SolidColorBrush(Color.FromRgb(208, 208, 208));
 
 
-            this.Line_Width = 2;
+            this.Line_Width = 1.7;
             this.AngleLine = 18;
             this.Excursion_X = 19;
             this.Excursion_Y = 18;

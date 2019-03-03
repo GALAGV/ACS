@@ -46,7 +46,7 @@
                 </MenuItem>
                 <Separator Width="4" />
                 <MenuItem Header="帮助(_H)" Height="20" FontFamily="微软雅黑">
-                    <MenuItem Header="关于软件(_A)" Height="20"></MenuItem>
+                    <MenuItem Header="关于软件(_A) V1.0.1" Height="20"></MenuItem>
                 </MenuItem>
             </Menu>
             <ToolBar Grid.Row="1" Grid.ColumnSpan="3" Background="#f0f0f0" Loaded="ToolBar_Loaded">

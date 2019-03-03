@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Log"
         mc:Ignorable="d"
-        Title="LogForm" Height="700" Width="1250" WindowState="Maximized" MinWidth="1100" MinHeight="600">
+        Title="LogForm" Height="700" Width="1290" WindowState="Maximized" MinWidth="1200" MinHeight="600">
     <Window.Resources>
         <Style x:Key="FontAwesome">
             <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Styles/fonts/#FontAwesome" />
@@ -41,9 +41,9 @@
                                 <ColumnDefinition Width="90"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition Width="90"></ColumnDefinition>
-                                <ColumnDefinition ></ColumnDefinition>
+                                <ColumnDefinition  Width="175"></ColumnDefinition>
                                 <ColumnDefinition Width="90"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition  Width="175"></ColumnDefinition>
                                 <ColumnDefinition Width="90"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition Width="90"></ColumnDefinition>
@@ -51,11 +51,39 @@
                                 <ColumnDefinition Width="220"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Label Content="查询日期：" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                            <DatePicker Grid.Column="1" Focusable="False" Height="25"  Name="DateTimes" VerticalContentAlignment="Center" DisplayDate="2018-09-16"></DatePicker>
-                            <Label Content="开始时间" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-                            <TextBox Grid.Column="3" VerticalContentAlignment="Center" Height="25" ></TextBox>
-                            <Label Content="结束时间" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-                            <TextBox Grid.Column="5" VerticalContentAlignment="Center" Height="25" ></TextBox>
+                            <DatePicker Grid.Column="1" Focusable="False" Height="25"  Name="DateTimes" VerticalContentAlignment="Center" ></DatePicker>
+                            <Label Content="开始时间：" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                            <Grid  Grid.Column="3"  Height="25" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="00" Name="StartHour"  HorizontalContentAlignment="Center" Grid.Column="0" Width="35"  VerticalContentAlignment="Center"></TextBox>
+                                <Label Content="：" Width="20" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ></Label>
+                                <TextBox Text="00" Name="Startminute" HorizontalContentAlignment="Center" Grid.Column="2" Width="35" VerticalContentAlignment="Center"></TextBox>
+                                <Label Content="：" Width="20" Grid.Column="3" HorizontalContentAlignment="Center"></Label>
+                                <TextBox Text="00"   Name="Startsecond" HorizontalContentAlignment="Center" Grid.Column="4" Width="35"  VerticalContentAlignment="Center"></TextBox>
+                            </Grid>
+                            <!--<TextBox Grid.Column="3" VerticalContentAlignment="Center" Height="25" ></TextBox>-->
+                            <Label Content="结束时间：" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                            <!--<TextBox Grid.Column="5" VerticalContentAlignment="Center" Height="25" ></TextBox>-->
+                            <Grid  Grid.Column="5"  Height="25" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" Name="StopHour" Text="23" HorizontalContentAlignment="Center" Width="35"  VerticalContentAlignment="Center"></TextBox>
+                                <Label Content="：" Width="20" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ></Label>
+                                <TextBox Text="59"   Name="Stopminute" HorizontalContentAlignment="Center"  Grid.Column="2" Width="35" VerticalContentAlignment="Center"></TextBox>
+                                <Label Content="：" Width="20" Grid.Column="3" HorizontalContentAlignment="Center"></Label>
+                                <TextBox Text="59"   Name="Stopsecond" HorizontalContentAlignment="Center" Grid.Column="4" Width="35"  VerticalContentAlignment="Center"></TextBox>
+                            </Grid>
                             <Label Content="AGV编号：" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="6"></Label>
                             <TextBox Grid.Column="7" VerticalContentAlignment="Center" Height="25" Name="AgvNum"></TextBox>
                             <Label Content="报警状态：" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="8"></Label>
@@ -64,8 +92,22 @@
                                 <ComboBoxItem >正常</ComboBoxItem>
                                 <ComboBoxItem>报警</ComboBoxItem>
                             </ComboBox>
-                            <Button Content="查询" BorderBrush="#adadad" Height="25" Grid.Column="10" Width="80" Margin="0,0,100,0" Name="Select" ></Button>
-                            <Button Content="导出" BorderBrush="#adadad" Height="25" Grid.Column="10" Name="Open"  Width="80" Margin="100,0,0,0"></Button>
+                            <Button  BorderBrush="#adadad" Height="25" Grid.Column="10" Width="80" Margin="0,0,100,0" Name="Select" Click="Select_Click" >
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xf002;"  FontSize="16" Style="{DynamicResource FontAwesome}" />
+                                        <TextBlock Text="查询" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button  BorderBrush="#adadad" Height="25" Grid.Column="10" Name="Open"  Width="80" Margin="100,0,0,0">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xf019;"  FontSize="16" Style="{DynamicResource FontAwesome}" />
+                                        <TextBlock Text="导出" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
                         </Grid>
                     </Grid>
                 </Border>
@@ -93,28 +135,56 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition Height="45"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <DataGrid x:Name="TabAgvMoveData" Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#adadad"  AllowDrop="True" RowHeaderWidth="0"  ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" >
+                            <DataGrid x:Name="Table_Data" Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#adadad"  AllowDrop="True" RowHeaderWidth="0"  ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" >
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Background" Value="White" />
+                                        <Setter Property="Height" Value="25" />
+                                        <Setter Property="Foreground" Value="Black" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#191970" />
+                                                <Setter Property="Foreground" Value="Black" />
+                                            </Trigger>
+                                            <Trigger Property="AlternationIndex" Value="0">
+                                                <Setter Property="Background" Value="White" />
+                                            </Trigger>
+                                            <Trigger Property="AlternationIndex" Value="1">
+                                                <Setter Property="Background" Value="#f2f2f2" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="LightGray" />
+                                            </Trigger>
+                                            <!--<Trigger Property="IsSelected" Value="True">
+                                    -->
+                                            <!--<Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="Background" Value="LightGray" />-->
+                                            <!--
+                                </Trigger>-->
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
                                 <DataGrid.Columns>
                                     <DataGridTemplateColumn   Width="80"  >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock   Text="{Binding agvStatic}"/>
+                                                <TextBlock   Text="{Binding UtcTime}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.HeaderTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="状态" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                                <TextBlock Text="时间" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.HeaderTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="AGV编号" Binding="{Binding agvNumber}"   Width="*" FontWeight="Black" >
+                                    <DataGridTextColumn Header="车号" Binding="{Binding AgvNum}"   Width="*" FontWeight="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="电压"  Binding="{Binding Voltage}" Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="运行准备"  Binding="{Binding MasterOn}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -128,56 +198,63 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="转弯" Binding="{Binding turn}"  Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="驱动" Binding="{Binding Drive}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="方向" Binding="{Binding Dir}"  Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="转弯" Binding="{Binding Left}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="挂钩"  Binding="{Binding Hook}"  Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="方向"  Binding="{Binding Direction}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="信标"   Binding="{Binding RFID}" Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="挂钩"   Binding="{Binding Hook}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="线路号"  Binding="{Binding RouteNo}"  Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="电压"  Binding="{Binding Power}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="扫描区域"  Binding="{Binding PBS}"  Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="PBS"   Binding="{Binding Pbs}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="步骤"   Binding="{Binding Step}" Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="信标"   Binding="{Binding Rfid}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="程序号"   Binding="{Binding Program}" Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="路径号"   Binding="{Binding RouteNo}" Width="*" Foreground="Black" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="报警码"   Binding="{Binding ErrorCode}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -186,31 +263,26 @@
                                     </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Grid Grid.Row="0" Panel.ZIndex="9" Margin="0,25,0,0" Height="200" >
+                            <Grid Grid.Row="0" Name="Panel2"  Panel.ZIndex="1" Margin="0,25,0,0" Height="200" >
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="&#xf002;" Foreground="Gray" FontSize="62" Style="{DynamicResource FontAwesome}" />
                                     <TextBlock Text="暂无数据！"  Foreground="Gray"  FontSize="50"  Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    </StackPanel>
+                                </StackPanel>
                             </Grid>
-
                             <Grid  Grid.Row="1">
-
-
                                 <Border >
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label  Content="转到"/>
                                         <TextBox Width="50" Height="23" VerticalContentAlignment="Center" Text="{Binding JumpNum}" Name="IndexPs" />
                                         <Label  Content="页"/>
-                                        <Button Height="23" Width="40" BorderBrush="#adadad" Name="Go"   Margin="0,0,20,0" Content="GO" Command="{Binding JumpPageCommand}"/>
-                                        <Button  Height="23" Width="60"  Name="Up"  BorderBrush="#adadad" Margin="0,0,10,0" Content="上一页" Command="{Binding PrevPageCommand}"/>
-                                        <Button  Height="23" Width="60" BorderBrush="#adadad"  Name="Next" Content="下一页" Command="{Binding NextPageCommand}"/>
+                                        <Button Height="23" Width="40" Click="Go_Click" BorderBrush="#adadad" Name="Go"   Margin="0,0,20,0" Content="GO" Command="{Binding JumpPageCommand}"/>
+                                        <Button  Height="23" Width="60"  Name="Up"  BorderBrush="#adadad" Click="Up_Click" Margin="0,0,10,0" Content="上一页" Command="{Binding PrevPageCommand}"/>
+                                        <Button  Height="23" Width="60" BorderBrush="#adadad" Click="Next_Click"  Name="Next" Content="下一页" Command="{Binding NextPageCommand}"/>
                                         <Label  Content="每页"/>
                                         <ComboBox  HorizontalContentAlignment="Center" Height="23"   Name="PagSize" VerticalContentAlignment="Center"  SelectedIndex="1" Width="60" Margin="5,0,0,0" Background="White" >
-                                            <ComboBoxItem>100</ComboBoxItem>
+                                            <ComboBoxItem >100</ComboBoxItem>
                                             <ComboBoxItem>200</ComboBoxItem>
                                             <ComboBoxItem>300</ComboBoxItem>
-                                            <ComboBoxItem>400</ComboBoxItem>
-                                            <ComboBoxItem>500</ComboBoxItem>
                                         </ComboBox>
                                         <Label  Content="条"/>
                                         <Label  Content="【当前"/>

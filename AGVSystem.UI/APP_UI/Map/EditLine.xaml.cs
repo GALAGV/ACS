@@ -135,7 +135,7 @@ namespace AGVSystem.UI.APP_UI.Map
                 if (route != null)
                 {
                     TagRecover();
-                    SignLine(map.wirePointArrays, Brushes.Black, 3);
+                    SignLine(map.wirePointArrays, Brushes.Black, 1.7);
                     int Index = routes.IndexOf(route);
                     int CountLine = routes.Count;
                     for (int i = 0; i < CountLine; i++)
@@ -173,7 +173,7 @@ namespace AGVSystem.UI.APP_UI.Map
             }
         }
 
-        private void SignLine(List<WirePointArray> pointArrays, Brush brushes, int LintWidth)
+        private void SignLine(List<WirePointArray> pointArrays, Brush brushes, double LintWidth)
         {
             pointArrays.ForEach(
                     p =>
@@ -218,7 +218,7 @@ namespace AGVSystem.UI.APP_UI.Map
                 RouteData = GetRoutes.FirstOrDefault(x => x.Program.Equals(Convert.ToInt32(Line.SelectedValue.ToString())));
                 if (RouteData != null)
                 {
-                    SignLine(map.wirePointArrays, Brushes.Black, 3);
+                    SignLine(map.wirePointArrays, Brushes.Black, 1.7);
                     TagRecover();
                     RouteName.Text = RouteData.Name;
                     ProgramNum.Text = RouteData.Program.ToString();
@@ -386,7 +386,7 @@ namespace AGVSystem.UI.APP_UI.Map
             routes.Clear();
             RouteName.Text = "";
             ProgramNum.Text = GetRoutes.Count > 0 ? (GetRoutes.Max(x => x.Program) + 1).ToString() : "1";
-            SignLine(map.wirePointArrays, Brushes.Black, 3);
+            SignLine(map.wirePointArrays, Brushes.Black, 1.7);
         }
 
         private void Line_Delete_Click(object sender, RoutedEventArgs e)

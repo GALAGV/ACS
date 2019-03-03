@@ -335,12 +335,8 @@ namespace AGVSystem.UI.APP_UI.Map
 
         public void LoadMap(Ga_Map GetMap)
         {
-            Stopwatch stopwatch = new Stopwatch();
             UTCTime = UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime));
-            stopwatch.Start();
             Tags = mapService.TagManagement(UTCTime);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.ElapsedMilliseconds);
             SerialPortData.AutoGenerateColumns = false;
             SerialPortData.ItemsSource = Tags;
             CanvasWidth = GetMap.Width * 10;
@@ -354,11 +350,8 @@ namespace AGVSystem.UI.APP_UI.Map
             map.GetCanvas = mainPanel;
             TopX.Children.Clear();
             TopY.Children.Clear();
-            stopwatch.Start();
             GetPainting.CoordinateX(TopX, TopY);
             map.LoadEditMap(UTCTime, false, true);
-            stopwatch.Start();
-            Console.WriteLine(stopwatch.ElapsedMilliseconds);
         }
     }
 }

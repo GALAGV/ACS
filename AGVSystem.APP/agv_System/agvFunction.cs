@@ -6,8 +6,6 @@ using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.Model.LogicData;
 using System.IO.Ports;
 using System.Windows.Media;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace AGVSystem.APP.agv_System
 {

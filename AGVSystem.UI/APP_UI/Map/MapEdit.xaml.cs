@@ -183,11 +183,13 @@ namespace AGVSystem.UI.APP_UI.Map
         /// <param name="e"></param>
         private void SaveMap_Click(object sender, RoutedEventArgs e)
         {
-
-            if (instrument.MapPreserve(UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)).ToString(), !editStatic, GetMap.Name, CanvasWidth, CanvasHeight))
+            string UTCTime = UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)).ToString();
+            if (instrument.MapPreserve(UTCTime, !editStatic, GetMap.Name, CanvasWidth, CanvasHeight))
             {
                 if (!editStatic)
                     editStatic = true;
+
+                CachePlant.Remove(UTCTime); //移除缓存
                 MessageBox.Show("保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else

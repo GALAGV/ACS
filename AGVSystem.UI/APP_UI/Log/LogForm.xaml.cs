@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AGVSystem.BLL.ServiceLogicBLL;
+using AGVSystem.Infrastructure.agvCommon;
+using System;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AGVSystem.UI.APP_UI.Log
 {
@@ -19,9 +12,252 @@ namespace AGVSystem.UI.APP_UI.Log
     /// </summary>
     public partial class LogForm : Window
     {
+        private Ga_mapBLL Ga_Map = new Ga_mapBLL();
+        private int PageCount = 0; //总记录条数
+        private int Index = 1;
         public LogForm()
         {
             InitializeComponent();
+        }
+
+        private void Select_Click(object sender, RoutedEventArgs e)
+        {
+            Index = 1;
+            LoadLogInfo();
+        }
+
+        private void LoadLogInfo()
+        {
+            if (!Verify())
+                return;
+
+            string Times = (Convert.ToDateTime(DateTimes.Text)).ToString("yyyyMMdd");
+            string StartTime = (Convert.ToDateTime($"{StartHour.Text.Trim()}:{Startminute.Text.Trim()}:{Startsecond.Text.Trim()}")).ToString("HHmmss");
+            string StopTime = (Convert.ToDateTime($"{StopHour.Text.Trim()}:{Stopminute.Text.Trim()}:{Stopsecond.Text.Trim()}")).ToString("HHmmss");
+            string AGVNum = string.IsNullOrWhiteSpace(AgvNum.Text) ? "0" : AgvNum.Text;
+
+            int Mes = MsgType.SelectedIndex;
+
+            DataTable data = Ga_Map.PagingSelectBLL(Times, StartTime, StopTime, AGVNum, Mes, Index, Convert.ToInt32(PagSize.Text), out PageCount);
+            if (data == null)
+            {
+                Panel.SetZIndex(Panel2, 1);
+            }
+            else
+            {
+                if (data.Rows.Count == 0)
+                {
+                    Panel.SetZIndex(Panel2, 1);
+                }
+                else
+                {
+                    Panel.SetZIndex(Panel2, -1);
+                }
+            }
+            Table_Data.DataContext = data;
+            Table_Data.AutoGenerateColumns = false;
+
+            CountData.Content = PageCount % Convert.ToInt32(PagSize.Text) == 0 ? PageCount / Convert.ToInt32(PagSize.Text) : (PageCount / Convert.ToInt32(PagSize.Text)) + 1;
+            Counts.Content = PageCount;
+            PagIndex.Content = Index;
+        }
+
+
+        #region 表单验证
+
+        public bool Verify()
+        {
+            if (string.IsNullOrEmpty(DateTimes.Text))
+            {
+                MessageBoxTool.Error("请选择查询日期！");
+                return false;
+            }
+            if (!string.IsNullOrEmpty(AgvNum.Text))
+            {
+                if (!FormatVerification.IsFloat(AgvNum.Text.Trim()))
+                {
+                    MessageBoxTool.Error("AGV编号格式输入错误！");
+                    return false;
+                }
+            }
+            if (FormatVerification.IsFloat(StartHour.Text))
+            {
+                if (FormatVerification.Strfloat(StartHour.Text))
+                {
+                    MessageBoxTool.Error("开始时间小时格式输入错误！");
+                    return false;
+                }
+                else
+                {
+                    if (Convert.ToInt32(StartHour.Text) > 23 || Convert.ToInt32(StartHour.Text) < 0)
+                    {
+                        MessageBoxTool.Error("开始时间小时格式输入错误！");
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                MessageBoxTool.Error("开始时间格小时式输入错误！");
+                return false;
+            }
+            if (FormatVerification.IsFloat(Startminute.Text))
+            {
+                if (FormatVerification.Strfloat(Startminute.Text))
+                {
+                    MessageBoxTool.Error("开始时间分钟格式输入错误！");
+                    return false;
+                }
+                else
+                {
+                    if (Convert.ToInt32(Startminute.Text) > 60 || Convert.ToInt32(Startminute.Text) < 0)
+                    {
+                        MessageBoxTool.Error("开始时间分钟格式输入错误！");
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                MessageBoxTool.Error("开始时间分钟格式输入错误！");
+                return false;
+            }
+
+            if (FormatVerification.IsFloat(Startsecond.Text))
+            {
+                if (FormatVerification.Strfloat(Startsecond.Text))
+                {
+                    MessageBoxTool.Error("开始时间秒格式输入错误！");
+                    return false;
+                }
+                else
+                {
+                    if (Convert.ToInt32(Startsecond.Text) > 60 || Convert.ToInt32(Startsecond.Text) < 0)
+                    {
+                        MessageBoxTool.Error("开始时间秒格式输入错误！");
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                MessageBoxTool.Error("开始时间秒格式输入错误！");
+                return false;
+            }
+            if (FormatVerification.IsFloat(StopHour.Text))
+            {
+                if (FormatVerification.Strfloat(StopHour.Text))
+                {
+                    MessageBoxTool.Error("结束时间小时格式输入错误！");
+                    return false;
+                }
+                else
+                {
+                    if (Convert.ToInt32(StopHour.Text) > 23 || Convert.ToInt32(StopHour.Text) < 0)
+                    {
+                        MessageBoxTool.Error("结束时间小时格式输入错误！");
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                MessageBoxTool.Error("结束时间格小时式输入错误！");
+                return false;
+            }
+            if (FormatVerification.IsFloat(Stopminute.Text))
+            {
+                if (FormatVerification.Strfloat(Stopminute.Text))
+                {
+                    MessageBoxTool.Error("结束时间分钟格式输入错误！");
+                    return false;
+                }
+                else
+                {
+                    if (Convert.ToInt32(Stopminute.Text) > 60 || Convert.ToInt32(Stopminute.Text) < 0)
+                    {
+                        MessageBoxTool.Error("结束时间分钟格式输入错误！");
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                MessageBoxTool.Error("结束时间分钟格式输入错误！");
+                return false;
+            }
+            if (FormatVerification.IsFloat(Stopsecond.Text))
+            {
+                if (FormatVerification.Strfloat(Stopsecond.Text))
+                {
+                    MessageBoxTool.Error("结束时间秒格式输入错误！");
+                    return false;
+                }
+                else
+                {
+                    if (Convert.ToInt32(Stopsecond.Text) > 60 || Convert.ToInt32(Stopsecond.Text) < 0)
+                    {
+                        MessageBoxTool.Error("结束时间秒格式输入错误！");
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                MessageBoxTool.Error("结束时间秒格式输入错误！");
+                return false;
+            }
+            return true;
+        }
+
+
+        #endregion
+
+        private void Up_Click(object sender, RoutedEventArgs e)
+        {
+            if (Table_Data.Items.Count > 0)
+            {
+                if (Index == 1)
+                    return;
+
+                Index--;
+                LoadLogInfo();
+            }
+        }
+
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            if (Table_Data.Items.Count > 0)
+            {
+                if (Convert.ToInt32(CountData.Content) <= Index)
+                    return;
+
+                Index++;
+                LoadLogInfo();
+            }
+        }
+
+        private void Go_Click(object sender, RoutedEventArgs e)
+        {
+            if (Table_Data.Items.Count > 0)
+            {
+                if (FormatVerification.IsFloat(IndexPs.Text.Trim()))
+                {
+                    if (!FormatVerification.Strfloat(IndexPs.Text.Trim()))
+                    {
+                        int Ind = Convert.ToInt32(IndexPs.Text.Trim());
+                        if (Ind > 0 && Ind <= Convert.ToInt32(CountData.Content))
+                        {
+                            Index = Ind;
+                        }
+                        LoadLogInfo();
+                    }
+                }
+                else
+                {
+                    MessageBoxTool.Error("格式输入错误！");
+                }
+            }
         }
     }
 }

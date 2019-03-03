@@ -5,7 +5,7 @@ namespace AGVSystem.ServiceClearLog
 {
     public partial class Service1 : ServiceBase
     {
-        LogServe serve = new LogServe();
+       private  LogServe serve = new LogServe();
 
         public Service1()
         {

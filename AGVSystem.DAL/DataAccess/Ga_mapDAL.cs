@@ -283,9 +283,9 @@ namespace AGVSystem.DAL.DataAccess
         /// </summary>
         /// <param name="exls"></param>
         /// <returns></returns>
-        public MySqlDataReader GetMapTags(string exls)
+        public DataTable GetMapTags(string exls)
         {
-            return MySQLHelper.ExecuteReader("SELECT `X`,`Y`,`TagName` FROM   `agv`.`tag" + exls + "` order by (TagName+0)");
+            return MySQLHelper.ExecuteDataTable("SELECT `X`,`Y`,`TagName` FROM   `agv`.`tag" + exls + "` order by (TagName+0)");
         }
 
         /// <summary>
@@ -293,9 +293,9 @@ namespace AGVSystem.DAL.DataAccess
         /// </summary>
         /// <param name="Times"></param>
         /// <returns></returns>
-        public MySqlDataReader LineData(string Times)
+        public DataTable LineData(string Times)
         {
-            return MySQLHelper.ExecuteReader("SELECT * FROM `agv`.`line" + Times + "`");
+            return MySQLHelper.ExecuteDataTable("SELECT * FROM `agv`.`line" + Times + "`");
         }
 
         /// <summary>
@@ -303,9 +303,9 @@ namespace AGVSystem.DAL.DataAccess
         /// </summary>
         /// <param name="Times"></param>
         /// <returns></returns>
-        public MySqlDataReader widgetArrlist(string Times)
+        public DataTable widgetArrlist(string Times)
         {
-            return MySQLHelper.ExecuteReader("SELECT * FROM  `agv`.`widget" + Times + "`  order by WidgetNo");
+            return MySQLHelper.ExecuteDataTable("SELECT * FROM  `agv`.`widget" + Times + "`  order by WidgetNo");
         }
 
         /// <summary>
@@ -793,6 +793,38 @@ namespace AGVSystem.DAL.DataAccess
         public bool ClearLog(string TableName)
         {
             return MySQLHelper.ExecuteNonQuery($"DROP TABLE  `agv`.`{TableName}`") > 0;
+        }
+
+
+        public DataTable PagingSelect(string LogDate, string StartTime, string StopTime, string AgvNum, int Mes, int Inedex, int PageSize, out int PageCount)
+        {
+            DataTable ds = MySQLHelper.ExecuteDataTable("SELECT table_name FROM information_schema.TABLES WHERE table_name ='loginfo" + LogDate + "';");
+            if (ds.Rows.Count > 0)
+            {
+                string selectList = "`UtcTime`,`AgvNum`,`MasterOn`,`Speed`,`Drive`,`Left`,`Direction`,`Hook`,`Power`,`Pbs`,`Rfid`,`RouteNo`,`ErrorCode`";
+                string tableName = $"agv.`loginfo{LogDate}`";
+                StringBuilder whereStr = new StringBuilder();
+                whereStr.Append($" and UtcTime>={StartTime}");
+                whereStr.Append($" and UtcTime<={StopTime}");
+                if (AgvNum != "0")
+                {
+                    whereStr.Append($" and AgvNum={AgvNum}");
+                }
+                if (Mes == 1)
+                {
+                    whereStr.Append(" and ErrorCode = 0");
+                }
+                else if (Mes == 2)
+                {
+                    whereStr.Append(" and ErrorCode <> 0");
+                }
+                return MySQLHelper.GetPager(out PageCount, selectList, tableName, whereStr.ToString(), "ID", Inedex, PageSize);
+            }
+            else
+            {
+                PageCount = 0;
+                return null;
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.Infrastructure.agvCommon;
+using System.Data;
 
 namespace AGVSystem.APP.agv_Map
 {
@@ -916,7 +917,7 @@ namespace AGVSystem.APP.agv_Map
             valuePairs.Clear();
             GetKeyValues.Clear();
             siseWin = 1;
-            painting.Line_Width = 3;
+            //painting.Line_Width = 2;
             LoadTag(Time, event_type);
             LoadLine(Time);
             WidgetLoad(Time, event_type);
@@ -930,13 +931,16 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="painti"></param>
         public void LoadTag(long Times, bool Tagevent)
         {
-            MySqlDataReader item = IO_AGVMapService.RataTable(Times.ToString());
-            while (item.Read())
+            string Key = $"Tag_{Times}";
+            DataTable Data = CachePlant.GetResult(Key, () =>
+            {
+                return IO_AGVMapService.RataTable(Times.ToString());
+            });
+            foreach (DataRow item in Data.Rows)
             {
                 int id = Convert.ToInt32(item["TagName"].ToString());
                 TagCreate(new Point() { X = (Convert.ToDouble(item["X"].ToString()) * 10) - 19, Y = (Convert.ToDouble(item["Y"].ToString()) * 10) - 11.5 }, Convert.ToInt32(item["TagName"].ToString()), true, Tagevent);
             }
-            item.Close();
         }
         /// <summary>
         /// 载入线路
@@ -944,8 +948,9 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="Times"></param>
         public void LoadLine(long Times)
         {
-            MySqlDataReader item = IO_AGVMapService.LinelistArrer(Times.ToString());
-            while (item.Read())
+            string Key = $"Line_{Times}";
+            DataTable Data = CachePlant.GetResult(Key, () => { return IO_AGVMapService.LinelistArrer(Times.ToString()); });
+            foreach (DataRow item in Data.Rows)
             {
                 if (Convert.ToInt32(item["LineStyel"].ToString()) == 1)
                 {
@@ -964,7 +969,6 @@ namespace AGVSystem.APP.agv_Map
                 AddLine();
                 Pairsarray.Clear();
             }
-            item.Close();
         }
 
         /// <summary>
@@ -973,9 +977,10 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="Times"></param>
         public void WidgetLoad(long Times, bool Widgetevent)
         {
-            MySqlDataReader item = IO_AGVMapService.GetWidget(Times.ToString());
+            string Key = $" Widget_{Times}";
+            DataTable Data = CachePlant.GetResult(Key, () => { return IO_AGVMapService.GetWidget(Times.ToString()); });
             int Indexs = 0;
-            while (item.Read())
+            foreach (DataRow item in Data.Rows)
             {
                 if (item["WidgetNo"].ToString().Substring(0, 2).Equals("AR"))
                 {
@@ -990,7 +995,6 @@ namespace AGVSystem.APP.agv_Map
                     TextInx = Indexs;
                 }
             }
-            item.Close();
             TextInx++;
             index++;
         }
@@ -998,8 +1002,6 @@ namespace AGVSystem.APP.agv_Map
         #endregion
 
         #region 比例尺缩放
-
-
 
         /// <summary>
         /// 地图比例尺缩放

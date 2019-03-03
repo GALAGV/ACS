@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Map"
         mc:Ignorable="d"
-        Title="添加地图" Height="284.595" Width="383.93" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="添加地图" Height="232.595" Width="299.93" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <GroupBox Header="添加地图" Margin="10">
+        <GroupBox Header="添加地图" Margin="5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="38"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"></ColumnDefinition>
@@ -25,8 +25,8 @@
                 <TextBox Grid.Row="0" Grid.Column="1" Name="mapName" Height="25" VerticalContentAlignment="Center" ></TextBox>
                 <TextBox Grid.Row="1" Grid.Column="1" Name="mapWidth"  Height="25" VerticalContentAlignment="Center" ></TextBox>
                 <TextBox Grid.Row="2" Grid.Column="1" Name="mapHeight"  Height="25" VerticalContentAlignment="Center"></TextBox>
-                <Button Content="确定(_S)" Name="MapAdd" Click="MapAdd_Click" Grid.Row="3" BorderBrush="#adadad" Grid.Column="1" Grid.ColumnSpan="2" Width="80" Height="27" Margin="2,11,157,12" />
-                <Button Content="取消(_C)" Grid.Row="3" BorderBrush="#adadad" Grid.Column="1" Name="FormClose" Click="FormClose_Click" Grid.ColumnSpan="2" Width="80"  Height="27" Margin="136,13,23,10" ></Button>
+                <Button Content="确定(_S)" Name="MapAdd" Click="MapAdd_Click" Margin="0,0,70,0" Grid.Row="3" HorizontalAlignment="Center" BorderBrush="#adadad" Grid.Column="0" Grid.ColumnSpan="2" Width="80" Height="27" />
+                <Button Content="取消(_C)" Grid.Row="3" BorderBrush="#adadad" Margin="0,0,-140,0" Grid.Column="0" HorizontalAlignment="Center" Name="FormClose" Click="FormClose_Click" Grid.ColumnSpan="2" Width="80"  Height="27"  ></Button>
             </Grid>
         </GroupBox>
 

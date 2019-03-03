@@ -129,15 +129,30 @@ namespace AGVSystem.APP.agv_Map
                 tag.PbsColor= Convert.ToInt32(data["Pbs"].ToString()) !=16 && Convert.ToInt32(data["Pbs"].ToString()) != 0 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
                 tag.PbsRev = MainInfo.agvPbs[Convert.ToInt32(data["PbsRev"].ToString())];
                 tag.PbsRevColor= Convert.ToInt32(data["PbsRev"].ToString()) != 16 && Convert.ToInt32(data["PbsRev"].ToString()) != 0 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
-                tag.TagTerminal = data["TagTerminal"] is DBNull ? null : data["TagTerminal"].ToString();
-                tag.PreTurnSpeed = CheckColumnName(data, "PreTurnSpeed") ? MainInfo.agvSpeed[data.GetInt32("PreTurnSpeed")] : MainInfo.agvSpeed[0];
-                tag.PreTurnSpeedColor= CheckColumnName(data, "PreTurnSpeed") ? (data.GetInt32("PreTurnSpeed")!=0 && data.GetInt32("PreTurnSpeed") != 10 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) : new SolidColorBrush(Colors.Black);
-                tag.RevTurnSpeed = CheckColumnName(data, "RevTurnSpeed") ? MainInfo.agvSpeed[data.GetInt32("RevTurnSpeed")] : MainInfo.agvSpeed[0];
-                tag.RevTurnSpeedColor= CheckColumnName(data, "RevTurnSpeed") ? (data.GetInt32("RevTurnSpeed") != 0 && data.GetInt32("RevTurnSpeed") != 10 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) : new SolidColorBrush(Colors.Black);
-                tag.PreTurnPBS = CheckColumnName(data, "PreTurnPBS") ? MainInfo.agvPbs[data.GetInt32("PreTurnPBS")] : MainInfo.agvPbs[0];
-                tag.PreTurnPBSColor = CheckColumnName(data, "PreTurnPBS") ? (data.GetInt32("PreTurnPBS") != 0 && data.GetInt32("PreTurnPBS") != 16 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) : new SolidColorBrush(Colors.Black);
-                tag.RevTurnPBS = CheckColumnName(data, "RevTurnPBS") ? MainInfo.agvPbs[data.GetInt32("RevTurnPBS")] : MainInfo.agvPbs[0];
-                tag.RevTurnPBSColor= CheckColumnName(data, "RevTurnPBS") ? (data.GetInt32("RevTurnPBS") != 0 && data.GetInt32("RevTurnPBS") != 16 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) : new SolidColorBrush(Colors.Black);
+                tag.TagTerminal = data["TagTerminal"] is DBNull ? "" : data["TagTerminal"].ToString();
+
+                if (CheckColumnName(data, "PreTurnSpeed"))
+                {
+                    tag.PreTurnSpeed = MainInfo.agvSpeed[data.GetInt32("PreTurnSpeed")];
+                    tag.PreTurnSpeedColor = (data.GetInt32("PreTurnSpeed") != 0 && data.GetInt32("PreTurnSpeed") != 10 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black));
+                    tag.RevTurnSpeed =  MainInfo.agvSpeed[data.GetInt32("RevTurnSpeed")] ;
+                    tag.RevTurnSpeedColor = (data.GetInt32("RevTurnSpeed") != 0 && data.GetInt32("RevTurnSpeed") != 10 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) ;
+                    tag.PreTurnPBS = MainInfo.agvPbs[data.GetInt32("PreTurnPBS")];
+                    tag.PreTurnPBSColor = (data.GetInt32("PreTurnPBS") != 0 && data.GetInt32("PreTurnPBS") != 16 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black)) ;
+                    tag.RevTurnPBS =MainInfo.agvPbs[data.GetInt32("RevTurnPBS")] ;
+                    tag.RevTurnPBSColor =  (data.GetInt32("RevTurnPBS") != 0 && data.GetInt32("RevTurnPBS") != 16 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black))  ;
+                }
+                else
+                {
+                    tag.PreTurnSpeed = MainInfo.agvSpeed[0];
+                    tag.PreTurnSpeedColor =new SolidColorBrush(Colors.Black);
+                    tag.RevTurnSpeed =  MainInfo.agvSpeed[0];
+                    tag.RevTurnSpeedColor =  new SolidColorBrush(Colors.Black);
+                    tag.PreTurnPBS =  MainInfo.agvPbs[0];
+                    tag.PreTurnPBSColor =  new SolidColorBrush(Colors.Black);
+                    tag.RevTurnPBS =MainInfo.agvPbs[0];
+                    tag.RevTurnPBSColor = new SolidColorBrush(Colors.Black);
+                }
                 tags.Add(tag);
             }
             data.Close();
@@ -177,7 +192,9 @@ namespace AGVSystem.APP.agv_Map
             {
                 foreach (Ga_Map item in gs)
                 {
-                    IO_AGVMapService.RemoveMap(UTC.ConvertDateTimeLong(Convert.ToDateTime(item.CreateTime)));
+                    long UTCTime = UTC.ConvertDateTimeLong(Convert.ToDateTime(item.CreateTime));
+                    IO_AGVMapService.RemoveMap(UTCTime);
+                    CachePlant.Remove(UTCTime.ToString()); //移除缓存
                 }
                 return true;
             }

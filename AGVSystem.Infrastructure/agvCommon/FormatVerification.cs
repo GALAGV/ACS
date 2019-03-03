@@ -35,5 +35,14 @@ namespace AGVSystem.Infrastructure.agvCommon
         {
             return Regex.IsMatch(str, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
         }
+        /// <summary>
+        /// 匹配是否为小数
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool Strfloat(string str)
+        {
+            return Regex.IsMatch(str, "^([0-9]{1,}[.][0-9]*)$");
+        }
     }
 }

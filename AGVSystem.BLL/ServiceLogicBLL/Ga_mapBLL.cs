@@ -67,7 +67,7 @@ namespace AGVSystem.BLL.ServiceLogicBLL
             return map.ExportTableContent(TableName, Db, MapTime);
         }
 
-        public MySqlDataReader GetWidget(string Times)
+        public DataTable GetWidget(string Times)
         {
             return map.widgetArrlist(Times);
         }
@@ -88,7 +88,7 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         /// </summary>
         /// <param name="Times"></param>
         /// <returns></returns>
-        public MySqlDataReader LinelistArrer(string Times)
+        public DataTable LinelistArrer(string Times)
         {
             return map.LineData(Times);
         }
@@ -123,7 +123,7 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         /// </summary>
         /// <param name="exls"></param>
         /// <returns></returns>
-        public MySqlDataReader RataTable(string exls)
+        public DataTable RataTable(string exls)
         {
            return map.GetMapTags(exls);
         }
@@ -218,6 +218,10 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         public bool ClearLogBLL(string TableName)
         {
             return map.ClearLog(TableName);
+        }
+        public DataTable PagingSelectBLL(string LogDate, string StartTime, string StopTime, string AgvNum, int Mes, int Inedex, int PageSize, out int PageCount)
+        {
+            return map.PagingSelect(LogDate, StartTime, StopTime, AgvNum, Mes, Inedex, PageSize, out PageCount);
         }
     }
 }

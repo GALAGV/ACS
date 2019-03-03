@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="agv_Map\agvMapRegulate.cs" />
+    <Compile Include="agv_Map\CachePlant.cs" />
     <Compile Include="agv_Map\MapInstrument.cs" />
     <Compile Include="agv_Map\Painting.cs" />
     <Compile Include="agv_System\agvFunction.cs" />

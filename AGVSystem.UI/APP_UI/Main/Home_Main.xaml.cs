@@ -12,8 +12,6 @@ using AGVSystem.Model.MapData;
 using AGVSystem.Infrastructure.agvCommon;
 using AGVSystem.Model.LogicData;
 using System.Windows.Media.Imaging;
-using System.IO;
-using OperateIni;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
