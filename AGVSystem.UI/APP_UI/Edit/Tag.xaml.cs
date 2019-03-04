@@ -10,8 +10,8 @@ namespace AGVSystem.UI.APP_UI.Edit
     /// </summary>
     public partial class Tag : Window
     {
-        Label ObjTag;
-        double MapSize;
+        private Label ObjTag;
+        private double MapSize;
         public Action<Point, int> action; //信标移动委托
         public Action<int> ClearLine;  //清除线路委托
         public Func<int, int, bool> exist; //判断编号是否存在委托

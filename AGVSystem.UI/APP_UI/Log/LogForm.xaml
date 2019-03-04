@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Log"
         mc:Ignorable="d"
-        Title="LogForm" Height="700" Width="1290" WindowState="Maximized" MinWidth="1200" MinHeight="600">
+        Title="LogForm" Height="900" Width="1400" WindowState="Maximized" MinWidth="1200" MinHeight="600">
     <Window.Resources>
         <Style x:Key="FontAwesome">
             <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Styles/fonts/#FontAwesome" />
@@ -48,7 +48,7 @@
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition Width="90"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="220"></ColumnDefinition>
+                                <ColumnDefinition Width="280"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Label Content="查询日期：" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                             <DatePicker Grid.Column="1" Focusable="False" Height="25"  Name="DateTimes" VerticalContentAlignment="Center" ></DatePicker>
@@ -92,7 +92,7 @@
                                 <ComboBoxItem >正常</ComboBoxItem>
                                 <ComboBoxItem>报警</ComboBoxItem>
                             </ComboBox>
-                            <Button  BorderBrush="#adadad" Height="25" Grid.Column="10" Width="80" Margin="0,0,100,0" Name="Select" Click="Select_Click" >
+                            <Button  BorderBrush="#adadad" Height="25" Grid.Column="10" Width="80" Margin="0,0,170,0" Name="Select" Click="Select_Click" >
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="&#xf002;"  FontSize="16" Style="{DynamicResource FontAwesome}" />
@@ -100,11 +100,19 @@
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
-                            <Button  BorderBrush="#adadad" Height="25" Grid.Column="10" Name="Open"  Width="80" Margin="100,0,0,0">
+                            <Button  BorderBrush="#adadad"  Name="Write_Log" Click="Write_Log_Click" Height="25" Grid.Column="10"  Width="80" Margin="10,0,0,0">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xf0aa;"  FontSize="16" Style="{DynamicResource FontAwesome}" />
+                                        <TextBlock Text="导出" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button  BorderBrush="#adadad"  Name="Read_log" Click="Read_log_Click" Height="25" Grid.Column="10"  Width="80" Margin="190,0,0,0">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="&#xf019;"  FontSize="16" Style="{DynamicResource FontAwesome}" />
-                                        <TextBlock Text="导出" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="导入" Margin="5,0,0,0" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
@@ -279,7 +287,7 @@
                                         <Button  Height="23" Width="60"  Name="Up"  BorderBrush="#adadad" Click="Up_Click" Margin="0,0,10,0" Content="上一页" Command="{Binding PrevPageCommand}"/>
                                         <Button  Height="23" Width="60" BorderBrush="#adadad" Click="Next_Click"  Name="Next" Content="下一页" Command="{Binding NextPageCommand}"/>
                                         <Label  Content="每页"/>
-                                        <ComboBox  HorizontalContentAlignment="Center" Height="23"   Name="PagSize" VerticalContentAlignment="Center"  SelectedIndex="1" Width="60" Margin="5,0,0,0" Background="White" >
+                                        <ComboBox  HorizontalContentAlignment="Center" Height="23"   Name="PagSize" VerticalContentAlignment="Center"  SelectedIndex="0" Width="60" Margin="5,0,0,0" Background="White" >
                                             <ComboBoxItem >100</ComboBoxItem>
                                             <ComboBoxItem>200</ComboBoxItem>
                                             <ComboBoxItem>300</ComboBoxItem>

@@ -8,6 +8,7 @@ namespace AGVSystem.APP.agv_Map
 {
     public class Painting
     {
+
         #region 画布参数
 
         /// <summary>
@@ -88,7 +89,51 @@ namespace AGVSystem.APP.agv_Map
 
         #endregion
 
-        #region 初始化参数
+        #region 刻度容器
+
+       /// <summary>
+       /// X轴刻度容器
+       /// </summary>
+        private Canvas mainPaneX { get; set; }
+
+        /// <summary>
+        /// Y轴刻度容器
+        /// </summary>
+        private Canvas mainPaneY { get; set; }
+
+        /// <summary>
+        /// 主容器
+        /// </summary>
+        private Canvas CanvasMain { get; set; }
+
+        #endregion
+
+        #region 初始化容器
+
+        public void InitializeCanvas(Canvas mainPane_X, Canvas mainPane_Y, Canvas Canvas_Main, double Width, double Height)
+        {
+            this.mainPaneX = mainPane_X;
+            this.mainPaneY = mainPane_Y;
+            this.CanvasMain = Canvas_Main;
+            this.Change_Size(Width, Height);
+        }
+
+        /// <summary>
+        /// 改变容器大小
+        /// </summary>
+        /// <param name="Width"></param>
+        /// <param name="Height"></param>
+        public void Change_Size(double Width, double Height)
+        {
+            this.mainPaneX.Width = Width;
+            this.mainPaneY.Height = Height;
+            this.CanvasMain.Width = Width;
+            this.CanvasMain.Height = Height;
+        }
+
+        #endregion
+
+        #region 构造函数
         public Painting()
         {
             this.Scale_X = 10;
@@ -120,9 +165,9 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="endPt"></param>
         /// <param name="mainPanel"></param>
         /// <returns></returns>
-        public Path Line(Point startPt, Point endPt, Canvas mainPanel)
+        public Path Line(Point startPt, Point endPt)
         {
-            return DrawingLine(startPt, endPt, mainPanel, LineBackground_Color, Line_Width);
+            return DrawingLine(startPt, endPt, LineBackground_Color, Line_Width, CanvasMain);
         }
 
         /// <summary>
@@ -134,7 +179,7 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="brush">绘制颜色</param>
         /// <param name="width">绘制宽度</param>
         /// <returns></returns>
-        public Path DrawingLine(Point startPt, Point endPt, Canvas mainPanel, Brush brush, double width)
+        public Path DrawingLine(Point startPt, Point endPt, Brush brush, double width, Canvas canvas)
         {
             LineGeometry myLineGeometry = new LineGeometry();//实例化一条直线
             myLineGeometry.StartPoint = startPt;//设置起点
@@ -144,7 +189,7 @@ namespace AGVSystem.APP.agv_Map
             myPath.Stroke = brush;//设置颜色
             myPath.StrokeThickness = width; //设置宽度
             myPath.Data = myLineGeometry;//设置绘制形状
-            mainPanel.Children.Add(myPath);//绑定数据
+            canvas.Children.Add(myPath);//绑定数据
             return myPath;
         }
         #endregion
@@ -162,9 +207,9 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="brush">绘制颜色</param>
         /// <param name="width">宽度</param>
         /// <returns></returns>
-        public Path DrawingSemicircle(Point startPt, Point endPt, Canvas mainPanel)
+        public Path DrawingSemicircle(Point startPt, Point endPt)
         {
-            return GetPath(startPt, endPt, mainPanel, false, AngleLine, LineBackground_Color, Line_Width);
+            return GetPath(startPt, endPt, false, AngleLine, LineBackground_Color, Line_Width);
         }
 
         /// <summary>
@@ -178,7 +223,7 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="brush">绘制颜色</param>
         /// <param name="width">宽度</param>
         /// <returns></returns>
-        public Path GetPath(Point startPt, Point endPt, Canvas mainPanel, bool Static, int Sise, Brush brush, double width)
+        public Path GetPath(Point startPt, Point endPt, bool Static, int Sise, Brush brush, double width)
         {
             Path path = new Path();
             PathGeometry pathGeometry = new PathGeometry();
@@ -190,7 +235,7 @@ namespace AGVSystem.APP.agv_Map
             path.Data = pathGeometry;
             path.Stroke = brush;
             path.StrokeThickness = width; //设置宽度
-            mainPanel.Children.Add(path);
+            CanvasMain.Children.Add(path);
             return path;
         }
         #endregion
@@ -210,7 +255,7 @@ namespace AGVSystem.APP.agv_Map
         /// <param name="X">偏移X</param>
         /// <param name="Y">偏移Y</param>
         /// <returns></returns>
-        public List<Path> DrawingBroken(Point startPt, Point endPt, Canvas mainPanel)
+        public List<Path> DrawingBroken(Point startPt, Point endPt)
         {
             List<Path> GetPatjs = new List<Path>();
             double drn = startPt.X - endPt.X;
@@ -223,17 +268,17 @@ namespace AGVSystem.APP.agv_Map
                 {
                     Point TX = new Point() { X = endPt.X + Excursion_X, Y = startPt.Y };
                     Point TY = new Point() { X = endPt.X, Y = startPt.Y + Excursion_Y };
-                    GetPatjs.Add(Line(endPt, TY, mainPanel));
-                    GetPatjs.Add(Line(startPt, TX, mainPanel));
-                    GetPatjs.Add(GetPath(TX, TY, mainPanel, true, AngleLine, LineBackground_Color, Line_Width));
+                    GetPatjs.Add(Line(endPt, TY));
+                    GetPatjs.Add(Line(startPt, TX));
+                    GetPatjs.Add(GetPath(TX, TY, true, AngleLine, LineBackground_Color, Line_Width));
                 }
                 else
                 {
                     Point TX = new Point() { X = endPt.X - Excursion_X, Y = startPt.Y };
                     Point TY = new Point() { X = endPt.X, Y = startPt.Y - Excursion_Y };
-                    GetPatjs.Add(Line(startPt, TX, mainPanel));
-                    GetPatjs.Add(Line(endPt, TY, mainPanel));
-                    GetPatjs.Add(GetPath(TX, TY, mainPanel, true, AngleLine, LineBackground_Color, Line_Width));
+                    GetPatjs.Add(Line(startPt, TX));
+                    GetPatjs.Add(Line(endPt, TY));
+                    GetPatjs.Add(GetPath(TX, TY, true, AngleLine, LineBackground_Color, Line_Width));
                 }
             }
             else
@@ -243,17 +288,17 @@ namespace AGVSystem.APP.agv_Map
                 {
                     Point TX = new Point() { X = endPt.X - Excursion_X, Y = startPt.Y };
                     Point TY = new Point() { X = endPt.X, Y = startPt.Y + Excursion_Y };
-                    GetPatjs.Add(Line(startPt, TX, mainPanel));
-                    GetPatjs.Add(Line(endPt, TY, mainPanel));
-                    GetPatjs.Add(GetPath(TX, TY, mainPanel, false, AngleLine, LineBackground_Color, Line_Width));
+                    GetPatjs.Add(Line(startPt, TX));
+                    GetPatjs.Add(Line(endPt, TY));
+                    GetPatjs.Add(GetPath(TX, TY, false, AngleLine, LineBackground_Color, Line_Width));
                 }
                 else
                 {
                     Point TX = new Point() { X = endPt.X + Excursion_X, Y = startPt.Y };
                     Point TY = new Point() { X = endPt.X, Y = startPt.Y - Excursion_Y };
-                    GetPatjs.Add(Line(endPt, TY, mainPanel));
-                    GetPatjs.Add(Line(startPt, TX, mainPanel));
-                    GetPatjs.Add(GetPath(TX, TY, mainPanel, false, AngleLine, LineBackground_Color, Line_Width));
+                    GetPatjs.Add(Line(endPt, TY));
+                    GetPatjs.Add(Line(startPt, TX));
+                    GetPatjs.Add(GetPath(TX, TY, false, AngleLine, LineBackground_Color, Line_Width));
                 }
             }
             return GetPatjs;
@@ -263,20 +308,19 @@ namespace AGVSystem.APP.agv_Map
 
         #region 绘制画布
 
-       
         /// <summary>
         /// 绘制地图坐标系
         /// </summary>
         /// <param name="mainPanel"></param>
-        public void Coordinate(Canvas mainPanel)
+        public void Coordinate()
         {
-            for (int i = 0; i <= (mainPanel.Height / Canvas_X); i++)
+            for (int i = 0; i <= (CanvasMain.Height / Canvas_X); i++)
             {
-                DrawingLine(new Point(0, Canvas_X * i), new Point(mainPanel.Width, Canvas_Y * i), mainPanel, CanvasBackground_Color, CanvasLine_Width);
+                DrawingLine(new Point(0, Canvas_X * i), new Point(CanvasMain.Width, Canvas_Y * i), CanvasBackground_Color, CanvasLine_Width, CanvasMain);
             }
-            for (int i = 0; i <= (mainPanel.Width / Canvas_X); i++)
+            for (int i = 0; i <= (CanvasMain.Width / Canvas_X); i++)
             {
-                DrawingLine(new Point(Canvas_X * i, 0), new Point(Canvas_X * i, mainPanel.Height), mainPanel, CanvasBackground_Color, CanvasLine_Width);
+                DrawingLine(new Point(Canvas_X * i, 0), new Point(Canvas_X * i, CanvasMain.Height), CanvasBackground_Color, CanvasLine_Width, CanvasMain);
             }
         }
         #endregion
@@ -288,9 +332,11 @@ namespace AGVSystem.APP.agv_Map
         /// </summary>
         /// <param name="mainPanel"></param>
         /// <param name="mainPane2"></param>
-        public void CoordinateX(Canvas mainPanel, Canvas mainPane2)
+        public void CoordinateX()
         {
-            for (int i = 0; i <= (mainPanel.Width / Scale_X); i++)
+            this.mainPaneX.Children.Clear();
+            this.mainPaneY.Children.Clear();
+            for (int i = 0; i <= (mainPaneX.Width / Scale_X); i++)
             {
                 if (i.Equals(0))
                 {
@@ -298,22 +344,22 @@ namespace AGVSystem.APP.agv_Map
                 }
                 if (i % 10 == 0)
                 {
-                    DrawingLine(new Point(Scale_X * i, 3), new Point(Scale_X * i, mainPanel.Height), mainPanel, ScaleBackground_Color, ScaleLine_Width);
+                    DrawingLine(new Point(Scale_X * i, 3), new Point(Scale_X * i, mainPaneX.Height), ScaleBackground_Color, ScaleLine_Width, mainPaneX);
                     continue;
                 }
                 if (i % 5 == 0)
                 {
-                    DrawingLine(new Point(Scale_X * i, 8), new Point(Scale_X * i, mainPanel.Height), mainPanel, ScaleBackground_Color, ScaleLine_Width);
+                    DrawingLine(new Point(Scale_X * i, 8), new Point(Scale_X * i, mainPaneX.Height), ScaleBackground_Color, ScaleLine_Width, mainPaneX);
                     continue;
                 }
                 else
                 {
-                    DrawingLine(new Point(Scale_X * i, 12), new Point(Scale_X * i, mainPanel.Height), mainPanel, ScaleBackground_Color, ScaleLine_Width);
+                    DrawingLine(new Point(Scale_X * i, 12), new Point(Scale_X * i, mainPaneX.Height), ScaleBackground_Color, ScaleLine_Width, mainPaneX);
                 }
 
             }
-            DrawingLine(new Point(0, mainPanel.Height - 1), new Point(mainPanel.Width, mainPanel.Height - 1), mainPanel, ScaleBackground_Color, 2);
-            for (int i = 0; i <= (mainPane2.Height / Scale_X); i++)
+            DrawingLine(new Point(0, mainPaneX.Height - 1), new Point(mainPaneX.Width, mainPaneX.Height - 1), ScaleBackground_Color, 2, mainPaneX);
+            for (int i = 0; i <= (mainPaneY.Height / Scale_X); i++)
             {
                 if (i.Equals(0))
                 {
@@ -321,22 +367,22 @@ namespace AGVSystem.APP.agv_Map
                 }
                 if (i % 10 == 0)
                 {
-                    DrawingLine(new Point(3, Scale_X * i), new Point(mainPane2.Width, Scale_Y * i), mainPane2, ScaleBackground_Color, ScaleLine_Width);
+                    DrawingLine(new Point(3, Scale_X * i), new Point(mainPaneY.Width, Scale_Y * i), ScaleBackground_Color, ScaleLine_Width, mainPaneY);
                     continue;
                 }
                 if (i % 5 == 0)
                 {
-                    DrawingLine(new Point(8, Scale_X * i), new Point(mainPane2.Width, Scale_Y * i), mainPane2, ScaleBackground_Color, ScaleLine_Width);
+                    DrawingLine(new Point(8, Scale_X * i), new Point(mainPaneY.Width, Scale_Y * i), ScaleBackground_Color, ScaleLine_Width, mainPaneY);
                     continue;
                 }
                 else
                 {
-                    DrawingLine(new Point(12, Scale_X * i), new Point(mainPane2.Width, Scale_Y * i), mainPane2, ScaleBackground_Color, ScaleLine_Width);
+                    DrawingLine(new Point(12, Scale_X * i), new Point(mainPaneY.Width, Scale_Y * i), ScaleBackground_Color, ScaleLine_Width, mainPaneY);
                 }
             }
-            DrawingLine(new Point(mainPane2.Width - 1, 0), new Point(mainPane2.Width - 1, mainPane2.Height), mainPane2, ScaleBackground_Color, 2);
+            DrawingLine(new Point(mainPaneY.Width - 1, 0), new Point(mainPaneY.Width - 1, mainPaneY.Height), ScaleBackground_Color, 2, mainPaneY);
         }
-
         #endregion
+
     }
 }

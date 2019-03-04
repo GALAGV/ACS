@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using MySql.Data.MySqlClient;
 using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.Infrastructure.agvCommon;
 using System.Data;
@@ -16,7 +15,7 @@ namespace AGVSystem.APP.agv_Map
 {
     public class MapInstrument
     {
-        private int s = 1;//信标起始索引
+        private int s = 1; //信标起始索引
         private int index = 1;//区域起始索引
         private int TextInx = 1;//文字索引
         public double MapSise = 1; //画布默认缩放大小
@@ -34,7 +33,7 @@ namespace AGVSystem.APP.agv_Map
         public Dictionary<int, Label> keyValuePairs = new Dictionary<int, Label>();//区域集合
         public Dictionary<int, Label> valuePairs = new Dictionary<int, Label>();//信标集合
         public Dictionary<int, Label> GetKeyValues = new Dictionary<int, Label>();//文字集合
-        public Dictionary<int, WirePointArray> wires = new Dictionary<int, WirePointArray>();//暂时存放拖动时所用关联线路（线路起始点和结束点存在共用情况需做判断）
+        public Dictionary<int, WirePointArray> wires = new Dictionary<int, WirePointArray>();//暂时存放拖动时所用关联线路
         public Action<Label> action; //编辑信标委托
         public Action<Label> AreaAction; //编辑区域委托
 
@@ -281,17 +280,17 @@ namespace AGVSystem.APP.agv_Map
                 List<Path> Genpaths = null;
                 if (wires[item].circuitType.Equals(CircuitType.Line))//直线
                 {
-                    path = painting.Line(wires[item].GetPoint.SetPoint, wires[item].GetWirePoint.SetPoint, GetCanvas);
+                    path = painting.Line(wires[item].GetPoint.SetPoint, wires[item].GetWirePoint.SetPoint);
                     ((WirePointLine)wirePointArrays[item]).GetPath = path;//更新线路对象
                 }
                 else if (wires[item].circuitType.Equals(CircuitType.Semicircle))//半圆
                 {
-                    path = painting.DrawingSemicircle(wires[item].GetPoint.SetPoint, wires[item].GetWirePoint.SetPoint, GetCanvas);
+                    path = painting.DrawingSemicircle(wires[item].GetPoint.SetPoint, wires[item].GetWirePoint.SetPoint);
                     ((WirePointLine)wirePointArrays[item]).GetPath = path;//更新线路对象
                 }
                 else if (wires[item].circuitType.Equals(CircuitType.Broken))//折线
                 {
-                    Genpaths = painting.DrawingBroken(wires[item].GetPoint.SetPoint, wires[item].GetWirePoint.SetPoint, GetCanvas);
+                    Genpaths = painting.DrawingBroken(wires[item].GetPoint.SetPoint, wires[item].GetWirePoint.SetPoint);
                     ((WirePointBroken)wirePointArrays[item]).Paths = Genpaths;
                 }
             }
@@ -340,13 +339,13 @@ namespace AGVSystem.APP.agv_Map
             //}
             if (GetCircuitType.Equals(CircuitType.Line))//绘制直线
             {
-                Path path = painting.Line(Pairsarray[0].SetPoint, Pairsarray[1].SetPoint, GetCanvas);//绘制直线
+                Path path = painting.Line(Pairsarray[0].SetPoint, Pairsarray[1].SetPoint);//绘制直线
                 wirePointArrays.Add(new WirePointLine { GetPoint = Pairsarray[0], GetWirePoint = Pairsarray[1], GetPath = path, circuitType = CircuitType.Line });//将绘制的线路添加到线路集合中
             }
             else if (GetCircuitType.Equals(CircuitType.Semicircle))
             {
                 double ey = Pairsarray[0].SetPoint.X - Pairsarray[1].SetPoint.X; //大于0下方上方小于0上方
-                Path path = painting.DrawingSemicircle(Pairsarray[0].SetPoint, Pairsarray[1].SetPoint, GetCanvas);//绘制半圆
+                Path path = painting.DrawingSemicircle(Pairsarray[0].SetPoint, Pairsarray[1].SetPoint);//绘制半圆
                 if (ey > 0)
                 {
                     wirePointArrays.Add(new WirePointLine { GetPoint = Pairsarray[0], GetWirePoint = Pairsarray[1], GetPath = path, circuitType = CircuitType.Semicircle, Direction = 1 });//将绘制的线路添加到线路集合中
@@ -358,7 +357,7 @@ namespace AGVSystem.APP.agv_Map
             }
             else if (GetCircuitType.Equals(CircuitType.Broken))//折线
             {
-                List<Path> Pathr = painting.DrawingBroken(Pairsarray[0].SetPoint, Pairsarray[1].SetPoint, GetCanvas);
+                List<Path> Pathr = painting.DrawingBroken(Pairsarray[0].SetPoint, Pairsarray[1].SetPoint);
                 double drn = Pairsarray[0].SetPoint.X - Pairsarray[1].SetPoint.X;
                 double hrn = Pairsarray[0].SetPoint.Y - Pairsarray[1].SetPoint.Y;
 
@@ -890,6 +889,25 @@ namespace AGVSystem.APP.agv_Map
         }
 
 
+        #endregion
+
+        #region 加载编辑地图数据
+
+        /// <summary>
+        /// 载入编辑地图数据
+        /// </summary>
+        /// <param name="Time"></param>
+        public void LoadEditMap(long Time, bool event_type, bool tagtype)
+        {
+            siseWin = 1;
+            Remove_LineDate();
+            //painting.CoordinateX();
+            LoadTag(Time, event_type);
+            LoadLine(Time);
+            WidgetLoad(Time, event_type);
+            Mapmagnify(MapSise, tagtype);
+        }
+
         /// <summary>
         /// 载入编辑地图数据
         /// </summary>
@@ -902,27 +920,12 @@ namespace AGVSystem.APP.agv_Map
             Mapmagnify(MapSise, Width, Height);
         }
 
-        #endregion
-
-        #region 加载编辑地图数据
-
-        /// <summary>
-        /// 载入编辑地图数据
-        /// </summary>
-        /// <param name="Time"></param>
-        public void LoadEditMap(long Time, bool event_type, bool tagtype)
+        public void Remove_LineDate()
         {
             wirePointArrays.Clear();
             keyValuePairs.Clear();
             valuePairs.Clear();
             GetKeyValues.Clear();
-            siseWin = 1;
-            //painting.Line_Width = 2;
-            LoadTag(Time, event_type);
-            LoadLine(Time);
-            WidgetLoad(Time, event_type);
-
-            Mapmagnify(MapSise, tagtype);
         }
 
         /// <summary>
@@ -1012,11 +1015,11 @@ namespace AGVSystem.APP.agv_Map
         public void Mapmagnify(double Size, double Width, double Height)
         {
             GetCanvas.Children.Clear();
-            GetCanvas.Width = Width * Size;
-            GetCanvas.Height = Height * Size;
+            Main_ChangeSize(Width * Size, Height * Size);
             painting.Canvas_X = 10 * Size;
             painting.Canvas_Y = 10 * Size;
-            painting.Coordinate(GetCanvas);
+            painting.CoordinateX();
+            painting.Coordinate();
             Zoom(Size, GetCanvas, true);
             siseWin = Size;
         }
@@ -1030,11 +1033,11 @@ namespace AGVSystem.APP.agv_Map
         public void Mapmagnify(double Size, double Width, double Height, bool type)
         {
             GetCanvas.Children.Clear();
-            GetCanvas.Width = Width * Size;
-            GetCanvas.Height = Height * Size;
+            Main_ChangeSize(Width * Size, Height * Size);
             painting.Canvas_X = 10 * Size;
             painting.Canvas_Y = 10 * Size;
-            painting.Coordinate(GetCanvas);
+            painting.CoordinateX();
+            painting.Coordinate();
             Zoom(Size, GetCanvas, type);
             siseWin = Size;
         }
@@ -1048,7 +1051,8 @@ namespace AGVSystem.APP.agv_Map
         public void Mapmagnify(double Size, bool type)
         {
             GetCanvas.Children.Clear();
-            painting.Coordinate(GetCanvas);
+            painting.CoordinateX();
+            painting.Coordinate();
             Zoom(Size, GetCanvas, type);
             siseWin = Size;
         }
@@ -1076,21 +1080,21 @@ namespace AGVSystem.APP.agv_Map
                 item.GetWirePoint.SetPoint = point;
                 if (item.circuitType.Equals(CircuitType.Line))//直线
                 {
-                    path = painting.Line(item.GetPoint.SetPoint, item.GetWirePoint.SetPoint, mainPan);
+                    path = painting.Line(item.GetPoint.SetPoint, item.GetWirePoint.SetPoint);
                     path.StrokeThickness = ((WirePointLine)item).GetPath.StrokeThickness;
                     path.Stroke = ((WirePointLine)item).GetPath.Stroke;
                     ((WirePointLine)item).GetPath = path;
                 }
                 else if (item.circuitType.Equals(CircuitType.Semicircle))//半圆
                 {
-                    path = painting.DrawingSemicircle(item.GetPoint.SetPoint, item.GetWirePoint.SetPoint, mainPan);
+                    path = painting.DrawingSemicircle(item.GetPoint.SetPoint, item.GetWirePoint.SetPoint);
                     path.StrokeThickness = ((WirePointLine)item).GetPath.StrokeThickness;
                     path.Stroke = ((WirePointLine)item).GetPath.Stroke;
                     ((WirePointLine)item).GetPath = path;
                 }
                 else if (item.circuitType.Equals(CircuitType.Broken))//折线
                 {
-                    Kaths = painting.DrawingBroken(item.GetPoint.SetPoint, item.GetWirePoint.SetPoint, mainPan);
+                    Kaths = painting.DrawingBroken(item.GetPoint.SetPoint, item.GetWirePoint.SetPoint);
                     foreach (var ite in Kaths)
                     {
                         foreach (var it in ((WirePointBroken)item).Paths)
@@ -1158,5 +1162,28 @@ namespace AGVSystem.APP.agv_Map
 
         #endregion
 
+        #region 初始化容器大小
+
+        public void Initial_Canvas(Canvas mainPane_X, Canvas mainPane_Y, Canvas Canvas_Main, double Width, double Height)
+        {
+            this.GetCanvas = Canvas_Main;
+            painting.InitializeCanvas(mainPane_X, mainPane_Y, Canvas_Main, Width, Height);
+        }
+
+        public void Main_ChangeSize(double Width, double Height)
+        {
+            this.GetCanvas.Width = Width;
+            this.GetCanvas.Height = Height;
+            painting.Change_Size(Width, Height);
+        }
+        #endregion
+
+        #region 绘制画布刻度
+        public void Canvas_Draw()
+        {
+            painting.Coordinate();
+            painting.CoordinateX();
+        }
+        #endregion
     }
 }

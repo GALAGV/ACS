@@ -6,6 +6,10 @@ using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.Model.LogicData;
 using System.IO.Ports;
 using System.Windows.Media;
+using System.Linq;
+using AGVSystem.Infrastructure.agvCommon;
+using System.Text;
+using System.IO;
 
 namespace AGVSystem.APP.agv_System
 {
@@ -162,6 +166,33 @@ namespace AGVSystem.APP.agv_System
         {
 
 
+        }
+
+        /// <summary>
+        /// 导出日志
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="DateTime"></param>
+        public void LogWrite(string path, string DateTime)
+        {
+            try
+            {
+                string Tableresult = OperateIniTool.OperateIniRead("Table", "Name");
+                List<string> Table = !string.IsNullOrEmpty(Tableresult) ? Tableresult.Split(',').ToList() : new List<string>();
+                StringBuilder builder = new StringBuilder();
+                foreach (var item in Table)
+                {
+                    if (MapBLL.TableNotexistBLL($"{item}{DateTime}"))
+                    {
+                        builder.Append(MapBLL.ExportMySqlTables($"{item}{DateTime}", "agv"));
+                    }
+                }
+                File.WriteAllText(path, builder.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }

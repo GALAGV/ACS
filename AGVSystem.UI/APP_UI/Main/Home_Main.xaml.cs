@@ -29,15 +29,14 @@ namespace AGVSystem.UI.APP_UI.Main
             InitializeComponent();
         }
 
-        agvFunction Get_AGVmanagement = new agvFunction();
-        agvMapRegulate mapService = new agvMapRegulate(); //业务逻辑接口
-        MapInstrument map = new MapInstrument();
-        List<Ga_agv> Ga_agvNumArray; //数据源
-        Painting GetPainting = new Painting();
-        bool OpenPort = false;
-        bool StartNoopsyche = false;
-        ObservableCollection<Ga_Map> maps = new ObservableCollection<Ga_Map>();
-  
+        private agvFunction Get_AGVmanagement = new agvFunction();
+        private agvMapRegulate mapService = new agvMapRegulate(); //业务逻辑接口
+        private MapInstrument map = new MapInstrument();
+        private List<Ga_agv> Ga_agvNumArray; //数据源
+        private bool OpenPort = false; //是否打开串口
+        private bool StartNoopsyche = false; //是否智能运行
+        private ObservableCollection<Ga_Map> maps = new ObservableCollection<Ga_Map>();
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Task.Factory.StartNew(() => { mapService.DataBase(); });
@@ -79,24 +78,17 @@ namespace AGVSystem.UI.APP_UI.Main
                 Ga_Map GetMap = maps.FirstOrDefault(x => x.CreateTime.Equals(MapMenu.SelectedValue.ToString()));
                 if (GetMap != null)
                 {
-                    TopX.Children.Clear();
-                    TopY.Children.Clear();
-                    GetPainting.CoordinateX(TopX, TopY);
-                    map.GetCanvas = mainPanel;
                     if (OperateIniTool.Exist)
                     {
                         string SiseResult = OperateIniTool.OperateIniRead("AGV", "MapSise");
                         map.MapSise = !string.IsNullOrEmpty(SiseResult) ? Convert.ToDouble(SiseResult) : 2;
                         MapRegulate.TemplateName = OperateIniTool.OperateIniRead("AGV", "TemplateName");
                         string LineResult = OperateIniTool.OperateIniRead("AGV", "DirectionLine");
-                        MapRegulate.DirectionLine= LineResult.TransformInt();
+                        MapRegulate.DirectionLine = LineResult.TransformInt();
                     }
                     double CanvasWidth = GetMap.Width * 10 * map.MapSise > this.Width * 1.2 ? GetMap.Width * 10 * map.MapSise : this.Width * 1.2;
                     double CanvasHeight = GetMap.Height * 10 * map.MapSise > this.Height * 1.2 ? GetMap.Height * 10 * map.MapSise : this.Height * 1.2;
-                    TopX.Width = CanvasWidth;
-                    TopY.Height = CanvasHeight;
-                    mainPanel.Width = CanvasWidth;
-                    mainPanel.Height = CanvasHeight;
+                    map.Initial_Canvas(TopX, TopY, mainPanel, CanvasWidth, CanvasHeight);
                     map.LoadEditMap(MapRegulate.UTCTime, false, false);
                     TabAgvMoveInfo(MapRegulate.UTCTime);
                     LoadComInfo(MapRegulate.UTCTime);
@@ -330,17 +322,7 @@ namespace AGVSystem.UI.APP_UI.Main
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)
         {
-            ToolBar toolBar = sender as ToolBar;
-            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
-            if (overflowGrid != null)
-            {
-                overflowGrid.Visibility = Visibility.Collapsed;
-            }
-            var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
-            if (mainPanelBorder != null)
-            {
-                mainPanelBorder.Margin = new Thickness(0);
-            }
+            (sender as ToolBar).ToolBar_Formatting();
         }
 
         private void TagEdit_Click(object sender, RoutedEventArgs e)

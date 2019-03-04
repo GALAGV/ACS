@@ -26,21 +26,17 @@ namespace AGVSystem.UI.APP_UI.Map
     public partial class EditLine : Window
     {
 
-        Painting GetPainting = new Painting();
-        MapInstrument map = new MapInstrument();
-        agvMapRegulate mapService = new agvMapRegulate(); 
-        double CanvasWidth, CanvasHeight; //初始宽高
-        ObservableCollection<Ga_Map> MapList = new ObservableCollection<Ga_Map>();
-        ObservableCollection<Route> GetRoutes = new ObservableCollection<Route>();
-        Route RouteData = new Route();
-        ObservableCollection<Route> routes = new ObservableCollection<Route>();
-        List<Ga_agvStatus> speed = MainInfo.agvSpeed.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvSpeed.ToList().IndexOf(p).ToString() }).ToList();
-        List<Ga_agvStatus> pbs = MainInfo.agvPbs.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvPbs.ToList().IndexOf(p).ToString() }).ToList();
-        List<Ga_agvStatus> turn = MainInfo.agvTurn.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvTurn.ToList().IndexOf(p).ToString() }).ToList();
-        List<Ga_agvStatus> direction = MainInfo.agvDire.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvDire.ToList().IndexOf(p).ToString() }).ToList();
-        List<Ga_agvStatus> hook = MainInfo.agvHook.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvHook.ToList().IndexOf(p).ToString() }).ToList();
-        long UTCTime;
-        bool edit = true;
+        private Painting GetPainting = new Painting();
+        private MapInstrument map = new MapInstrument();
+        private agvMapRegulate mapService = new agvMapRegulate();
+        private double CanvasWidth, CanvasHeight; //初始宽高
+        private ObservableCollection<Ga_Map> MapList = new ObservableCollection<Ga_Map>();
+        private ObservableCollection<Route> GetRoutes = new ObservableCollection<Route>();
+        private Route RouteData = new Route();
+        private ObservableCollection<Route> routes = new ObservableCollection<Route>();
+
+        private long UTCTime;
+        private bool edit = true;
 
         public EditLine(ObservableCollection<Ga_Map> Map)
         {
@@ -68,17 +64,10 @@ namespace AGVSystem.UI.APP_UI.Map
             CanvasHeight = GetMap.Height * 10;
             double CanvasWidths = GetMap.Width * 10 * map.MapSise;
             double CanvasHeights = GetMap.Height * 10 * map.MapSise;
-            TopX.Width = CanvasWidths;
-            TopY.Height = CanvasHeights;
-            mainPanel.Width = CanvasWidths;
-            mainPanel.Height = CanvasHeights;
-            map.GetCanvas = mainPanel;
-            TopX.Children.Clear();
-            TopY.Children.Clear();
-            GetPainting.CoordinateX(TopX, TopY);
+            map.Initial_Canvas(TopX, TopY, mainPanel, CanvasWidths, CanvasHeights);
             UTCTime = UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime));
-            map.LoadEditMap(UTCTime, false,true);
-            map.valuePairs.Select(p => p.Value).ToList().ForEach(p => { p.MouseDown += Value_MouseDown;p.Cursor = Cursors.Hand;});
+            map.LoadEditMap(UTCTime, false, true);
+            map.valuePairs.Select(p => p.Value).ToList().ForEach(p => { p.MouseDown += Value_MouseDown; p.Cursor = Cursors.Hand; });
             GetRoutes = mapService.GetrouteList(UTCTime.ToString());
             Line.ItemsSource = GetRoutes;
             Line.SelectedIndex = 0;
@@ -263,7 +252,7 @@ namespace AGVSystem.UI.APP_UI.Map
             }
             else
             {
-                SerialPortData.DataContext= new ObservableCollection<Route>();
+                SerialPortData.DataContext = new ObservableCollection<Route>();
             }
         }
 
@@ -272,11 +261,11 @@ namespace AGVSystem.UI.APP_UI.Map
         {
             return new Route()
             {
-                agvSetSpeed = speed,
-                agvSetPBS = pbs,
-                agvSetTurn = turn,
-                agvSetDirection = direction,
-                agvSetHook = hook,
+                agvSetSpeed = MapRegulate.speed,
+                agvSetPBS = MapRegulate.pbs,
+                agvSetTurn = MapRegulate.turn,
+                agvSetDirection = MapRegulate.direction,
+                agvSetHook = MapRegulate.hook,
                 Stop = route.Stop,
                 Tag = route.Tag,
                 ChangeProgram = route.ChangeProgram,
@@ -476,13 +465,6 @@ namespace AGVSystem.UI.APP_UI.Map
         /// </summary>
         private void CanvasMapZoom()
         {
-            TopX.Children.Clear();
-            TopY.Children.Clear();
-            TopX.Width = CanvasWidth * map.MapSise;
-            TopY.Height = CanvasHeight * map.MapSise;
-            GetPainting.Scale_X = 10 * map.MapSise;
-            GetPainting.Scale_Y = 10 * map.MapSise;
-            GetPainting.CoordinateX(TopX, TopY); //绘制X轴Y轴刻度
             map.Mapmagnify(map.MapSise, CanvasWidth, CanvasHeight, true);
         }
 
@@ -558,18 +540,7 @@ namespace AGVSystem.UI.APP_UI.Map
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)
         {
-            ToolBar toolBar = sender as ToolBar;
-            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
-            if (overflowGrid != null)
-            {
-                overflowGrid.Visibility = Visibility.Collapsed;
-            }
-
-            var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
-            if (mainPanelBorder != null)
-            {
-                mainPanelBorder.Margin = new Thickness(0);
-            }
+            (sender as ToolBar).ToolBar_Formatting();
         }
     }
 }

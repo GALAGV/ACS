@@ -1,7 +1,10 @@
-﻿using AGVSystem.BLL.ServiceLogicBLL;
+﻿using AGVSystem.APP.agv_Map;
+using AGVSystem.APP.agv_System;
+using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.Infrastructure.agvCommon;
 using System;
 using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,6 +16,8 @@ namespace AGVSystem.UI.APP_UI.Log
     public partial class LogForm : Window
     {
         private Ga_mapBLL Ga_Map = new Ga_mapBLL();
+        private agvFunction Function = new agvFunction();
+        private agvMapRegulate regulate = new agvMapRegulate();
         private int PageCount = 0; //总记录条数
         private int Index = 1;
         public LogForm()
@@ -256,6 +261,59 @@ namespace AGVSystem.UI.APP_UI.Log
                 else
                 {
                     MessageBoxTool.Error("格式输入错误！");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 导出日志
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Write_Log_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(DateTimes.Text))
+            {
+                MessageBoxTool.Error("请选择查询日期！");
+                return;
+            }
+            string Times = (Convert.ToDateTime(DateTimes.Text)).ToString("yyyyMMdd");
+            if (Ga_Map.TableNotexistBLL($"loginfo{Times}"))
+            {
+                Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
+                sfd.Filter = "日志文件|*.log";
+                sfd.FileName = $"log_{Times}";
+                if (sfd.ShowDialog() == true)
+                {
+                    Function.LogWrite(sfd.FileName, Times);
+                }
+            }
+            else
+            {
+                MessageBoxTool.Error("暂无日志！");
+            }
+        }
+
+        /// <summary>
+        /// 导入log
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Read_log_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".log";
+            dlg.Filter = "日志文件|*.log";
+            if (dlg.ShowDialog() == true)
+            {
+                string sqlText = File.ReadAllText(dlg.FileName);
+                if (regulate.AGV_MapTolead(sqlText) == true)
+                {
+                    MessageBox.Show("导入成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("导入失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

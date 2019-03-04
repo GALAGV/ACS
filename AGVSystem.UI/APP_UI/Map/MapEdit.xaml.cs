@@ -16,11 +16,11 @@ namespace AGVSystem.UI.APP_UI.Map
     /// </summary>
     public partial class MapEdit : Window
     {
-        Ga_Map GetMap = new Ga_Map();
-        Painting GetPainting = new Painting();
-        MapInstrument instrument = new MapInstrument();
-        double CanvasWidth, CanvasHeight; //初始宽高
-        bool editStatic = true;
+        private Ga_Map GetMap = new Ga_Map();
+        private Painting GetPainting = new Painting();
+        private MapInstrument instrument = new MapInstrument();
+        private double CanvasWidth, CanvasHeight; //初始宽高
+        private bool editStatic = true;
 
         public MapEdit(Ga_Map ga_Map, bool edit)
         {
@@ -39,20 +39,15 @@ namespace AGVSystem.UI.APP_UI.Map
             this.Title = "地图编辑-" + GetMap.Name;
             CanvasWidth = GetMap.Width * 10;
             CanvasHeight = GetMap.Height * 10;
-            TopX.Width = CanvasWidth * instrument.MapSise;
-            TopY.Height = CanvasHeight * instrument.MapSise;
+            double CanvasWidths = CanvasWidth * instrument.MapSise;
+            double CanvasHeights = CanvasHeight * instrument.MapSise;
             instrument.action = EditTag;
             instrument.AreaAction = EditArea;
-            mainPanel.Width = TopX.Width;
-            mainPanel.Height = TopY.Height;
-            instrument.GetCanvas = mainPanel;
-            TopX.Children.Clear();
-            TopY.Children.Clear();
-            GetPainting.CoordinateX(TopX, TopY); //绘制X轴Y轴刻度
+            instrument.Initial_Canvas(TopX, TopY, mainPanel, CanvasWidths, CanvasHeights);
             if (edit)
                 instrument.LoadEditMap(UTC.ConvertDateTimeLong(Convert.ToDateTime(GetMap.CreateTime)), CanvasWidth, CanvasHeight, true);
             else
-                GetPainting.Coordinate(mainPanel);
+                instrument.Canvas_Draw();
         }
 
 
@@ -166,13 +161,13 @@ namespace AGVSystem.UI.APP_UI.Map
         /// </summary>
         private void CanvasMapZoom()
         {
-            TopX.Children.Clear();
-            TopY.Children.Clear();
-            TopX.Width = CanvasWidth * instrument.MapSise;
-            TopY.Height = CanvasHeight * instrument.MapSise;
-            GetPainting.Scale_X = 10 * instrument.MapSise;
-            GetPainting.Scale_Y = 10 * instrument.MapSise;
-            GetPainting.CoordinateX(TopX, TopY); //绘制X轴Y轴刻度
+            //TopX.Children.Clear();
+            //TopY.Children.Clear();
+            //TopX.Width = CanvasWidth * instrument.MapSise;
+            //TopY.Height = CanvasHeight * instrument.MapSise;
+            //GetPainting.Scale_X = 10 * instrument.MapSise;
+            //GetPainting.Scale_Y = 10 * instrument.MapSise;
+            //GetPainting.CoordinateX(); //绘制X轴Y轴刻度
             instrument.Mapmagnify(instrument.MapSise, CanvasWidth, CanvasHeight);
         }
 
@@ -277,18 +272,8 @@ namespace AGVSystem.UI.APP_UI.Map
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)
         {
-            ToolBar toolBar = sender as ToolBar;
-            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
-            if (overflowGrid != null)
-            {
-                overflowGrid.Visibility = Visibility.Collapsed;
-            }
+            (sender as ToolBar).ToolBar_Formatting();
 
-            var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
-            if (mainPanelBorder != null)
-            {
-                mainPanelBorder.Margin = new Thickness(0);
-            }
         }
 
         private void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)

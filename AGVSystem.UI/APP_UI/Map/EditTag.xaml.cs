@@ -1,18 +1,15 @@
 ﻿using AGVSystem.APP.agv_Map;
 using AGVSystem.Infrastructure.agvCommon;
 using AGVSystem.Model.Ga_agvModels;
-using AGVSystem.Model.LogicData;
+using AGVSystem.Model.MapData;
 using OperateIni;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace AGVSystem.UI.APP_UI.Map
@@ -22,18 +19,13 @@ namespace AGVSystem.UI.APP_UI.Map
     /// </summary>
     public partial class EditTag : Window
     {
-        Painting GetPainting = new Painting();
-        MapInstrument map = new MapInstrument();
-        agvMapRegulate mapService = new agvMapRegulate();
-        double CanvasWidth, CanvasHeight; //初始宽高
-        ObservableCollection<Ga_Map> MapList = new ObservableCollection<Ga_Map>();
-        ObservableCollection<MapTag> Tags = new ObservableCollection<MapTag>();
-        List<Ga_agvStatus> speed = MainInfo.agvSpeed.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvSpeed.ToList().IndexOf(p).ToString() }).ToList();
-        List<Ga_agvStatus> pbs = MainInfo.agvPbs.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvPbs.ToList().IndexOf(p).ToString() }).ToList();
-        List<Ga_agvStatus> turn = MainInfo.agvTurn.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvTurn.ToList().IndexOf(p).ToString() }).ToList();
-        List<Ga_agvStatus> direction = MainInfo.agvDire.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvDire.ToList().IndexOf(p).ToString() }).ToList();
-        List<Ga_agvStatus> hook = MainInfo.agvHook.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvHook.ToList().IndexOf(p).ToString() }).ToList();
-        long UTCTime;
+        private Painting GetPainting = new Painting();
+        private MapInstrument map = new MapInstrument();
+        private agvMapRegulate mapService = new agvMapRegulate();
+        private double CanvasWidth, CanvasHeight; //初始宽高
+        private ObservableCollection<Ga_Map> MapList = new ObservableCollection<Ga_Map>();
+        private ObservableCollection<MapTag> Tags = new ObservableCollection<MapTag>();
+        private long UTCTime { get; set; }
         public EditTag()
         {
             InitializeComponent();
@@ -79,13 +71,6 @@ namespace AGVSystem.UI.APP_UI.Map
         /// </summary>
         private void CanvasMapZoom()
         {
-            TopX.Children.Clear();
-            TopY.Children.Clear();
-            TopX.Width = CanvasWidth * map.MapSise;
-            TopY.Height = CanvasHeight * map.MapSise;
-            GetPainting.Scale_X = 10 * map.MapSise;
-            GetPainting.Scale_Y = 10 * map.MapSise;
-            GetPainting.CoordinateX(TopX, TopY); //绘制X轴Y轴刻度
             map.Mapmagnify(map.MapSise, CanvasWidth, CanvasHeight, true);
         }
 
@@ -148,35 +133,35 @@ namespace AGVSystem.UI.APP_UI.Map
                 }
                 else if (Columnindex.Equals(7))
                 {
-                    Tags[Rowsindex].SpeedList = speed;
+                    Tags[Rowsindex].SpeedList = MapRegulate.speed;
                 }
                 else if (Columnindex.Equals(8))
                 {
-                    Tags[Rowsindex].SpeedRevList = speed;
+                    Tags[Rowsindex].SpeedRevList = MapRegulate.speed;
                 }
                 else if (Columnindex.Equals(9))
                 {
-                    Tags[Rowsindex].PreTurnSpeedList = speed;
+                    Tags[Rowsindex].PreTurnSpeedList = MapRegulate.speed;
                 }
                 else if (Columnindex.Equals(10))
                 {
-                    Tags[Rowsindex].RevTurnSpeedList = speed;
+                    Tags[Rowsindex].RevTurnSpeedList = MapRegulate.speed;
                 }
                 else if (Columnindex.Equals(11))
                 {
-                    Tags[Rowsindex].PbsList = pbs;
+                    Tags[Rowsindex].PbsList = MapRegulate.pbs;
                 }
                 else if (Columnindex.Equals(12))
                 {
-                    Tags[Rowsindex].PbsRevList = pbs;
+                    Tags[Rowsindex].PbsRevList = MapRegulate.pbs;
                 }
                 else if (Columnindex.Equals(13))
                 {
-                    Tags[Rowsindex].PreTurnPBSList = pbs;
+                    Tags[Rowsindex].PreTurnPBSList = MapRegulate.pbs;
                 }
                 else if (Columnindex.Equals(14))
                 {
-                    Tags[Rowsindex].RevTurnPBSList = pbs;
+                    Tags[Rowsindex].RevTurnPBSList = MapRegulate.pbs;
                 }
                 AssociatedTag(Convert.ToInt32(route.TagName));
             }
@@ -302,7 +287,7 @@ namespace AGVSystem.UI.APP_UI.Map
         {
             string[] TagArray = mapService.SelectTagSystem(UTCTime, TagID.ToString());
             TagRecover();
-             map.valuePairs.FirstOrDefault(p => p.Key.Equals(TagID)).Value.Background = new SolidColorBrush(Colors.Red);
+            map.valuePairs.FirstOrDefault(p => p.Key.Equals(TagID)).Value.Background = new SolidColorBrush(Colors.Red);
             Label label = map.valuePairs.FirstOrDefault(p => p.Key.Equals(TagID)).Value;
             SrcCount.ScrollToHorizontalOffset(label.Margin.Left - 600);//滚动条X轴跟随移动
             SrcCount.ScrollToVerticalOffset(label.Margin.Top - 500); ///滚动条Y轴等随移动
@@ -319,18 +304,7 @@ namespace AGVSystem.UI.APP_UI.Map
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)
         {
-            ToolBar toolBar = sender as ToolBar;
-            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
-            if (overflowGrid != null)
-            {
-                overflowGrid.Visibility = Visibility.Collapsed;
-            }
-
-            var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
-            if (mainPanelBorder != null)
-            {
-                mainPanelBorder.Margin = new Thickness(0);
-            }
+            (sender as ToolBar).ToolBar_Formatting();
         }
 
         public void LoadMap(Ga_Map GetMap)
@@ -343,14 +317,7 @@ namespace AGVSystem.UI.APP_UI.Map
             CanvasHeight = GetMap.Height * 10;
             double CanvasWidths = GetMap.Width * 10 * map.MapSise;
             double CanvasHeights = GetMap.Height * 10 * map.MapSise;
-            TopX.Width = CanvasWidths;
-            TopY.Height = CanvasHeights;
-            mainPanel.Width = CanvasWidths;
-            mainPanel.Height = CanvasHeights;
-            map.GetCanvas = mainPanel;
-            TopX.Children.Clear();
-            TopY.Children.Clear();
-            GetPainting.CoordinateX(TopX, TopY);
+            map.Initial_Canvas(TopX, TopY, mainPanel, CanvasWidths, CanvasHeights);
             map.LoadEditMap(UTCTime, false, true);
         }
     }

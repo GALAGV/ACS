@@ -128,7 +128,7 @@ namespace AGVSystem.APP.LogClearService
                 string Time = dt.ToString("yyyyMMdd");
                 foreach (var item in Table)
                 {
-                    if (_Serve.TableNotexistBLL($"{item}{Time}").Rows.Count > 0)
+                    if (_Serve.TableNotexistBLL($"{item}{Time}"))
                     {
                         _Serve.ClearLogBLL($"{item}{Time}");
                         WriteLog.writeLogInfo("LogClear", "Log", $"ClearTable:{item}{Time}");

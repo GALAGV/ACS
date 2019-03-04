@@ -17,16 +17,15 @@ namespace AGVSystem.UI.APP_UI.Map
     /// </summary>
     public partial class CompileMap : Window
     {
+        private agvMapRegulate mapService = new agvMapRegulate(); //业务逻辑接口
+        private ObservableCollection<Ga_Map> GetMaps = new ObservableCollection<Ga_Map>(); //显示数据源
+
+
         public CompileMap()
         {
             InitializeComponent();
             Compile();
         }
-
-        agvMapRegulate mapService = new agvMapRegulate(); //业务逻辑接口
-
-        ObservableCollection<Ga_Map> GetMaps = new ObservableCollection<Ga_Map>(); //显示数据源
-
 
         public void Compile()
         {

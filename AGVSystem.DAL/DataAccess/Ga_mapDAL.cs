@@ -63,8 +63,8 @@ namespace AGVSystem.DAL.DataAccess
         /// <returns></returns>
         public string ExportSetting(long MapTime, string Db)
         {
-            string Delstr = string.Format("DELETE FROM `agv`.`setting`;");
-            string insertSqlText = string.Format("INSERT INTO `agv`.`setting` (`ID`, `Map`, `Mode`) VALUES (1, {0} , {1});", MapTime, 1);
+            string Delstr = string.Format("DELETE FROM `agv`.`setting`;\r\n");
+            string insertSqlText = string.Format("INSERT INTO `agv`.`setting` (`ID`, `Map`, `Mode`) VALUES (1, {0} , {1});\r\n", MapTime, 1);
             return Delstr + insertSqlText;
         }
 
@@ -76,9 +76,9 @@ namespace AGVSystem.DAL.DataAccess
         /// <returns></returns>
         public string ExportMySqlTable(string TableName, string Db)
         {
-            string dropSql = string.Format("DROP TABLE IF EXISTS {0}.`{1}`;", Db, TableName);
+            string dropSql = string.Format("DROP TABLE IF EXISTS {0}.`{1}`;\r\n\r\n", Db, TableName);
             StringBuilder sqlText = new StringBuilder(dropSql);
-            string createSql = string.Format("CREATE TABLE IF NOT EXISTS {0}.`{1}`", Db, TableName);
+            string createSql = string.Format("CREATE TABLE IF NOT EXISTS {0}.`{1}` \r\n", Db, TableName);
             sqlText.Append(createSql);
             sqlText.Append(" (");
             string sql = string.Format("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{0}' AND TABLE_SCHEMA = '{1}'", TableName, Db);
@@ -107,7 +107,7 @@ namespace AGVSystem.DAL.DataAccess
                     sqlText.Append(mr["COLUMN_COMMENT"].ToString());
                     sqlText.Append("'");
                 }
-                sqlText.Append(",");
+                sqlText.Append(", \r\n");
                 if (mr["COLUMN_KEY"].ToString() == "PRI")
                 {
                     keyStr = "PRIMARY KEY(`ID`)";
@@ -115,21 +115,21 @@ namespace AGVSystem.DAL.DataAccess
                 colCount++;
             }
             sqlText.Append(keyStr);
-            sqlText.Append(") ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8 ROW_FORMAT = COMPACT;");
+            sqlText.Append(") ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8 ROW_FORMAT = COMPACT; \r\n\r\n");
             mr.Close();
 
             sql = string.Format("SELECT * FROM {0}.`{1}`", Db, TableName);
 
             mr = MySQLHelper.ExecuteReader(sql);
 
-            string Delstr = string.Format("DELETE FROM {0}.`{1}`;", Db, TableName);
+            string Delstr = string.Format("DELETE FROM {0}.`{1}`; \r\n\r\n", Db, TableName);
             StringBuilder insertSqlText = new StringBuilder(Delstr);
             int getName = 0;
             while (mr.Read())
             {
                 if (getName == 0)
                 {
-                    string insertSql = string.Format("INSERT INTO {0}.`{1}` (", Db, TableName);
+                    string insertSql = string.Format("INSERT INTO {0}.`{1}` \r\n (", Db, TableName);
                     insertSqlText.Append(insertSql);
                     for (int i = 0; i < colCount; i++)
                     {
@@ -141,7 +141,7 @@ namespace AGVSystem.DAL.DataAccess
                         }
                         else
                         {
-                            insertSqlText.Append("`) VALUES");
+                            insertSqlText.Append("`) VALUES \r\n");
                         }
                     }
                     getName = 1;
@@ -166,13 +166,13 @@ namespace AGVSystem.DAL.DataAccess
                     }
                     else
                     {
-                        insertSqlText.Append("'),");
+                        insertSqlText.Append("'),\r\n");
                     }
                 }
             }
             mr.Close();
-            insertSqlText.Remove(insertSqlText.Length - 1, 1);
-            insertSqlText.Append(";");
+            insertSqlText.Remove(insertSqlText.Length - 3, 3);
+            insertSqlText.Append(";\r\n\r\n");
             return sqlText.ToString() + insertSqlText.ToString();
         }
 
@@ -200,7 +200,7 @@ namespace AGVSystem.DAL.DataAccess
             sql = string.Format("SELECT * FROM {0}.`{1}` WHERE `CreateTime` = '{2}'", Db, TableName, MapTime);
             mr = MySQLHelper.ExecuteReader(sql); ;
 
-            string Delstr = string.Format("DELETE FROM {0}.`{1}` WHERE `CreateTime` = '{2}' ;", Db, TableName, MapTime);
+            string Delstr = string.Format("DELETE FROM {0}.`{1}` WHERE `CreateTime` = '{2}' ;\r\n", Db, TableName, MapTime);
             StringBuilder insertSqlText = new StringBuilder();
             int getName = 0;
             while (mr.Read())
@@ -250,7 +250,7 @@ namespace AGVSystem.DAL.DataAccess
             }
             mr.Close();
             insertSqlText.Remove(insertSqlText.Length - 1, 1);
-            insertSqlText.Append(";");
+            insertSqlText.Append(";\r\n");
             return Delstr + insertSqlText.ToString();
         }
 
@@ -778,16 +778,15 @@ namespace AGVSystem.DAL.DataAccess
 
         public MySqlDataReader SelectNetwork(long CreateTime)
         {
-            DataTable dt = TableNotexist($"networkconfig{CreateTime}");
-            if (dt.Rows.Count > 0)
+            if (TableNotexist($"networkconfig{CreateTime}"))
                 return MySQLHelper.ExecuteReader($"SELECT * FROM agv.`networkconfig{CreateTime}`");
             else
                 return null;
         }
 
-        public DataTable TableNotexist(string TableName)
+        public bool TableNotexist(string TableName)
         {
-            return MySQLHelper.ExecuteDataTable($"SELECT table_name FROM information_schema.TABLES WHERE table_name ='{TableName}';");
+            return MySQLHelper.ExecuteDataTable($"SELECT table_name FROM information_schema.TABLES WHERE table_name ='{TableName}';").Rows.Count > 0;
         }
 
         public bool ClearLog(string TableName)

@@ -194,8 +194,8 @@
                             </StackPanel>
                         </ScrollViewer>
 
-                        <ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,20">
-                            <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,-1,0,20" >
+                        <ScrollViewer Name="SrcY" Grid.Row="2" Grid.Column="0"  VerticalScrollBarVisibility="Hidden" Margin="0,-1,0,20">
+                            <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,0,0,20" >
                                 <Canvas Name="TopY" Width="20" HorizontalAlignment="Left" ></Canvas>
                             </StackPanel>
                         </ScrollViewer>
