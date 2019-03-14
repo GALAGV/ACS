@@ -27,6 +27,7 @@ namespace AGVSystem.Infrastructure.agvCommon
             return datetime.AddDays(1 - datetime.Day).AddDays(-1);
         }
 
+        //// <summary>
         /// 取得某月的第一天
         /// </summary>
         /// <param name="datetime">要取得月份第一天的时间</param>

@@ -125,14 +125,14 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="文字">
+                <!--<Button Cursor="Hand" ToolTip="文字">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">
                             <Image Stretch="Fill" Source="/image/Text.png"/>
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Separator />
+                <Separator />-->
                 <Button Cursor="Hand" ToolTip="区域" Name="Area" Click="Area_Click">
                     <Button.Content >
                         <StackPanel Orientation="Horizontal">

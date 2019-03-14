@@ -5,7 +5,7 @@ namespace AGVSystem.BLL.ServiceLogicBLL
 {
     public class Ga_agvBLL 
     {
-        private Ga_agvDAL GetABB = new Ga_agvDAL();
+        private Ga_agvDAL GetAgvDAL = new Ga_agvDAL();
 
         /// <summary>
         /// 查询所有AGV
@@ -14,7 +14,19 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         /// <returns></returns>
         public List<string> AGVNumList(long MapTime)
         {
-            return GetABB.AGVArray(MapTime);
+            return GetAgvDAL.AGVArray(MapTime);
         }
+
+        /// <summary>
+        /// 记录已下发线路
+        /// </summary>
+        /// <param name="CarNum"></param>
+        /// <param name="RouteName"></param>
+        /// <param name="Task"></param>
+        public void LogRouteInfoBLL(int CarNum, string[] RouteName, string Task)
+        {
+            GetAgvDAL.LogRouteInfoDAL(CarNum, RouteName, Task);
+        }
+
     }
 }

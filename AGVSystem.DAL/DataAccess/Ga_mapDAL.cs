@@ -125,8 +125,10 @@ namespace AGVSystem.DAL.DataAccess
             string Delstr = string.Format("DELETE FROM {0}.`{1}`; \r\n\r\n", Db, TableName);
             StringBuilder insertSqlText = new StringBuilder(Delstr);
             int getName = 0;
+            bool existRows = false;
             while (mr.Read())
             {
+                existRows = true;
                 if (getName == 0)
                 {
                     string insertSql = string.Format("INSERT INTO {0}.`{1}` \r\n (", Db, TableName);
@@ -171,8 +173,11 @@ namespace AGVSystem.DAL.DataAccess
                 }
             }
             mr.Close();
-            insertSqlText.Remove(insertSqlText.Length - 3, 3);
-            insertSqlText.Append(";\r\n\r\n");
+            if (existRows)
+            {
+                insertSqlText.Remove(insertSqlText.Length - 3, 3);
+                insertSqlText.Append(";\r\n\r\n");
+            }
             return sqlText.ToString() + insertSqlText.ToString();
         }
 
@@ -203,8 +208,10 @@ namespace AGVSystem.DAL.DataAccess
             string Delstr = string.Format("DELETE FROM {0}.`{1}` WHERE `CreateTime` = '{2}' ;\r\n", Db, TableName, MapTime);
             StringBuilder insertSqlText = new StringBuilder();
             int getName = 0;
+            bool existRows = false;
             while (mr.Read())
             {
+                existRows = true;
                 if (getName == 0)
                 {
                     string insertSql = string.Format("INSERT INTO {0}.`{1}` (", Db, TableName);
@@ -249,8 +256,11 @@ namespace AGVSystem.DAL.DataAccess
                 }
             }
             mr.Close();
-            insertSqlText.Remove(insertSqlText.Length - 1, 1);
-            insertSqlText.Append(";\r\n");
+            if(existRows)
+            {
+                insertSqlText.Remove(insertSqlText.Length - 1, 1);
+                insertSqlText.Append(";\r\n");
+            }
             return Delstr + insertSqlText.ToString();
         }
 
@@ -645,6 +655,27 @@ namespace AGVSystem.DAL.DataAccess
             return MySQLHelper.ExecuteReader(string.Format("SELECT * FROM `agv`.`route{0}`", MapName));
         }
 
+        public DataTable MapRouteTable(string MapName)
+        {
+            return MySQLHelper.ExecuteDataTable(string.Format("SELECT * FROM `agv`.`route{0}`", MapName));
+        }
+
+        public MySqlDataReader MapRoute(string MapName, string LIneName, string Program)
+        {
+            string Sql = string.Empty;
+            if (!Program.Equals("N/A"))
+            {
+                Sql = $"SELECT * FROM `agv`.`route{MapName}` WHERE  Name LIKE '%{LIneName}%' and Program={Program}";
+            }
+            else
+            {
+                Sql = $"SELECT * FROM `agv`.`route{MapName}` WHERE  Name LIKE '%{LIneName}%'";
+            }
+            return MySQLHelper.ExecuteReader(Sql);
+        }
+
+
+
         public MySqlDataReader MapRouteDAL(string MapName)
         {
             return MySQLHelper.ExecuteReader(string.Format("SELECT `Program`,`Name`,`CreateTime` FROM `agv`.`route{0}`", MapName));
@@ -754,7 +785,7 @@ namespace AGVSystem.DAL.DataAccess
         {
             try
             {
-                string DB = string.Format("CREATE DATABASE IF NOT EXISTS `agv`; ");
+                string DB = string.Format("CREATE DATABASE IF NOT EXISTS `agv`;");
                 string userSql = string.Format("CREATE TABLE IF NOT EXISTS agv.`user` ( `ID` int(10) NOT NULL AUTO_INCREMENT, `User` varchar(50) NOT NULL COMMENT '用户名', `Password` varchar(50) DEFAULT NULL COMMENT '密码', `CardNo` varchar(50) DEFAULT NULL COMMENT '工牌号', `Authorization` varchar(50) NOT NULL COMMENT '权限，0管理员，1调试用户，2普通用户', PRIMARY KEY(`ID`)) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8; ");
                 string mapSql = string.Format("CREATE TABLE IF NOT EXISTS agv.`map` ( `ID` int(10) NOT NULL AUTO_INCREMENT, `CreateTime` bigint(20) DEFAULT NULL COMMENT '创建时间', `Name` varchar(50) DEFAULT NULL COMMENT '地图名称', `Width` double DEFAULT NULL COMMENT '地图宽度（米）', `Height` double unsigned DEFAULT NULL COMMENT '地图长度（米）',  `AGV` varchar(50) DEFAULT NULL COMMENT '地图上注册的AGV',  `Type` int(11) DEFAULT NULL COMMENT '地图类型，磁标，RFID，激光 0磁标，1RFID，2激光', PRIMARY KEY(`ID`)) ENGINE = InnoDB AUTO_INCREMENT = 42 DEFAULT CHARSET = utf8 ROW_FORMAT = COMPACT COMMENT = '取名为map+UTC时间，如map1234567890'; ");
                 string settingSql = string.Format("CREATE TABLE IF NOT EXISTS agv.`setting` (`ID` int(11) NOT NULL AUTO_INCREMENT, `Map` bigint(20) DEFAULT '0' COMMENT '默认地图', `Mode` int(10) DEFAULT '0' COMMENT '启动方式：0.编辑模式，1.自启动模式', PRIMARY KEY(`ID`)) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8; ");

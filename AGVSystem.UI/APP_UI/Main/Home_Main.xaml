@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:AGVSystem.UI.APP_UI.Main"
         mc:Ignorable="d"
         Title="Home_Main" Height="900" Width="1400" WindowState="Maximized" MinWidth="750" MinHeight="600"  Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+        <Style x:Key="FontAwesome">
+            <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Styles/fonts/#FontAwesome" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid Background="#f0f0f0">
             <Grid.RowDefinitions>
@@ -68,9 +73,30 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Label Content="地图:" ></Label>
+                <Label Content="地图:" VerticalAlignment="Center"  HorizontalAlignment="Center" ></Label>
                 <ComboBox Width="125" SelectedIndex="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="MapMenu" SelectionChanged="MapMenu_SelectionChanged" DisplayMemberPath="Name" SelectedValuePath="CreateTime">
                 </ComboBox>
+                <Separator />
+                <ProgressBar VerticalAlignment="Center"  Name="Schedule"  HorizontalAlignment="Center"  Width="100" Value="0" Height="20"></ProgressBar>
+                <Label Content="0%" Name="scale" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Separator />
+                <Button Cursor="Hand"  Name="Issue_Line" Click="Issue_Line_Click" IsEnabled="False">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill"  Source="/image/issue.png"/>
+                            <TextBlock  Text="下发路径" Margin="5,0,0,0" FontSize="14" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Separator />
+                <Button Cursor="Hand"  IsEnabled="False" Name="Issueoff" Click="Issueoff_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xf057;" FontSize="22" Foreground="#515151" Style="{DynamicResource FontAwesome}" />
+                            <TextBlock  Text="取消下发" Margin="5,0,0,0" FontSize="14" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
             </ToolBar>
             <Border Grid.Column="2" Grid.Row="2"   Background="#ffff" >
                 <Border Grid.Column="2" Grid.Row="2" Margin="3,3,1,3" BorderBrush="#898c95" Background="#ffff" BorderThickness="1,1,1,1">
@@ -233,12 +259,12 @@
                                             <DataGridTemplateColumn  Width="*">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock  Foreground="{Binding ComStaticColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding ComStatic}"/>
+                                                        <TextBlock  Foreground="{Binding ComStaticColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding ComStatic,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                                 <DataGridTemplateColumn.HeaderTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="状态" FontSize="12" Foreground="Black" Cursor="Cross"></TextBlock>
+                                                        <TextBlock Text="状态" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                             </DataGridTemplateColumn>
@@ -286,12 +312,12 @@
                                             <DataGridTemplateColumn  Width="*">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock  Foreground="{Binding IP_StaticColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding IP_Static}"/>
+                                                        <TextBlock  Foreground="{Binding IP_StaticColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding IP_Static,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                                 <DataGridTemplateColumn.HeaderTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="状态" FontSize="12" Foreground="Black" Cursor="Cross"></TextBlock>
+                                                        <TextBlock Text="状态" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                             </DataGridTemplateColumn>
@@ -310,16 +336,44 @@
                     <TabControl Grid.ColumnSpan="5">
                         <TabItem Header="运行信息">
                             <DataGrid x:Name="TabAgvMoveData"  AllowDrop="True" RowHeaderWidth="0"  ItemsSource="{Binding}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" >
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Background" Value="White" />
+                                        <Setter Property="Height" Value="25" />
+                                        <Setter Property="Foreground" Value="Black" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#191970" />
+                                                <Setter Property="Foreground" Value="Black" />
+                                            </Trigger>
+                                            <Trigger Property="AlternationIndex" Value="0">
+                                                <Setter Property="Background" Value="White" />
+                                            </Trigger>
+                                            <Trigger Property="AlternationIndex" Value="1">
+                                                <Setter Property="Background" Value="#f2f2f2" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="LightGray" />
+                                            </Trigger>
+                                            <!--<Trigger Property="IsSelected" Value="True">
+                                    -->
+                                            <!--<Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="Background" Value="LightGray" />-->
+                                            <!--
+                                </Trigger>-->
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
                                 <DataGrid.Columns>
                                     <DataGridTemplateColumn   Width="80"  >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock  Foreground="{Binding ColorBg,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding agvStatic}"/>
+                                                <TextBlock  Foreground="{Binding ColorBg,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding agvStatic,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.HeaderTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="状态" FontSize="12" Foreground="Black" Cursor="Cross"></TextBlock>
+                                                <TextBlock Text="网络状态" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.HeaderTemplate>
                                     </DataGridTemplateColumn>
@@ -330,6 +384,18 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
+                                    <DataGridTemplateColumn   Width="*"  >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Foreground="{Binding ColorOperation,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Operation,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="运行状态" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                    </DataGridTemplateColumn>
                                     <DataGridTextColumn Header="电压"  Binding="{Binding Voltage}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
@@ -344,27 +410,63 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="转弯" Binding="{Binding turn}"  Width="*" Foreground="Black" >
+                                    <!--<DataGridTextColumn Header="" Binding="{Binding turn}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="方向" Binding="{Binding Dir}"  Width="*" Foreground="Black" >
+                                    </DataGridTextColumn>-->
+                                    <DataGridTemplateColumn   Width="*"  >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Foreground="{Binding Turncolor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding turn,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="转弯" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                    </DataGridTemplateColumn>
+                                    <!--<DataGridTextColumn Header="方向" Binding="{Binding Dir}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="挂钩"  Binding="{Binding Hook}"  Width="*" Foreground="Black" >
+                                    </DataGridTextColumn>-->
+                                    <DataGridTemplateColumn   Width="*"  >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Foreground="{Binding Dircolor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Dir,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="方向" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                    </DataGridTemplateColumn>
+                                    <!--<DataGridTextColumn Header="挂钩"  Binding="{Binding Hook}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
-                                    </DataGridTextColumn>
+                                    </DataGridTextColumn>-->
+                                    <DataGridTemplateColumn   Width="*"  >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Foreground="{Binding Hookcolor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding Hook,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="挂钩" FontSize="12" Foreground="Black" Cursor="Hand"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                    </DataGridTemplateColumn>
                                     <DataGridTextColumn Header="信标"   Binding="{Binding RFID}" Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
@@ -372,14 +474,14 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="线路号"  Binding="{Binding RouteNo}"  Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="扫描区域"  Binding="{Binding PBS}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="扫描区域"  Binding="{Binding PBS}"  Width="*" Foreground="Black" >
+                                    <DataGridTextColumn Header="线路号"  Binding="{Binding RouteNo}"  Width="*" Foreground="Black" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
@@ -404,12 +506,11 @@
                             </DataGrid>
                         </TabItem>
                         <TabItem Header="日志输出">
-                            <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                <TextBox Name="txtLog" AcceptsReturn="True"  IsReadOnly="True" Text="2018-12-11 05:30:22 agvNum:5 start"
-                 TextWrapping="Wrap" Foreground="#4682b4"
-                 VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"/>
-                            </ScrollViewer>
+                            <!--<ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">-->
+                                <TextBox Name="txtLog"  BorderThickness="0"  AcceptsReturn="True"   Background="#ffffec"  IsReadOnly="True" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto"
+                 TextWrapping="Wrap" Foreground="Black"
+   /> 
+                            <!--</ScrollViewer>-->
                         </TabItem>
                     </TabControl>
                 </Border>

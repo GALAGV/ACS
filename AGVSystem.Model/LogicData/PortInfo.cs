@@ -1,35 +1,60 @@
-﻿using System.Collections.Generic;
+﻿using AGVDLL;
+using AGVSystem.Model.Ga_agvModels;
+using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 
 namespace AGVSystem.Model.LogicData
 {
     public class PortInfo
     {
-        //AGV
-        public static List<int> AGVCom = new List<int>();
-        public static List<int> Baud = new List<int>();
-        public static List<string> agv = new List<string>();
+        public static List<AgvPortInfo> AgvPortsList = new List<AgvPortInfo>();//AGV串口集合
 
-        //PLC
-        public static List<SerialPort> plcPort = new List<SerialPort>();
-        public static List<int> plcCom = new List<int>();
-        public static List<int> plcBaud = new List<int>();
-        public static List<string> plcStr = new List<string>();
+        public static List<DevicePortInfo> DePortsList = new List<DevicePortInfo>(); //按钮，LPC，充电机串口集合
 
-        //按钮
-        public static List<SerialPort> buttonPort = new List<SerialPort>();
-        public static List<int> buttonCom = new List<int>();
-        public static List<int> buttonBaud = new List<int>();
-        public static List<string> buttonStr = new List<string>();
+        public static List<NetworkInfo> Networks = new List<NetworkInfo>(); //网络集合
+    }
 
-        //充电机
-        public static List<SerialPort> chargePort = new List<SerialPort>();
-        public static List<int> chargeCom = new List<int>();
-        public static List<int> chargeBaud = new List<int>();
-        public static List<string> chargeStr = new List<string>();
+    public class BasePort  //串口基类
+    {
+        /// <summary>
+        /// 串口编号
+        /// </summary>
+        public int ComNumber { get; set; }
 
-        //网络
-        public static List<string> IP = new List<string>();
-        public static List<int> Port = new List<int>();
+        /// <summary>
+        /// 波特率
+        /// </summary>
+        public int BaudRate { get; set; }
+    }
+
+
+    public class AgvPortInfo : BasePort
+    {
+        public IntPtr IntPtr { get; set; }
+
+        /// <summary>
+        /// Agv车号
+        /// </summary>
+        public string AgvStr { get; set; }
+
+        /// <summary>
+        /// agvdll 动态调用
+        /// </summary>
+        public AGVDLL.AGVDLL AgvDll { get; set; }
+    }
+
+    public class DevicePortInfo : BasePort
+    {
+        public SerialPort Port { get; set; }
+
+        public PortType PortType { get; set; }
+    }
+
+    public class RFIDLineList
+    {
+        public List<RFIDClass> GetRFIDs { get; set; }  //RFIDClass集合
+
+        public int Program { get; set; }  //线路好
     }
 }

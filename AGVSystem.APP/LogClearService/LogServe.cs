@@ -40,12 +40,13 @@ namespace AGVSystem.APP.LogClearService
                     interval = OperateIniTool.OperateIniRead("Table", "interval").TransformInt();
                     string Tableresult = OperateIniTool.OperateIniRead("Table", "Name");
                     Table = !string.IsNullOrEmpty(Tableresult) ? Tableresult.Split(',').ToList() : new List<string>();
-                    WriteLog.writeLogInfo("LogClear", "Log", "配置读取成功");
+                    WriteLog.writeLogInfo("Service", "service", "配置读取成功!");
                 }
                 else
                 {
-                    WriteLog.writeLogInfo("LogClear", "Log", "配置文件丢失");
+                    WriteLog.writeLogInfo("Service", "service", "配置文件丢失!");
                 }
+                cancellationTokenSource = new CancellationTokenSource();
                 Task.Factory.StartNew(() =>
                 {
                     while (!cancellationTokenSource.IsCancellationRequested)
@@ -53,12 +54,12 @@ namespace AGVSystem.APP.LogClearService
                         ClearLog();
                     }
                 }, cancellationTokenSource.Token);
-                WriteLog.writeLogInfo("LogClear", "Log", "日志清理服务启动成功");
+                WriteLog.writeLogInfo("Service", "service", "日志清理服务启动成功!");
             }
             catch (Exception ex)
             {
                 cancellationTokenSource.Cancel();
-                WriteLog.writeLogInfo("LogClear", "Log", "服务启动出错,错误信息:" + ex.ToString() + "");
+                WriteLog.writeLogInfo("Service", "service", "服务启动出错,错误信息:" + ex.ToString() + "");
             }
         }
         #endregion
@@ -73,11 +74,11 @@ namespace AGVSystem.APP.LogClearService
             try
             {
                 cancellationTokenSource.Cancel();
-                WriteLog.writeLogInfo("LogClear", "Log", "服务已停止！");
+                WriteLog.writeLogInfo("Service", "service", "服务已停止!");
             }
             catch (Exception ex)
             {
-                WriteLog.writeLogInfo("LogClear", "Log", $"服务停止异常，异常信息：{ex.Message.ToString()}");
+                WriteLog.writeLogInfo("Service", "service", $"服务停止异常，异常信息：{ex.Message.ToString()}");
             }
         }
         #endregion

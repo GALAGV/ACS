@@ -79,8 +79,8 @@
                 <GroupItem>蓝色</GroupItem>
                 <GroupItem>紫色</GroupItem>
             </ComboBox>
-            <Button Content="确认" Name="btn_Submit" Click="Btn_Submit_Click"  Height="30" BorderBrush="#adadad" FontWeight="Black" Margin="20,5,0,0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="90" Grid.Column="2" Grid.Row="6" ></Button>
-            <Button Content="删除" FontWeight="Black" Click="Btn_Delete_Click" Width="90" Height="30" BorderBrush="#adadad" Name="btn_Delete"  Margin="56,5,0,0" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Stretch" />
+            <Button Content="确认" Name="btn_Submit" Click="Btn_Submit_Click"  Height="30" BorderBrush="#adadad"  Margin="20,5,0,0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="90" Grid.Column="2" Grid.Row="6" ></Button>
+            <Button Content="删除" Click="Btn_Delete_Click" Width="90" Height="30" BorderBrush="#adadad" Name="btn_Delete"  Margin="56,5,0,0" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Stretch" />
         </Grid>
 
 

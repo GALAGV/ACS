@@ -5,12 +5,10 @@ using AGVSystem.Model.Ga_agvModels;
 using AGVSystem.Model.LogicData;
 using AGVSystem.Model.MapData;
 using AGVSystem.UI.APP_UI.Setting;
-using OperateIni;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,8 +23,6 @@ namespace AGVSystem.UI.APP_UI.Map
     /// </summary>
     public partial class EditLine : Window
     {
-
-        private Painting GetPainting = new Painting();
         private MapInstrument map = new MapInstrument();
         private agvMapRegulate mapService = new agvMapRegulate();
         private double CanvasWidth, CanvasHeight; //初始宽高
@@ -34,7 +30,7 @@ namespace AGVSystem.UI.APP_UI.Map
         private ObservableCollection<Route> GetRoutes = new ObservableCollection<Route>();
         private Route RouteData = new Route();
         private ObservableCollection<Route> routes = new ObservableCollection<Route>();
-
+        private List<string> associatedTag = new List<string>(); //关联Tag集合
         private long UTCTime;
         private bool edit = true;
 
@@ -50,11 +46,14 @@ namespace AGVSystem.UI.APP_UI.Map
         {
             MapList = mapService.GetMapRegulate(); ;
             MapMenu.ItemsSource = MapList;
-            LoadMap(MapList[0]);
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini"))
+            if (MapList.Count() > 0)
             {
-                string Size = IniFile.ReadIniData("AGV", "MapSise", "", AppDomain.CurrentDomain.BaseDirectory + "\\setting.ini");
-                map.MapSise = Convert.ToDouble(Size);
+                LoadMap(MapList[0]);
+                if (OperateIniTool.Exist)
+                {
+                    string Size = OperateIniTool.OperateIniRead("AGV", "MapSise");
+                    map.MapSise = Convert.ToDouble(Size);
+                }
             }
         }
 
@@ -73,8 +72,16 @@ namespace AGVSystem.UI.APP_UI.Map
             Line.SelectedIndex = 0;
         }
 
-        List<string> associatedTag = new List<string>(); //关联Tag集合
 
+
+        #region 添加线路点
+
+       
+        /// <summary>
+        /// 添加线路点
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Value_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Label tag = (Label)sender;
@@ -82,12 +89,13 @@ namespace AGVSystem.UI.APP_UI.Map
             {
                 if (routes.Count().Equals(0) || (associatedTag.Where(x => x.Equals(tag.Tag.ToString())).Count() >= 1) || (edit == true && (associatedTag.Where(x => x.Equals(tag.Tag.ToString())).Count() >= 1)))
                 {
-                    AssociatedTag(Convert.ToInt32(tag.Tag));
-                    int TagPoint = routes.Count() > 0 ? Convert.ToInt32(routes[routes.Count() - 1].Tag) : 0;
-                    int TagWirePoint = Convert.ToInt32(tag.Tag);
-                    SignLine(map.wirePointArrays.Where(p => (
-                    p.GetPoint.TagID.Equals(TagPoint) && p.GetWirePoint.TagID.Equals(TagWirePoint)) || (p.GetPoint.TagID.Equals(TagWirePoint) && p.GetWirePoint.TagID.Equals(TagPoint))).ToList(), Brushes.Red, 8);
-                    routes.Add(NewRoute(new Route()
+                    AssociatedTag(Convert.ToInt32(tag.Tag)); //标记关联Tag为绿色
+                    int TagPoint = routes.Count() > 0 ? Convert.ToInt32(routes[routes.Count() - 1].Tag) : 0; //起始Tag（表格最后一个Tag）
+                    int TagWirePoint = Convert.ToInt32(tag.Tag);  //结束Tag（点击Tag）
+                    List<WirePointArray> wires = map.wirePointArrays.Where(p => (   //查找关联线路
+                     p.GetPoint.TagID.Equals(TagPoint) && p.GetWirePoint.TagID.Equals(TagWirePoint)) || (p.GetPoint.TagID.Equals(TagWirePoint) && p.GetWirePoint.TagID.Equals(TagPoint))).ToList();
+                    map.SignLine(wires, Brushes.Red, 8,999);  //关联线路标记为红色
+                    routes.Add(NewRoute(new Route() //添加线路
                     {
                         Stop = "0",
                         Tag = tag.Tag.ToString(),
@@ -98,33 +106,112 @@ namespace AGVSystem.UI.APP_UI.Map
                         Hook = (MainInfo.agvHook.Length - 1).ToString(),
                         Direction = (MainInfo.agvDire.Length - 1).ToString(),
                     }));
-                    if (!edit)
+
+                    #region 计算方向
+
+                    if (MapRegulate.DirectionLine == 1)  //是否开启方向自动计算
                     {
-                        if (!string.IsNullOrWhiteSpace(MapRegulate.TemplateName))
+                        if (routes.Count() > 0 && wires.Count() > 0 && wires[0].circuitType == CircuitType.Broken)
+                        {
+                            Point startPt = new Point() { X = map.valuePairs[TagPoint].Margin.Left - 19, Y = map.valuePairs[TagPoint].Margin.Top - 11.5 };
+                            Point endPt = new Point() { X = map.valuePairs[TagWirePoint].Margin.Left - 19, Y = map.valuePairs[TagWirePoint].Margin.Top - 11.5 };
+
+                            //map.Draw_Triangle(startPt,endPt);
+
+
+                            Point X = wires[0].GetPoint.SetPoint;
+                            Point Y = wires[0].GetWirePoint.SetPoint; ;
+
+                            double XP = (X.X - Y.X);
+                            double YP = (X.Y - Y.Y);
+
+                            double LineStart = (startPt.X - endPt.X);
+                            double endStart = (startPt.Y - endPt.Y);
+
+                            int Counts = routes.Count;
+
+                            if ((LineStart < 0 && endStart > 0))
+                            {
+                                if (XP < 0 && YP > 0)
+                                {
+                                    routes[Counts - 2].Turn = "左转";
+                                }
+                                else
+                                {
+                                    routes[Counts - 2].Turn = "右转";
+                                }
+                            }
+                            else if (LineStart > 0 && endStart > 0)
+                            {
+                                if (XP > 0 && YP > 0)
+                                {
+                                    routes[Counts - 2].Turn = "右转";
+                                }
+                                else
+                                {
+                                    routes[Counts - 2].Turn = "左转";
+                                }
+                            }
+                            else if (LineStart > 0 && endStart < 0)
+                            {
+
+                                if (XP > 0 && YP < 0)
+                                {
+                                    routes[Counts - 2].Turn = "左转";
+                                }
+                                else
+                                {
+                                    routes[Counts - 2].Turn = "右转";
+                                }
+                            }
+                            else if (LineStart < 0 && endStart < 0)
+                            {
+                                if (XP < 0 && YP < 0)
+                                {
+                                    routes[Counts - 2].Turn = "右转";
+                                }
+                                else
+                                {
+                                    routes[Counts - 2].Turn = "左转";
+                                }
+                            }
+                            routes[Counts - 1].Turn = "取消转弯";
+                            routes[Counts - 1].TurnColor = brushTurn(Convert.ToInt32(MainInfo.agvTurn.ToList().IndexOf(routes[Counts - 1].Turn)));
+                            routes[Counts - 2].TurnColor = brushTurn(Convert.ToInt32(MainInfo.agvTurn.ToList().IndexOf(routes[Counts - 2].Turn)));
+                        }
+                    }
+                    #endregion
+
+                    #region 新建线路规则匹配
+
+                    if (!edit) //不等于编辑模式
+                    {
+                        if (!string.IsNullOrWhiteSpace(MapRegulate.TemplateName)) //线路名称模板不为空
                         {
                             string Name = MapRegulate.TemplateName;
                             string TemplateText = string.Empty;
-                            if (Name.Contains("[StartTag]") && Name.Contains("[StopTag]"))
+                            if (Name.Contains("[StartTag]") && Name.Contains("[StopTag]")) //确认匹配规则是否匹配
                             {
-                                TemplateText = Name.Replace("[StartTag]", $"{routes[0].Tag}");
-                                TemplateText = TemplateText.Replace("[StopTag]", $"{routes[routes.Count() - 1].Tag}");
+                                TemplateText = Name.Replace("[StartTag]", $"{routes[0].Tag}"); //替换起始点
+                                TemplateText = TemplateText.Replace("[StopTag]", $"{routes[routes.Count() - 1].Tag}"); //替换结束点
                                 RouteName.Text = TemplateText;
                             }
                         }
                         else
                         {
-                            RouteName.Text = $"{routes[0].Tag}-{routes[routes.Count() - 1].Tag}";
+                            RouteName.Text = $"{routes[0].Tag}-{routes[routes.Count() - 1].Tag}"; //模板为空，则执行默认规则
                         }
                     }
+                    #endregion
                 }
             }
-            else if (e.RightButton == MouseButtonState.Pressed)
+            else if (e.RightButton == MouseButtonState.Pressed)  //移除线路点
             {
                 Route route = routes.FirstOrDefault(x => x.Tag.Equals(tag.Tag.ToString()));
                 if (route != null)
                 {
                     TagRecover();
-                    SignLine(map.wirePointArrays, Brushes.Black, 1.7);
+                    map.SignLine(map.wirePointArrays, Brushes.Black, 1.7,1);
                     int Index = routes.IndexOf(route);
                     int CountLine = routes.Count;
                     for (int i = 0; i < CountLine; i++)
@@ -138,9 +225,9 @@ namespace AGVSystem.UI.APP_UI.Map
                             if (i != Index)
                             {
                                 if (!i.Equals(CountLine - 1))
-                                    SignLine(map.wirePointArrays.Where(p => (
+                                    map.SignLine(map.wirePointArrays.Where(p => (
                                       p.GetPoint.TagID.Equals(Convert.ToInt32(routes[i].Tag)) && p.GetWirePoint.TagID.Equals(Convert.ToInt32(routes[i + 1].Tag))) ||
-                                      (p.GetPoint.TagID.Equals(Convert.ToInt32(routes[i + 1].Tag)) && p.GetWirePoint.TagID.Equals(Convert.ToInt32(routes[i].Tag)))).ToList(), Brushes.Red, 8);
+                                      (p.GetPoint.TagID.Equals(Convert.ToInt32(routes[i + 1].Tag)) && p.GetWirePoint.TagID.Equals(Convert.ToInt32(routes[i].Tag)))).ToList(), Brushes.Red, 8,999);
                             }
                         }
                     }
@@ -148,8 +235,14 @@ namespace AGVSystem.UI.APP_UI.Map
                 }
             }
         }
+        #endregion
 
+        #region 点击Tag标记红色，关联Tag标记绿色
 
+        /// <summary>
+        /// 点击Tag标记红色，关联Tag标记绿色
+        /// </summary>
+        /// <param name="TagID"></param>
         private void AssociatedTag(int TagID)
         {
             string[] TagArray = mapService.SelectTagSystem(UTCTime, TagID.ToString());
@@ -161,45 +254,40 @@ namespace AGVSystem.UI.APP_UI.Map
                 map.valuePairs.FirstOrDefault(p => p.Key.Equals(Convert.ToInt32(TagArray[i]))).Value.Background = new SolidColorBrush(Colors.Green);
             }
         }
+        #endregion
 
-        private void SignLine(List<WirePointArray> pointArrays, Brush brushes, double LintWidth)
-        {
-            pointArrays.ForEach(
-                    p =>
-                    {
-                        if (p.circuitType.Equals(CircuitType.Line) || p.circuitType.Equals(CircuitType.Semicircle))
-                        {
-                            System.Windows.Shapes.Path path = ((WirePointLine)p).GetPath;
-                            path.Stroke = brushes;
-                            path.StrokeThickness = LintWidth;
-                        }
-                        else if (p.circuitType.Equals(CircuitType.Broken))
-                        {
-                            List<System.Windows.Shapes.Path> path = ((WirePointBroken)p).Paths;
-                            path.ForEach(x => { x.Stroke = brushes; x.StrokeThickness = LintWidth; });
-                        }
-                    });
-        }
+        #region Tag颜色复原
 
         private void TagRecover()
         {
             map.valuePairs.Select(p => p.Value).ToList().ForEach(p => p.Background = new SolidColorBrush(Colors.Black));
         }
+        #endregion
 
+        #region 地图选项更改事件
+
+       
         private void MapMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MapMenu.Items.Count > 0 && !string.IsNullOrEmpty(MapMenu.Text))
             {
                 SerialPortData.DataContext = null;
                 LoadMap(MapList.FirstOrDefault(x => x.CreateTime.Equals(MapMenu.SelectedValue.ToString())));
+
             }
         }
+        #endregion
+
+        #region 线路选项更改
 
         private void Line_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Line.SelectedValue == null)
+            {
+                routes.Clear();
+                SerialPortData.DataContext = routes;
                 return;
-
+            }
             if (Line.Items.Count > 0 && Line.SelectedValue != null)
             {
                 edit = true;
@@ -207,7 +295,7 @@ namespace AGVSystem.UI.APP_UI.Map
                 RouteData = GetRoutes.FirstOrDefault(x => x.Program.Equals(Convert.ToInt32(Line.SelectedValue.ToString())));
                 if (RouteData != null)
                 {
-                    SignLine(map.wirePointArrays, Brushes.Black, 1.7);
+                    map.SignLine(map.wirePointArrays, Brushes.Black, 1.7,1);
                     TagRecover();
                     RouteName.Text = RouteData.Name;
                     ProgramNum.Text = RouteData.Program.ToString();
@@ -239,7 +327,7 @@ namespace AGVSystem.UI.APP_UI.Map
                             string aa = TagArray[i];
                             string bb = TagArray[i + 1];
                             List<WirePointArray> wires = map.wirePointArrays.Where(p => (p.GetPoint.TagID.Equals(Convert.ToInt32(TagArray[i])) && p.GetWirePoint.TagID.Equals(Convert.ToInt32(TagArray[i + 1]))) || (p.GetPoint.TagID.Equals(Convert.ToInt32(TagArray[i + 1])) && p.GetWirePoint.TagID.Equals(Convert.ToInt32(TagArray[i])))).ToList();
-                            SignLine(wires, Brushes.Red, 8);
+                            map.SignLine(wires, Brushes.Red, 8,999);
                         }
                         else
                         {
@@ -255,8 +343,10 @@ namespace AGVSystem.UI.APP_UI.Map
                 SerialPortData.DataContext = new ObservableCollection<Route>();
             }
         }
+        #endregion
 
-
+        #region 格式化线路数据
+     
         private Route NewRoute(Route route)
         {
             return new Route()
@@ -284,13 +374,23 @@ namespace AGVSystem.UI.APP_UI.Map
                 DirectionColor = HookORDirectionColor(Convert.ToInt32(route.Direction), false)
             };
         }
+        #endregion
 
-
+        #region 数据选项框关闭事件
+       
         private void ListT_DropDownClosed(object sender, EventArgs e)
         {
             this.SerialPortData.CommitEdit();
         }
+        #endregion
 
+        #region 线路选项列更改事件
+
+        /// <summary>
+        /// 线路选项列更改事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SerialPortData_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             int indexs = SerialPortData.SelectedIndex;
@@ -315,6 +415,10 @@ namespace AGVSystem.UI.APP_UI.Map
                 }
             }
         }
+
+        #endregion
+
+        #region 保存线路
 
         private void RouteSave_Click(object sender, RoutedEventArgs e)
         {
@@ -367,6 +471,9 @@ namespace AGVSystem.UI.APP_UI.Map
                 MessageBox.Show("格式输入错误！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        #endregion
+
+        #region 添加线路
 
         private void Line_Add_Click(object sender, RoutedEventArgs e)
         {
@@ -375,8 +482,11 @@ namespace AGVSystem.UI.APP_UI.Map
             routes.Clear();
             RouteName.Text = "";
             ProgramNum.Text = GetRoutes.Count > 0 ? (GetRoutes.Max(x => x.Program) + 1).ToString() : "1";
-            SignLine(map.wirePointArrays, Brushes.Black, 1.7);
+            map.SignLine(map.wirePointArrays, Brushes.Black, 1.7,1);
         }
+        #endregion
+
+        #region 删除线路
 
         private void Line_Delete_Click(object sender, RoutedEventArgs e)
         {
@@ -406,6 +516,10 @@ namespace AGVSystem.UI.APP_UI.Map
             }
         }
 
+        #endregion
+
+        #region 颜色获取
+
         public Brush brushTurn(int id)
         {
             if (id.Equals(0))
@@ -426,7 +540,6 @@ namespace AGVSystem.UI.APP_UI.Map
             }
             return new SolidColorBrush(Colors.Black);
         }
-
 
         public Brush HookORDirectionColor(int id, bool Hook)
         {
@@ -450,6 +563,10 @@ namespace AGVSystem.UI.APP_UI.Map
             }
         }
 
+        #endregion
+
+        #region 缩放
+
         private void Magnify_Click(object sender, RoutedEventArgs e)
         {
             map.MapSise += 0.2;
@@ -467,6 +584,7 @@ namespace AGVSystem.UI.APP_UI.Map
         {
             map.Mapmagnify(map.MapSise, CanvasWidth, CanvasHeight, true);
         }
+      
 
         private void Shrink_Click(object sender, RoutedEventArgs e)
         {
@@ -485,11 +603,14 @@ namespace AGVSystem.UI.APP_UI.Map
             CanvasMapZoom();
         }
 
-
-        private void ListT_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SrcCount_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-
+            SrcX.ScrollToHorizontalOffset(e.HorizontalOffset);//X轴标尺跟随移动
+            SrcY.ScrollToVerticalOffset(e.VerticalOffset); //Y轴标尺等随移动
         }
+        #endregion
+
+
 
         private void Config_Click(object sender, RoutedEventArgs e)
         {
@@ -497,16 +618,8 @@ namespace AGVSystem.UI.APP_UI.Map
             line.ShowDialog();
         }
 
-        private void SrcCount_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            SrcX.ScrollToHorizontalOffset(e.HorizontalOffset);//X轴标尺跟随移动
-            SrcY.ScrollToVerticalOffset(e.VerticalOffset); //Y轴标尺等随移动
-        }
 
-        private void SerialPortData_GotFocus(object sender, RoutedEventArgs e)
-        {
 
-        }
 
         private void SerialPortData_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -536,6 +649,13 @@ namespace AGVSystem.UI.APP_UI.Map
                     routes[index].HookColor = HookORDirectionColor(MainInfo.agvHook.ToList().IndexOf(route.Hook), true);
                 }
             }
+        }
+
+        private void Inquire_Line_Click(object sender, RoutedEventArgs e)
+        {
+            GetRoutes = mapService.GetrouteList(UTCTime.ToString(), RouteName.Text.Trim(), ProgramNum.Text.Trim());
+            Line.ItemsSource = GetRoutes;
+            Line.SelectedIndex = 0;
         }
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)

@@ -8,7 +8,6 @@ using System.IO;
 using AGVSystem.Infrastructure.agvCommon;
 using System.Collections.ObjectModel;
 using AGVSystem.Model.LogicData;
-using System.Linq;
 using System.Windows.Media;
 
 namespace AGVSystem.APP.agv_Map
@@ -69,29 +68,44 @@ namespace AGVSystem.APP.agv_Map
         /// <returns></returns>
         public ObservableCollection<Route> GetrouteList(string MapName)
         {
+            return Ergodic_Read(IO_AGVMapService.BLLMapRoute(MapName));
+        }
+
+
+        public ObservableCollection<Route> GetrouteList(string MapName, string LineName, string Program)
+        {
+            if (string.IsNullOrWhiteSpace(Program) || !FormatVerification.IsFloat(Program))
+                return Ergodic_Read(IO_AGVMapService.BLLMapRoute(MapName, LineName, "N/A"));
+            else
+                return Ergodic_Read(IO_AGVMapService.BLLMapRoute(MapName, LineName, Program));
+        }
+
+        private ObservableCollection<Route> Ergodic_Read(MySqlDataReader read)
+        {
             ObservableCollection<Route> routes = new ObservableCollection<Route>();
-            MySqlDataReader mySql = IO_AGVMapService.BLLMapRoute(MapName);
-            while (mySql.Read())
+            while (read.Read())
             {
-                routes.Add(new Route() {
-                    ID= Convert.ToInt32(mySql["ID"].ToString().Trim()),
-                    Name= mySql["Name"].ToString().Trim(),
-                    CreateTime= long.Parse(mySql["CreateTime"].ToString().Trim()),
-                    Tag= mySql["Tag"].ToString().Trim(),
-                    Direction = mySql["Direction"].ToString().Trim(),
-                    ChangeProgram= mySql["ChangeProgram"].ToString().Trim(),
-                    Hook = mySql["Hook"].ToString().Trim(),
-                    Pbs= mySql["Pbs"].ToString().Trim(),
-                    Program= Convert.ToInt32(mySql["Program"].ToString().Trim()),
-                    revPbs= mySql["revPbs"].ToString().Trim(),
-                    Speed= mySql["Speed"].ToString().Trim(),
-                    Stop= mySql["Stop"].ToString().Trim(),
-                    Turn = mySql["Turn"].ToString().Trim()
+                routes.Add(new Route()
+                {
+                    ID = Convert.ToInt32(read["ID"].ToString().Trim()),
+                    Name = read["Name"].ToString().Trim(),
+                    CreateTime = long.Parse(read["CreateTime"].ToString().Trim()),
+                    Tag = read["Tag"].ToString().Trim(),
+                    Direction = read["Direction"].ToString().Trim(),
+                    ChangeProgram = read["ChangeProgram"].ToString().Trim(),
+                    Hook = read["Hook"].ToString().Trim(),
+                    Pbs = read["Pbs"].ToString().Trim(),
+                    Program = Convert.ToInt32(read["Program"].ToString().Trim()),
+                    revPbs = read["revPbs"].ToString().Trim(),
+                    Speed = read["Speed"].ToString().Trim(),
+                    Stop = read["Stop"].ToString().Trim(),
+                    Turn = read["Turn"].ToString().Trim()
                 });
             }
-            mySql.Close();
+            read.Close();
             return routes;
         }
+
 
 
 

@@ -10,6 +10,12 @@ using System.Linq;
 using AGVSystem.Infrastructure.agvCommon;
 using System.Text;
 using System.IO;
+using System.Collections.Concurrent;
+using AGVDLL;
+using System.Collections.ObjectModel;
+using AGVSystem.Model.MapData;
+using System.Windows.Controls;
+using System.Data;
 
 namespace AGVSystem.APP.agv_System
 {
@@ -22,19 +28,19 @@ namespace AGVSystem.APP.agv_System
         /// AGV信息
         /// </summary>
         /// <returns></returns>
-        public List<Ga_agvStatus> AgvInfo()
+        public ObservableCollection<Ga_agvStatus> AgvInfo()
         {
-            return new List<Ga_agvStatus>()
+            return new ObservableCollection<Ga_agvStatus>()
             {
-                new Ga_agvStatus { StatusName = "AGV",  StatusValue = "1" , ColorBg = new SolidColorBrush(Colors.Black)},
-                new Ga_agvStatus { StatusName = "网络状态", StatusValue = "在线" , ColorBg = new SolidColorBrush(Colors.Green)},
-                new Ga_agvStatus { StatusName = "运行准备", StatusValue = "ON" , ColorBg = new SolidColorBrush(Colors.Green) },
-                new Ga_agvStatus { StatusName = "驱动状态", StatusValue = "上升"  , ColorBg = new SolidColorBrush(Colors.Red)},
-                new Ga_agvStatus { StatusName = "脱轨状态", StatusValue = "正常"  , ColorBg = new SolidColorBrush(Colors.Green)},
-                new Ga_agvStatus { StatusName = "出发位置", StatusValue = "5" , ColorBg = new SolidColorBrush(Colors.Black)},
-                new Ga_agvStatus { StatusName = "目的位置", StatusValue = "4" , ColorBg = new SolidColorBrush(Colors.Black)},
-                new Ga_agvStatus { StatusName = "任务名称", StatusValue = "运输", ColorBg = new SolidColorBrush(Colors.Black) },
-                new Ga_agvStatus { StatusName = "报警信息", StatusValue = "正常" , ColorBg = new SolidColorBrush(Colors.Green)},
+                new Ga_agvStatus { StatusName = "AGV",  StatusValue = "" , ColorBg = new SolidColorBrush(Colors.Black)},
+                new Ga_agvStatus { StatusName = "网络状态", StatusValue = "" , ColorBg = new SolidColorBrush(Colors.Black)},
+                new Ga_agvStatus { StatusName = "运行准备", StatusValue = "" , ColorBg = new SolidColorBrush(Colors.Black) },
+                new Ga_agvStatus { StatusName = "驱动状态", StatusValue = ""  , ColorBg = new SolidColorBrush(Colors.Black)},
+                new Ga_agvStatus { StatusName = "脱轨状态", StatusValue = ""  , ColorBg = new SolidColorBrush(Colors.Black)},
+                new Ga_agvStatus { StatusName = "出发位置", StatusValue = "" , ColorBg = new SolidColorBrush(Colors.Black)},
+                new Ga_agvStatus { StatusName = "目的位置", StatusValue = "" , ColorBg = new SolidColorBrush(Colors.Black)},
+                new Ga_agvStatus { StatusName = "任务名称", StatusValue = "", ColorBg = new SolidColorBrush(Colors.Black) },
+                new Ga_agvStatus { StatusName = "报警信息", StatusValue = "" , ColorBg = new SolidColorBrush(Colors.Black)},
             };
         }
 
@@ -44,11 +50,15 @@ namespace AGVSystem.APP.agv_System
         /// <param name="Agvlist"></param>
         /// <param name="selAgv"></param>
         /// <returns></returns>
-        public List<Ga_agv> AgvInfo(long Time, ref int selAgv)
+        public ObservableCollection<Ga_agv> AgvInfo(long Time, ref int selAgv, ref ConcurrentDictionary<int, CarStatus> pairs, ref ConcurrentDictionary<int, AgvInfo> valuePairs)
         {
             MainInfo.agvNo.Clear();
+            MapRegulate.Site.Clear();
+            valuePairs.Clear();
+            pairs.Clear();
             List<string> Agvlist = GetAgvBLL.AGVNumList(Time);
-            List<Ga_agv> Ga_agvNum = new List<Ga_agv>();
+            ObservableCollection<Ga_agv> Ga_agvNum = new ObservableCollection<Ga_agv>();
+            Random random = new Random();
             for (int i = 0; i < Agvlist.Count; i++)
             {
                 Ga_agvNum.Add(
@@ -66,9 +76,16 @@ namespace AGVSystem.APP.agv_System
                            Step = "",
                            turn = "",
                            Voltage = "",
-                           ColorBg = new SolidColorBrush(Colors.Red)
+                           Operation = "",
+                           ColorOperation = new SolidColorBrush(Colors.Black),
+                           ColorBg = new SolidColorBrush(Colors.Red),
+                           Turncolor = new SolidColorBrush(Colors.Black),
+                           Dircolor = new SolidColorBrush(Colors.Black)
                        });
                 MainInfo.agvNo.Add(Agvlist[i]);
+                MapRegulate.Site.GetOrAdd(Convert.ToInt32(Agvlist[i]), new SiteInfo() { agvSite = new Label(), agvSiteColor = MainInfo.Brushes[random.Next(0, 17)] });
+                valuePairs.GetOrAdd(Convert.ToInt32(Agvlist[i]), new AgvInfo());
+                pairs.GetOrAdd(Convert.ToInt32(Agvlist[i]), new CarStatus() { errorCode = 205, carNum = Convert.ToInt32(Agvlist[i]) });
                 if (i.Equals(0))
                     selAgv = Convert.ToInt32(Agvlist[0]);
             }
@@ -80,43 +97,80 @@ namespace AGVSystem.APP.agv_System
         /// </summary>
         /// <param name="Time"></param>
         /// <returns></returns>
-        public List<Ga_PortInfo> agvGather(long Time)
+        public ObservableCollection<Ga_PortInfo> agvGather(long Time)
         {
-            List<Ga_PortInfo> portInfos = new List<Ga_PortInfo>();
+            ObservableCollection<Ga_PortInfo> portInfos = new ObservableCollection<Ga_PortInfo>();
             MySqlDataReader Read = MapBLL.ListDevice(Time);
+            PortInfo.AgvPortsList.Clear();
+            PortInfo.DePortsList.Clear();
+            SerialPort SP = new SerialPort();
+            SP.StopBits = StopBits.One;
+            SP.Parity = Parity.Odd;
+            SP.ReadTimeout = 1000;
+            SP.WriteTimeout = 1000;
             while (Read.Read())
             {
-                string Port_type = string.Empty;
+                PortType Port_type;
+                SP.PortName = "COM" + Read["Com"].ToString();
                 if (Read["Agv"].ToString() == "Button")
                 {
-                    PortInfo.buttonPort.Add(new SerialPort());
-                    PortInfo.buttonCom.Add(Convert.ToInt32(Read["Com"].ToString()));
-                    PortInfo.buttonBaud.Add(Convert.ToInt32(Read["Baud"].ToString()));
-                    PortInfo.buttonStr.Add("Button");
-                    Port_type = "按钮";
+                    //PortInfo.buttonPort.Add(new SerialPort());
+                    //PortInfo.buttonCom.Add(Convert.ToInt32(Read["Com"].ToString()));
+                    //PortInfo.buttonBaud.Add(Convert.ToInt32(Read["Baud"].ToString()));
+                    //PortInfo.buttonStr.Add("Button");
+                    Port_type = PortType.Button;
+                    PortInfo.DePortsList.Add(new DevicePortInfo()
+                    {
+                        ComNumber = Convert.ToInt32(Read["Com"].ToString()),
+                        BaudRate = Convert.ToInt32(Read["Baud"].ToString()),
+                        Port = SP,
+                        PortType = PortType.Button
+                    });
                 }
                 else if (Read["Agv"].ToString() == "Charge")
                 {
-                    PortInfo.chargePort.Add(new SerialPort());
-                    PortInfo.chargeCom.Add(Convert.ToInt32(Read["Com"].ToString()));
-                    PortInfo.chargeBaud.Add(Convert.ToInt32(Read["Baud"].ToString()));
-                    PortInfo.chargeStr.Add("Charge");
-                    Port_type = "充电机";
+                    //PortInfo.chargePort.Add(new SerialPort());
+                    //PortInfo.chargeCom.Add(Convert.ToInt32(Read["Com"].ToString()));
+                    //PortInfo.chargeBaud.Add(Convert.ToInt32(Read["Baud"].ToString()));
+                    //PortInfo.chargeStr.Add("Charge");
+                    Port_type = PortType.Charge;
+                    PortInfo.DePortsList.Add(new DevicePortInfo()
+                    {
+                        ComNumber = Convert.ToInt32(Read["Com"].ToString()),
+                        BaudRate = Convert.ToInt32(Read["Baud"].ToString()),
+                        Port = SP,
+                        PortType = PortType.Charge
+                    });
                 }
                 else if (Read["Agv"].ToString() == "Plc")
                 {
-                    PortInfo.chargePort.Add(new SerialPort());
-                    PortInfo.plcCom.Add(Convert.ToInt32(Read["Com"].ToString()));
-                    PortInfo.plcBaud.Add(Convert.ToInt32(Read["Baud"].ToString()));
-                    PortInfo.plcStr.Add("Plc");
-                    Port_type = "PLC";
+                    //PortInfo.chargePort.Add(new SerialPort());
+                    //PortInfo.plcCom.Add(Convert.ToInt32(Read["Com"].ToString()));
+                    //PortInfo.plcBaud.Add(Convert.ToInt32(Read["Baud"].ToString()));
+                    //PortInfo.plcStr.Add("Plc");
+                    Port_type = PortType.PLC;
+                    PortInfo.DePortsList.Add(new DevicePortInfo()
+                    {
+                        ComNumber = Convert.ToInt32(Read["Com"].ToString()),
+                        BaudRate = Convert.ToInt32(Read["Baud"].ToString()),
+                        Port = SP,
+                        PortType = PortType.PLC
+                    });
                 }
                 else
                 {
-                    PortInfo.AGVCom.Add(Convert.ToInt32(Read["Com"].ToString()));
-                    PortInfo.Baud.Add(Convert.ToInt32(Read["Baud"].ToString()));
-                    PortInfo.agv.Add((Read["Agv"].ToString()));
-                    Port_type = "AGV";
+                    //PortInfo.AGVCom.Add(Convert.ToInt32(Read["Com"].ToString()));
+                    //PortInfo.Baud.Add(Convert.ToInt32(Read["Baud"].ToString()));
+                    //PortInfo.agv.Add((Read["Agv"].ToString()));
+                    Port_type = PortType.AGV;
+
+                    PortInfo.AgvPortsList.Add(new AgvPortInfo()
+                    {
+                        AgvDll = new AGVDLL.AGVDLL(),
+                        AgvStr = Read["Agv"].ToString(),
+                        BaudRate = Convert.ToInt32(Read["Baud"].ToString()),
+                        ComNumber = Convert.ToInt32(Read["Com"].ToString())
+                    });
                 }
                 portInfos.Add(
                     new Ga_PortInfo()
@@ -124,7 +178,7 @@ namespace AGVSystem.APP.agv_System
                         ComNumber = "COM" + Read["Com"].ToString().Trim(),
                         ComPortType = Port_type,
                         ComStatic = "关闭",
-                        ComStaticColor=  new SolidColorBrush(Colors.Red)
+                        ComStaticColor = new SolidColorBrush(Colors.Red)
                     });
             }
             Read.Close();
@@ -136,10 +190,11 @@ namespace AGVSystem.APP.agv_System
         /// </summary>
         /// <param name="UTCTime"></param>
         /// <returns></returns>
-        public List<NetworkInfo> LoadNetwork(long UTCTime)
+        public ObservableCollection<NetworkInfo> LoadNetwork(long UTCTime)
         {
+            PortInfo.Networks.Clear();
             MySqlDataReader reader = MapBLL.SelectNetworkBLL(UTCTime);
-            List<NetworkInfo> Net = new List<NetworkInfo>();
+            ObservableCollection<NetworkInfo> Net = new ObservableCollection<NetworkInfo>();
             if (reader != null)
             {
                 while (reader.Read())
@@ -149,7 +204,12 @@ namespace AGVSystem.APP.agv_System
                         IP_Address = reader.GetString("IP_Address"),
                         IP_Port = reader.GetInt32("IP_Port"),
                         IP_Static = "断开",
-                        IP_StaticColor = new SolidColorBrush(Colors.Red)
+                        IP_StaticColor = new SolidColorBrush(Colors.Red),
+                    });
+                    PortInfo.Networks.Add(new NetworkInfo()
+                    {
+                        IP_Address = reader.GetString("IP_Address"),
+                        IP_Port = reader.GetInt32("IP_Port")
                     });
                 }
                 reader.Close();
@@ -195,4 +255,5 @@ namespace AGVSystem.APP.agv_System
             }
         }
     }
+
 }

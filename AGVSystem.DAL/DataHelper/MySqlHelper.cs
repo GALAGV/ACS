@@ -13,6 +13,9 @@ namespace AGVSystem.DAL.DataHelper
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["DataBaseText"].ConnectionString;
 
+        public static MySqlConnection MyConnCal = new MySqlConnection(connectionString);//用于计算路径长连接
+
+        public static MySqlConnection MyConnLog = new MySqlConnection(connectionString);//用于记日志长连接
         #region 构造函数
 
         static MySQLHelper()
@@ -255,10 +258,10 @@ namespace AGVSystem.DAL.DataHelper
                     tx.Commit();
                     return true;
                 }
-                catch (Exception)
+                catch (MySql.Data.MySqlClient.MySqlException e)
                 {
                     tx.Rollback();
-                    return false;
+                    throw e;
                 }
             }
         }

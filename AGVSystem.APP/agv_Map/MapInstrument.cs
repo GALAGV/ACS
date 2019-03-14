@@ -1185,5 +1185,34 @@ namespace AGVSystem.APP.agv_Map
             painting.CoordinateX();
         }
         #endregion
+
+        #region 线路标记红色
+
+        public void SignLine(List<WirePointArray> pointArrays, Brush brushes, double LintWidth,int Index)
+        {
+            pointArrays.ForEach(
+                    p =>
+                    {
+                        if (p.circuitType.Equals(CircuitType.Line) || p.circuitType.Equals(CircuitType.Semicircle))
+                        {
+                            Path path = ((WirePointLine)p).GetPath;
+                            path.Stroke = brushes;
+                            path.StrokeThickness = LintWidth;
+                            Panel.SetZIndex(path, Index);
+                        }
+                        else if (p.circuitType.Equals(CircuitType.Broken))
+                        {
+                            List<Path> path = ((WirePointBroken)p).Paths;
+                            path.ForEach(x => { x.Stroke = brushes; x.StrokeThickness = LintWidth; Panel.SetZIndex(x, Index); });
+                        }
+                    });
+        }
+
+        #endregion
+
+        public Path Draw_Triangle(CircuitType type, Point startPt, Point endPt, bool direction)
+        {
+            return painting.DrawArrow(type, startPt, endPt, direction);
+        }
     }
 }

@@ -47,7 +47,18 @@ namespace AGVSystem.Model.Ga_agvModels
         public string Stop { get; set; }
 
 
-        public string Turn { get; set; }
+        private string turn { get; set; }
+
+        public string Turn
+        {
+            get { return turn; }
+            set
+            {
+                turn = value;
+                GetChanged("Turn");
+            }
+        }
+
 
         private Brush turnColor;
         public Brush TurnColor

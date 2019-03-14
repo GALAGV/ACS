@@ -19,7 +19,7 @@ namespace AGVSystem.UI.APP_UI.Map
     {
         private agvMapRegulate mapService = new agvMapRegulate(); //业务逻辑接口
         private ObservableCollection<Ga_Map> GetMaps = new ObservableCollection<Ga_Map>(); //显示数据源
-
+        public Action Map_action { get; set; }
 
         public CompileMap()
         {
@@ -53,6 +53,7 @@ namespace AGVSystem.UI.APP_UI.Map
                 if (mapService.Export_Map(UTC.ConvertDateTimeLong(Convert.ToDateTime(ga_Map.CreateTime)), sfd.FileName))
                 {
                     GetMaps.ToList().ForEach(x => x.IsSelected = false); //取消选择
+                    Map_action.Invoke(); //刷新主界面
                     MessageBox.Show("导出成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Asterisk, MessageBoxResult.No);
                 }
                 else
@@ -123,6 +124,7 @@ namespace AGVSystem.UI.APP_UI.Map
                 {
                     GetMaps = mapService.GetMapRegulate();
                     TabSerialPortData.DataContext = GetMaps;
+                    Map_action.Invoke(); //刷新主界面
                     MessageBox.Show("删除成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
                 }
             }
@@ -148,6 +150,7 @@ namespace AGVSystem.UI.APP_UI.Map
                 {
                     GetMaps = mapService.GetMapRegulate();
                     TabSerialPortData.DataContext = GetMaps;
+                    Map_action.Invoke(); //刷新主界面
                     MessageBox.Show("导入成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else

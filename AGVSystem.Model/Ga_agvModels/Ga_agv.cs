@@ -16,57 +16,224 @@ namespace AGVSystem.Model.Ga_agvModels
         /// <summary>
         /// 网络状态
         /// </summary>
-        public string agvStatic { get; set; }
+        private string AgvStatic;
+
+        public string agvStatic
+        {
+            get { return AgvStatic; }
+            set
+            {
+                AgvStatic = value;
+                GetChanged("agvStatic");
+            }
+        }
 
         /// <summary>
         /// 电压
         /// </summary>
-        public string Voltage { get; set; }
+        private string voltage;
+
+        public string Voltage
+        {
+            get { return voltage; }
+            set
+            {
+                voltage = value;
+                GetChanged("Voltage");
+            }
+        }
 
         /// <summary>
         /// 速度
         /// </summary>
-        public string Speed { get; set; }
+        private string speed;
+
+        public string Speed
+        {
+            get { return speed; }
+            set
+            {
+                speed = value;
+                GetChanged("Speed");
+            }
+        }
 
         /// <summary>
         /// 转弯
         /// </summary>
-        public string turn { get; set; }
+        private string Turn;
+
+        public string turn
+        {
+            get { return Turn; }
+            set
+            {
+                Turn = value;
+                GetChanged("turn");
+            }
+        }
+
+        private Brush turncolor;
+        public Brush Turncolor
+        {
+            get { return turncolor; }
+            set
+            {
+                turncolor = value;
+                GetChanged("Turncolor");
+            }
+        }
+
+        /// <summary>
+        /// 运行状态 运行/停止
+        /// </summary>
+        private string operation;
+
+        public string Operation
+        {
+            get { return operation; }
+            set
+            {
+                operation = value;
+                GetChanged("Operation");
+            }
+        }
+        private Brush coloroperation;
+        public Brush ColorOperation
+        {
+            get { return coloroperation; }
+            set
+            {
+                coloroperation = value;
+                GetChanged("ColorOperation");
+            }
+        }
 
         /// <summary>
         /// 方向
         /// </summary>
-        public string Dir { get; set; }
+        private string dir;
+
+        public string Dir
+       {
+            get { return dir; }
+            set
+            {
+                dir = value;
+                GetChanged("Dir");
+            }
+        }
+
+        private Brush dircolor;
+        public Brush Dircolor
+        {
+            get { return dircolor; }
+            set
+            {
+                dircolor = value;
+                GetChanged("Dircolor");
+            }
+        }
 
         /// <summary>
         /// 挂钩
         /// </summary>
-        public string Hook { get; set; }
+        private string hook;
+
+        public string Hook
+        {
+            get { return hook; }
+            set
+            {
+                hook = value;
+                GetChanged("Hook");
+            }
+        }
+
+        private Brush hookcolor;
+        public Brush Hookcolor
+        {
+            get { return hookcolor; }
+            set
+            {
+                hookcolor = value;
+                GetChanged("Hookcolor");
+            }
+        }
 
         /// <summary>
         /// RFID编号
         /// </summary>
-        public string RFID { get; set; }
+        private string rFID;
+
+        public string RFID
+        {
+            get { return rFID; }
+            set
+            {
+                rFID = value;
+                GetChanged("RFID");
+            }
+        }
 
         /// <summary>
         /// 线路号
         /// </summary>
-        public string RouteNo { get; set; }
+        private string routeNo;
+
+        public string RouteNo
+        {
+            get { return routeNo; }
+            set
+            {
+                routeNo = value;
+                GetChanged("RouteNo");
+            }
+        }
 
         /// <summary>
         /// PBS
         /// </summary>
-        public string PBS { get; set; }
+        private string pBS;
+        public string PBS
+        {
+            get { return pBS; }
+            set
+            {
+                pBS = value;
+                GetChanged("PBS");
+            }
+        }
 
         /// <summary>
         /// 步骤
         /// </summary>
-        public string Step { get; set; }
+        private string step;
+
+        public string Step
+        {
+            get { return step; }
+            set
+            {
+                step = value;
+                GetChanged("Step");
+            }
+        }
 
         /// <summary>
         /// 程序号
         /// </summary>
-        public string Program { get; set; }
+        private string program;
+
+        public string Program
+        {
+            get { return program; }
+            set
+            {
+                program = value;
+                GetChanged("Program");
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -2,6 +2,7 @@
 using AGVSystem.Model.LogicData;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
 
@@ -21,13 +22,18 @@ namespace AGVSystem.Model.MapData
 
         public static ConcurrentDictionary<int, Image> GetValuePairs = new ConcurrentDictionary<int, Image>(); //AGV状态Img列表
 
-        public static List<Ga_PortInfo> GetPortInfos = new List<Ga_PortInfo>(); //串口数据源
+        public static ObservableCollection<Ga_PortInfo> GetPortInfos = new ObservableCollection<Ga_PortInfo>(); //串口数据源
 
-        public static List<NetworkInfo> networkInfos = new List<NetworkInfo>();
+        public static ObservableCollection<NetworkInfo> networkInfos = new ObservableCollection<NetworkInfo>();
 
-        public static List<Ga_agv> GetAgvs = new List<Ga_agv>(); //所有AGV数据源
+        public static ObservableCollection<Ga_agv> GetAgvs = new ObservableCollection<Ga_agv>(); //所有AGV数据源
 
-        public static List<Ga_agvStatus> Ga_AgvStatuses = new List<Ga_agvStatus>(); //默认AGV初始信息
+        public static ObservableCollection<Ga_agvStatus> Ga_AgvStatuses = new ObservableCollection<Ga_agvStatus>(); //默认AGV初始信息
+
+        public static ObservableCollection<Ga_Map> maps = new ObservableCollection<Ga_Map>(); //地图选项列表数据源
+
+        public static ConcurrentDictionary<int, SiteInfo> Site = new ConcurrentDictionary<int, SiteInfo>(); //所有AGV位置
+
 
         public static List<Ga_agvStatus> speed = MainInfo.agvSpeed.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvSpeed.ToList().IndexOf(p).ToString() }).ToList();
 
@@ -39,4 +45,13 @@ namespace AGVSystem.Model.MapData
 
         public static List<Ga_agvStatus> hook = MainInfo.agvHook.Select(p => new Ga_agvStatus() { StatusName = p, statusValue = MainInfo.agvHook.ToList().IndexOf(p).ToString() }).ToList();
     }
+
+    public class SiteInfo {
+
+        public Label agvSite { get; set; }
+
+        public System.Windows.Media.Brush agvSiteColor { get; set; }
+
+    }
+
 }

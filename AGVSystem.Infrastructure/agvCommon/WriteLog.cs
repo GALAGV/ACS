@@ -14,15 +14,16 @@ namespace AGVSystem.Infrastructure.agvCommon
         public static void writeLogInfo(string DireName, string LogName, string LogInfo)
         {
             string Time = DateTime.Now.ToString("yyyyMMdd");
+            string TimeDate = DateTime.Now.ToString("yyyyMM");
             if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName))
             {
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName);
             }
-            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + Time))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + TimeDate))
             {
-                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + Time);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + TimeDate);
             }
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + Time + "\\" + LogName + Time + ".txt";
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\" + DireName + "\\" + TimeDate + "\\" + LogName + Time + ".txt";
             if (!File.Exists(filePath))
             {
                 File.Create(filePath).Close();
@@ -33,7 +34,5 @@ namespace AGVSystem.Infrastructure.agvCommon
             sw.Close();
             fs.Close();
         }
-
-
     }
 }

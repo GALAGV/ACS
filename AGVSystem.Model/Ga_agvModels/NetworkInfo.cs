@@ -1,15 +1,30 @@
-﻿using System.ComponentModel;
+﻿using AGVSystem.Model.LogicData;
+using System.ComponentModel;
 using System.Windows.Media;
 
 namespace AGVSystem.Model.Ga_agvModels
 {
-    public class NetworkInfo : INotifyPropertyChanged
+    public class NetworkInfo : INotifyPropertyChanged 
     {
+
         public string IP_Address { get; set; }
 
         public int IP_Port { get; set; }
 
-        public string IP_Static { get; set; }
+        private string iP_Static { get; set; }
+
+        public string IP_Static
+        {
+            get { return iP_Static; }
+            set
+            {
+                iP_Static = value;
+                GetChanged("IP_Static");
+            }
+        }
+
+
+        public AsyncTcpClient TcpClient { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

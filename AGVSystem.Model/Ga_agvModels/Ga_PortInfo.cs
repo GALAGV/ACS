@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using AGVSystem.Model.LogicData;
+using System.ComponentModel;
 using System.Windows.Media;
 
 namespace AGVSystem.Model.Ga_agvModels
@@ -16,12 +17,23 @@ namespace AGVSystem.Model.Ga_agvModels
         /// <summary>
         /// 串口类型
         /// </summary>
-        public string ComPortType { get; set; }
+        public PortType ComPortType { get; set; }
 
         /// <summary>
         /// 串口状态
         /// </summary>
-        public string ComStatic { get; set; }
+        private string comStatic { get; set; }
+        public string ComStatic
+        {
+            get { return comStatic; }
+            set
+            {
+                comStatic = value;
+                GetChanged("ComStatic");
+            }
+        }
+
+
 
         private Brush comStaticColor;
         public Brush ComStaticColor

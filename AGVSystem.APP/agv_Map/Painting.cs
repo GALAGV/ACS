@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AGVSystem.Model.DrawMap;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -226,17 +228,151 @@ namespace AGVSystem.APP.agv_Map
         public Path GetPath(Point startPt, Point endPt, bool Static, int Sise, Brush brush, double width)
         {
             Path path = new Path();
+
             PathGeometry pathGeometry = new PathGeometry();
             ArcSegment arc = new ArcSegment(startPt, new Size(Sise, Sise), 0, false, Static ? SweepDirection.Clockwise : SweepDirection.Counterclockwise, true);
             PathFigure figure = new PathFigure();
             figure.StartPoint = endPt;
             figure.Segments.Add(arc);
             pathGeometry.Figures.Add(figure);
+
             path.Data = pathGeometry;
             path.Stroke = brush;
             path.StrokeThickness = width; //设置宽度
             CanvasMain.Children.Add(path);
             return path;
+        }
+
+        #endregion
+
+        #region 生成箭头
+
+
+        /// <summary>
+        /// 生成箭头
+        /// </summary>
+        /// <param name="type">线路类型</param>
+        /// <param name="startPt">起始点</param>
+        /// <param name="endPt">结束点</param>
+        /// <param name="direction">线路起始和结束点和绘制起始结束点是否相同</param>
+        /// <returns></returns>
+        public Path DrawArrow(CircuitType type, Point startPt, Point endPt, bool direction)
+        {
+            double Differ_X = startPt.X - endPt.X;
+            double Differ_Y = startPt.Y - endPt.Y;
+
+
+            Point point1 = new Point();
+            Point point2 = new Point();
+            Point point3 = new Point();
+
+            if (type == CircuitType.Line)
+            {
+                if (Differ_X == 0 && Differ_Y > 0)
+                {
+                    point1 = new Point() { Y = endPt.Y, X = endPt.X + 8 };
+                    point2 = new Point() { Y = endPt.Y, X = endPt.X - 8 };
+                    point3 = new Point() { Y = endPt.Y - 17, X = endPt.X };
+                }
+                if (Differ_X == 0 && Differ_Y < 0)
+                {
+                    point1 = new Point() { Y = endPt.Y, X = endPt.X + 8 };
+                    point2 = new Point() { Y = endPt.Y, X = endPt.X - 8 };
+                    point3 = new Point() { Y = endPt.Y + 17, X = endPt.X };
+                }
+                else if (Differ_Y == 0 && Differ_X < 0)
+                {
+                    point1 = new Point() { Y = endPt.Y - 8, X = endPt.X };
+                    point2 = new Point() { Y = endPt.Y + 8, X = endPt.X };
+                    point3 = new Point() { Y = endPt.Y, X = endPt.X + 17 };
+                }
+                else if (Differ_Y == 0 && Differ_X > 0)
+                {
+                    point1 = new Point() { Y = endPt.Y - 8, X = endPt.X };
+                    point2 = new Point() { Y = endPt.Y + 8, X = endPt.X };
+                    point3 = new Point() { Y = endPt.Y, X = endPt.X - 17 };
+                }
+                if (direction)
+                {
+                    if ((Differ_X < 0 && Differ_Y > 0 && Math.Abs(Differ_X) < 20) || (Differ_X > 0 && Differ_Y > 0 && Math.Abs(Differ_X) < 20))
+                    {
+                        point1 = new Point() { Y = endPt.Y, X = endPt.X - 8 };
+                        point2 = new Point() { Y = endPt.Y, X = endPt.X + 8 };
+                        point3 = new Point() { Y = endPt.Y - 17, X = endPt.X };
+                    }
+                    else if ((Differ_X < 0 && Differ_Y < 0 && Math.Abs(Differ_X) < 20) || (Differ_X > 0 && Differ_Y < 0 && Math.Abs(Differ_X) < 20))
+                    {
+                        point1 = new Point() { Y = endPt.Y, X = endPt.X - 8 };
+                        point2 = new Point() { Y = endPt.Y, X = endPt.X + 8 };
+                        point3 = new Point() { Y = endPt.Y + 17, X = endPt.X };
+                    }
+                }
+            }
+            else if (type == CircuitType.Broken)
+            {
+                if (direction)
+                {
+                    if (Differ_X < 0 && Differ_Y < 0)
+                    {
+                        point1 = new Point() { Y = endPt.Y, X = endPt.X - 8 };
+                        point2 = new Point() { Y = endPt.Y, X = endPt.X + 8 };
+                        point3 = new Point() { Y = endPt.Y + 17, X = endPt.X };
+                    }
+                    else if (Differ_X < 0 && Differ_Y > 0)
+                    {
+                        point1 = new Point() { Y = endPt.Y, X = endPt.X - 8 };
+                        point2 = new Point() { Y = endPt.Y, X = endPt.X + 8 };
+                        point3 = new Point() { Y = endPt.Y - 17, X = endPt.X };
+                    }
+                    else if (Differ_X > 0 && Differ_Y > 0)
+                    {
+                        point1 = new Point() { Y = endPt.Y, X = endPt.X - 8 };
+                        point2 = new Point() { Y = endPt.Y, X = endPt.X + 8 };
+                        point3 = new Point() { Y = endPt.Y - 17, X = endPt.X };
+                    }
+                    else if (Differ_X > 0 && Differ_Y < 0)
+                    {
+                        point1 = new Point() { Y = endPt.Y, X = endPt.X - 8 };
+                        point2 = new Point() { Y = endPt.Y, X = endPt.X + 8 };
+                        point3 = new Point() { Y = endPt.Y + 17, X = endPt.X };
+                    }
+                }
+                else
+                {
+                    if (Differ_X < 0 && Differ_Y < 0)
+                    {
+                        point1 = new Point() { Y = endPt.Y - 8, X = endPt.X };
+                        point2 = new Point() { Y = endPt.Y + 8, X = endPt.X };
+                        point3 = new Point() { Y = endPt.Y, X = endPt.X + 17 };
+                    }
+                    if (Differ_X > 0 && Differ_Y > 0 || Differ_X > 0 && Differ_Y < 0)
+                    {
+                        point1 = new Point() { Y = endPt.Y - 8, X = endPt.X };
+                        point2 = new Point() { Y = endPt.Y + 8, X = endPt.X };
+                        point3 = new Point() { Y = endPt.Y, X = endPt.X - 17 };
+                    }
+                    else if (Differ_X > 0 && Differ_Y < 0 || Differ_X > 0 && Differ_Y > 0)
+                    {
+                        point1 = new Point() { Y = endPt.Y - 8, X = endPt.X };
+                        point2 = new Point() { Y = endPt.Y + 8, X = endPt.X };
+                        point3 = new Point() { Y = endPt.Y, X = endPt.X - 17 };
+                    }
+                }
+            }
+            Path x_axisArrow = new Path();//x轴箭头
+           //x_axisArrow.Fill = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            x_axisArrow.Fill = new SolidColorBrush(Colors.Green);
+            PathFigure x_axisFigure = new PathFigure();
+            x_axisFigure.IsClosed = true;
+            x_axisFigure.StartPoint = point1;                          //路径的起点
+            x_axisFigure.Segments.Add(new LineSegment(point2, false)); //第2个点
+            x_axisFigure.Segments.Add(new LineSegment(point3, false)); //第3个点
+            PathGeometry x_axisGeometry = new PathGeometry();
+            x_axisGeometry.Figures.Add(x_axisFigure);
+            x_axisArrow.Data = x_axisGeometry;
+            Panel.SetZIndex(x_axisArrow, 9996);
+            this.CanvasMain.Children.Add(x_axisArrow);
+            return x_axisArrow;
         }
         #endregion
 

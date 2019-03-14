@@ -10,7 +10,6 @@ using AGVSystem.BLL.ServiceLogicBLL;
 using AGVSystem.Model.MapData;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
-using AGVSystem.Model.LogicData;
 using System.Data;
 using AGVSystem.APP.agv_Map;
 using OperateIni;
@@ -575,8 +574,6 @@ namespace AGVSystem.UI.APP_UI.Setting
             }
             if (verify)
             {
-                PortInfo.IP.Clear();
-                PortInfo.Port.Clear();
                 if (mapMessage.SavenetworkBLL(MapRegulate.UTCTime, Ipsite.Select(p => p.Text.Trim()).ToList(), PortData.Select(p => p.Text.Trim()).ToList()))
                 {
                     MessageBox.Show("保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);

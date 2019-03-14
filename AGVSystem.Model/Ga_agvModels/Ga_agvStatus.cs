@@ -46,7 +46,7 @@ namespace AGVSystem.Model.Ga_agvModels
             set
             {
                 colorBg = value;
-                GetChanged("Brush");
+                GetChanged("ColorBg");
             }
         }
 

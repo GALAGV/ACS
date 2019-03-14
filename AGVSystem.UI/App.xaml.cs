@@ -48,7 +48,7 @@ namespace AGVSystem.UI
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             Exception ex = e.Exception;
-            OnExceptionHandler(ex);
+            Log4NetHelper.WriteTaskLog(ex.Message, ex);
         }
 
         //异常处理 封装
@@ -56,14 +56,9 @@ namespace AGVSystem.UI
         {
             if (ex != null)
             {
-                string errorMsg = "";
-                if (ex.InnerException != null)
-                {
-                    errorMsg += String.Format("【InnerException】{0}\n{1}\n", ex.InnerException.Message, ex.InnerException.StackTrace);
-                }
-                errorMsg += String.Format("{0}\n{1}", ex.Message, ex.StackTrace);
-                WriteLog.writeLogInfo("Error", "error", errorMsg);//写入日志
-                MessageBox.Show(ex.Message,"错误",MessageBoxButton.OK,MessageBoxImage.Error);
+                //WriteLog.writeLogInfo("Error", "error", errorMsg);//写入日志
+                Log4NetHelper.WriteErrorLog(ex.Message, ex);
+                MessageBox.Show(ex.Message, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

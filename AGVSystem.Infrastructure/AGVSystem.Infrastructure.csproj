@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,9 +31,30 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AGVDLL">
       <HintPath>..\AGVSystem.DispatchLogic\bin\Debug\AGVDLL.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="OperateIni">
       <HintPath>..\AGVSystem.UI\bin\Debug\OperateIni.dll</HintPath>
@@ -60,11 +82,14 @@
     <Compile Include="agvCommon\ConvertCode.cs" />
     <Compile Include="agvCommon\DataTimeTool.cs" />
     <Compile Include="agvCommon\Encryption.cs" />
+    <Compile Include="agvCommon\Error.cs" />
     <Compile Include="agvCommon\FormatVerification.cs" />
+    <Compile Include="agvCommon\Log4NetHelper.cs" />
     <Compile Include="agvCommon\Md5.cs" />
     <Compile Include="agvCommon\MessageBoxTool.cs" />
     <Compile Include="agvCommon\OperateIniTool.cs" />
     <Compile Include="agvCommon\ServiceFactory.cs" />
+    <Compile Include="agvCommon\SimAgvInfo.cs" />
     <Compile Include="agvCommon\ToolBarStyle.cs" />
     <Compile Include="agvCommon\UTC.cs" />
     <Compile Include="agvCommon\WriteLog.cs" />
@@ -75,6 +100,9 @@
       <Project>{1d31f265-8d5f-44ed-a730-6025e7006e6f}</Project>
       <Name>AGVSystem.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

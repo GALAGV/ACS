@@ -152,6 +152,15 @@ namespace AGVSystem.BLL.ServiceLogicBLL
         {
             return map.MapRoute(MapName);
         }
+        public DataTable BLLMapRouteTable(string MapName)
+        {
+            return map.MapRouteTable(MapName);
+        }
+
+        public MySqlDataReader BLLMapRoute(string MapName, string LIneName, string Program)
+        {
+            return map.MapRoute(MapName, LIneName, Program);
+        }
 
         public MySqlDataReader MapArrayBLL()
         {

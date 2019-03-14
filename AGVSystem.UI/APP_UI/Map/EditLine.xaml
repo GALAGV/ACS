@@ -86,7 +86,7 @@
                     </Button.Content>
                 </Button>
                 <Separator />
-                <Button Cursor="Hand" ToolTip="新建线路" Name="Line_Delete" Click="Line_Delete_Click">
+                <Button Cursor="Hand" ToolTip="删除线路" Name="Line_Delete" Click="Line_Delete_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xf057;" FontSize="25" Foreground="#515151" Style="{DynamicResource FontAwesome}" />
@@ -95,6 +95,14 @@
                     </Button.Content>
                 </Button>
                 <Separator />
+                <Button Cursor="Hand" ToolTip="查询" Name="Inquire_Line"  Click="Inquire_Line_Click">
+                    <Button.Content >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xf00e;" FontSize="25" Foreground="#515151" Style="{DynamicResource FontAwesome}" />
+                            <TextBlock Text="查询"  Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
             </ToolBar>
             <Grid Grid.Row="2" Background="#f0f0f0">
                 <Grid.ColumnDefinitions>
@@ -181,7 +189,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox  BorderThickness="0" Text="{Binding Path= Speed,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" HorizontalAlignment="Center" Name="listT" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetSpeed}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox  BorderThickness="0" Text="{Binding Path= Speed,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" HorizontalAlignment="Center" Name="listT"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetSpeed}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -206,7 +214,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox Name="listT" BorderThickness="0" Text="{Binding Path= Pbs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetPBS}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox Name="listT" BorderThickness="0"  DropDownClosed="ListT_DropDownClosed"  Text="{Binding Path= Pbs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    Height="25" Width="75" ItemsSource="{Binding agvSetPBS}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -231,7 +239,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox BorderThickness="0" Text="{Binding Path= Turn,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   Name="listT" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetTurn}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox BorderThickness="0" Text="{Binding Path= Turn,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   Name="listT"   DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetTurn}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -256,7 +264,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox   BorderThickness="0" Text="{Binding Path= Direction,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Name="listT" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetDirection}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox   BorderThickness="0" Text="{Binding Path= Direction,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Name="listT"   DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetDirection}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -281,7 +289,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                         <DataGridTemplateColumn.CellEditingTemplate>
                                             <DataTemplate>
-                                                <ComboBox  Name="listT" BorderThickness="0" Text="{Binding Path= Hook,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ListT_SelectionChanged"  DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetHook}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
+                                                <ComboBox  Name="listT" BorderThickness="0" Text="{Binding Path= Hook,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   DropDownClosed="ListT_DropDownClosed"  Height="25" Width="75" ItemsSource="{Binding agvSetHook}"   DisplayMemberPath="StatusName" SelectedValuePath="StatusValue" VerticalContentAlignment="Center"   HorizontalContentAlignment="Center"  SelectedIndex="0" ></ComboBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellEditingTemplate>
                                     </DataGridTemplateColumn>
@@ -358,10 +366,6 @@
                     </Border>
                 </Border>
             </Grid>
-
-
-
-
         </Grid>
     </Grid>
 </Window>
